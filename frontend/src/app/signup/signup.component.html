@@ -1,0 +1,105 @@
+<div class="container d-table">
+    <div class="d-100vh-va-middle">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card-group" *ngIf="_showConfirmation == false">
+                    <div class="card p-2">
+                        <div class="card-block">
+                            <form [formGroup]="_signupForm" (ngSubmit)="onSubmit(_signupForm.value)">
+                                <h1>Register</h1>
+                                <p class="text-muted">Please fill out the following fields to register</p>
+
+                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('username')}">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="icon-user"></i></span>
+                                            <input class="form-control" type="text" placeholder="Username" [formControl]="_signupForm.controls['username']" [ngClass]="{'form-control-danger': !_isValid('username')}" maxlength="20">
+                                        </div>
+                                    </div><div class="clearfix"></div>
+                                    <div class="col-sm-12" *ngIf="!_formErrors.username.valid">
+                                        <span class="help-block help-block-error">{{_formErrors.username.message}}</span>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="help-text">* Username only allows alphanumeric, underscore and dashboard between 3 and 15 characters. i.e. sampleusername</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('email')}">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="icon-envelope-letter"></i></span>
+                                            <input class="form-control" type="email" placeholder="Email Address" [formControl]="_signupForm.controls['email']" [ngClass]="{'form-control-danger': !_isValid('email')}">
+                                        </div><div class="clearfix"></div>
+                                    </div><div class="clearfix"></div>
+                                    <div class="col-sm-12" *ngIf="!_formErrors.email.valid">
+                                        <span class="help-block help-block-error">{{_formErrors.email.message}}</span>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="help-text">* Email must be valid email address. i.e. sample@username.com.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('password')}">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                            <input class="form-control" type="password" placeholder="Password" [formControl]="_signupForm.controls['password']" [ngClass]="{'form-control-danger': !_isValid('password')}">
+                                        </div>
+                                    </div><div class="clearfix"></div>
+                                    <div class="col-sm-12" *ngIf="!_formErrors.password.valid">
+                                        <span class="help-block help-block-error">{{_formErrors.password.message}}</span>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <p class="help-text">* Password must be more than 6 characters.</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('password_confirm')}">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                            <input class="form-control" type="password" placeholder="Repeat Password" [formControl]="_signupForm.controls['password_confirm']" [ngClass]="{'form-control-danger': !_isValid('password_confirm')}">
+                                        </div>
+                                        <span class="help-block help-block-error" *ngIf="!_formErrors.password_confirm.valid">{{_formErrors.password_confirm.message}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="submit" class="btn btn-success btn-block px-2" [disabled]="!_signupForm.valid || _submitted == true">Signup</button>
+                                    </div>
+                                    <div class="col-xs-6 text-xs-right">
+                                        <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="_submitted" >
+                                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                    </div>
+                                    <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
+                                        <div class="alert alert-danger">{{_errorMessage}}</div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-group" *ngIf="_showConfirmation == true">
+                    <div class="card p-2">
+                        <div class="card-block">
+                            <h1>Thank you for signing up</h1>
+                            <br />
+                            <p class="text-muted">
+                                To complete the registration process you must confirm your account. An email has sent to {{_signupForm.controls['email'].value}}.<br />
+                                <br />
+                                To confirm and activate your account please check your inbox and click on the link found in the email we just sent.
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

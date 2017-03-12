@@ -1,0 +1,50 @@
+<div class="container d-table">
+    <div class="d-100vh-va-middle">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card-group" *ngIf="_errorMessage != ''">
+                    <div class="card p-2">
+                        <div class="card-block">
+                            <h1>Error occurred</h1>
+                            <br />
+                            <p class="text-muted" style="white-space: pre;">{{_errorMessage}}</p>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-group" *ngIf="_submitted == true && _isConfirmed == false">
+                    <div class="card p-2">
+                        <div class="card-block">
+                            <h1>Confirming your account</h1>
+                            <br />
+                            <p class="text-muted">
+                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-group" *ngIf="_submitted == true && _isConfirmed == true">
+                    <div class="card p-2">
+                        <div class="card-block">
+                            <h1>Account Confirmed</h1>
+                            <br />
+                            <p class="text-muted">
+                                Your account has been confirmed. Please login now.
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a [routerLink]="['/login']" class="btn btn-link px-0">Go to Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

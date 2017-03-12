@@ -1,0 +1,90 @@
+<header class="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler hidden-lg-up" type="button" mobile-nav-toggle>&#9776;</button>
+        <a class="navbar-brand" href="#"></a>
+
+        <ul class="nav navbar-nav hidden-md-down">
+            <li class="nav-item">
+                <a class="nav-link navbar-toggler sidebar-toggle" href="#">&#9776;</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">Dashboard</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/user']">Users</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']">Settings</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav float-xs-right">
+
+            <li class="nav-item dropdown" dropdown (onToggle)="toggled($event)">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                    <span class="hidden-md-down">admin</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" dropdownMenu aria-labelledby="simple-dropdown">
+                    <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/logout']"><i class="icon-lock-open"></i> Logout</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</header>
+
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard </a>
+            </li>
+
+            <li class="divider"></li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/user']"><i class="icon-calculator"></i> Users </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']"><i class="icon-pie-chart"></i> Settings</a>
+            </li>
+            <li class="divider"></li>
+
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']"><i class="icon-lock-open"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Main content -->
+<main class="main">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <breadcrumbs></breadcrumbs>
+
+        <!-- Breadcrumb Menu-->
+        <li class="breadcrumb-menu">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <a class="btn btn-secondary" href="#"><i class="icon-speech"></i></a>
+                <a class="btn btn-secondary" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+                <a class="btn btn-secondary" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+            </div>
+        </li>
+
+    </ol>
+
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+</main>
+
+<footer class="footer">
+    <span class="text-left">
+        <a href="http://coreui.io">CoreUI</a> &copy; 2016 creativeLabs.
+    </span>
+    <span class="float-xs-right">
+        Powered by <a href="http://coreui.io">CoreUI</a>. Customized by CK Design &amp; Development.
+    </span>
+</footer>
