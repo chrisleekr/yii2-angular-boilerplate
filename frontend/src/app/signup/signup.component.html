@@ -1,5 +1,10 @@
 <div class="container d-table">
-    <div class="d-100vh-va-middle">
+    <div class="d-90vh-va-middle">
+        <div class="row row-logo m-b-md">
+            <div class="col-sm-12 text-sm-center">
+                <img src="/img/logo.png" width="350px" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card-group" *ngIf="_showConfirmation == false">
@@ -20,7 +25,7 @@
                                         <span class="help-block help-block-error">{{_formErrors.username.message}}</span>
                                     </div>
                                     <div class="col-sm-12">
-                                        <p class="help-text">* Username only allows alphanumeric, underscore and dashboard between 3 and 15 characters. i.e. sampleusername</p>
+                                        <p class="help-text">* Username only allows alphanumeric, underscore and dashboard between 3 and 25 characters. i.e. sampleusername</p>
                                     </div>
                                 </div>
                                 <div class="form-group row" [ngClass]="{'has-danger': !_isValid('email')}">

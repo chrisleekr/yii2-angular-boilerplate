@@ -17,9 +17,9 @@ export class GlobalService{
         }
     }
 
-    loadGlobalSettingsFromLocalStorage():void{
-        if(localStorage.getItem('setting') != null){
-            this.setting = JSON.parse(localStorage.getItem('setting'));
+    loadGlobalSettingsFromSessionStorage():void{
+        if(sessionStorage.getItem('frontend-setting') != null){
+            this.setting = JSON.parse(sessionStorage.getItem('frontend-setting'));
         }
 
     }

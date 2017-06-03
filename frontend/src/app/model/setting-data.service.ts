@@ -9,20 +9,21 @@ import {Observable} from 'rxjs/Rx';
 import {GlobalService} from './global.service';
 import {UserService} from './user.service';
 import {Setting} from './setting';
+import {AuthHttp} from 'angular2-jwt';
 
 @Injectable()
 export class SettingDataService {
 
-    constructor(private _http:Http,
-                private _globalService:GlobalService,
-                private _userService:UserService){
+    constructor(private _globalService:GlobalService,
+                private _userService:UserService,
+                private _authHttp: AuthHttp){
     }
 
     // POST /v1/setting
     addSetting(setting:Setting):Observable<any>{
         let headers = this.getHeaders();
 
-        return this._http.post(
+        return this._authHttp.post(
             this._globalService.apiHost+'/setting',
             JSON.stringify(setting),
             {
@@ -40,7 +41,7 @@ export class SettingDataService {
     deleteSettingById(id:number):Observable<boolean>{
         let headers = this.getHeaders();
 
-        return this._http.delete(
+        return this._authHttp.delete(
             this._globalService.apiHost+'/setting/'+id,
             {
                 headers: headers
@@ -57,7 +58,7 @@ export class SettingDataService {
     updateSettingById(setting:Setting):Observable<any>{
         let headers = this.getHeaders();
 
-        return this._http.put(
+        return this._authHttp.put(
             this._globalService.apiHost+'/setting/'+setting.id,
             JSON.stringify(setting),
             {
@@ -74,14 +75,14 @@ export class SettingDataService {
     private getHeaders():Headers {
         return new Headers({
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+this._userService.getAccessToken(),
+            'Authorization': 'Bearer '+this._userService.getToken(),
         });
     }
     // GET /v1/setting
     getAllSettings(): Observable<Setting[]> {
         let headers = this.getHeaders();
 
-        return this._http.get(
+        return this._authHttp.get(
             this._globalService.apiHost+'/setting?sort=meta_key',
             {
                 headers: headers
@@ -96,7 +97,7 @@ export class SettingDataService {
 
     refreshGlobalSettings():void{
         // get settings
-        this._globalService.loadGlobalSettingsFromLocalStorage();
+        this._globalService.loadGlobalSettingsFromSessionStorage();
 
         this.getAllSettingsPublic()
             .subscribe(
@@ -111,7 +112,7 @@ export class SettingDataService {
                                 this._globalService.setting[setting.meta_key] = +setting.meta_value;
                                 break;
                         }
-                        localStorage.setItem('setting', JSON.stringify(this._globalService.setting));
+                        sessionStorage.setItem('frontend-setting', JSON.stringify(this._globalService.setting));
                     });
 
 
@@ -123,7 +124,7 @@ export class SettingDataService {
     getAllSettingsPublic(): Observable<Array<any>> {
         let headers = this.getHeaders();
 
-        return this._http.get(
+        return this._authHttp.get(
             this._globalService.apiHost+'/setting/public',
             {
                 // headers: headers
@@ -139,7 +140,7 @@ export class SettingDataService {
     getSettingById(id:number):Observable<Setting> {
         let headers = this.getHeaders();
 
-        return this._http.get(
+        return this._authHttp.get(
             this._globalService.apiHost+'/setting/'+id,
             {
                 headers: headers
@@ -153,8 +154,8 @@ export class SettingDataService {
     }
 
     private handleError (error: Response | any) {
-
         let errorMessage:any = {};
+
         // Connection error
         if(error.status == 0) {
             errorMessage = {

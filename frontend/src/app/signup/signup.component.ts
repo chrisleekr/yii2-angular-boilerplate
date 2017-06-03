@@ -26,8 +26,8 @@ export class SignupComponent implements OnInit {
         this._signupForm = _formBuilder.group({
             username: ['', Validators.compose([
                 Validators.required,
-                CustomValidators.rangeLength([3, 15]),
-                Validators.pattern('^[A-Za-z0-9_-]{3,15}$'),
+                CustomValidators.rangeLength([3, 25]),
+                Validators.pattern('^[A-Za-z0-9_-]{3,25}$'),
             ])],
             email: ['', Validators.compose([
                 Validators.required,

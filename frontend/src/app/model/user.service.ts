@@ -8,22 +8,27 @@ import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Rx';
 import {Router} from "@angular/router";
 
+import {tokenNotExpired} from 'angular2-jwt';
+import {AuthHttp, JwtHelper} from 'angular2-jwt';
+
+
 @Injectable()
 export class UserService {
     private loggedIn = false;
     public redirectURL = '';
+    public jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(private _http: Http,
-                private _globalService: GlobalService,
-                private _router: Router) {
-        this.loggedIn = this.checkAccessToken();
+    constructor(private _globalService: GlobalService,
+                private _router: Router,
+                private _authHttp: AuthHttp) {
+        this.loggedIn = this.isLoggedIn();
     }
 
     public login(username, password) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/login',
                 JSON.stringify({
@@ -32,15 +37,15 @@ export class UserService {
                         "password": password
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    localStorage.setItem('access_token', response.data.access_token);
+                    localStorage.setItem('frontend-token', response.data.access_token);
                     this.loggedIn = true;
                 } else {
-                    localStorage.removeItem('access_token');
+                    localStorage.removeItem('frontend-token');
                     this.loggedIn = false;
                 }
                 return response;
@@ -52,7 +57,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/signup',
                 JSON.stringify({
@@ -62,16 +67,12 @@ export class UserService {
                         "password": password
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    // localStorage.setItem('access_token', response.data.access_token);
-                    // this.loggedIn = true;
                 } else {
-                    // localStorage.removeItem('access_token');
-                    // this.loggedIn = false;
                 }
                 return response;
             })
@@ -82,7 +83,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/confirm',
                 JSON.stringify({
@@ -91,16 +92,12 @@ export class UserService {
                         "auth_key": auth_key,
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    // localStorage.setItem('access_token', response.data.access_token);
-                    // this.loggedIn = true;
                 } else {
-                    // localStorage.removeItem('access_token');
-                    // this.loggedIn = false;
                 }
                 return response;
             })
@@ -111,7 +108,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/password-reset-request',
                 JSON.stringify({
@@ -119,16 +116,12 @@ export class UserService {
                         "email": email
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    // localStorage.setItem('access_token', response.data.access_token);
-                    // this.loggedIn = true;
                 } else {
-                    // localStorage.removeItem('access_token');
-                    // this.loggedIn = false;
                 }
                 return response;
             })
@@ -140,7 +133,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/password-reset-token-verification',
                 JSON.stringify({
@@ -148,16 +141,12 @@ export class UserService {
                         "token": token,
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    // localStorage.setItem('access_token', response.data.access_token);
-                    // this.loggedIn = true;
                 } else {
-                    // localStorage.removeItem('access_token');
-                    // this.loggedIn = false;
                 }
                 return response;
             })
@@ -168,7 +157,7 @@ export class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=UTF-8');
 
-        return this._http
+        return this._authHttp
             .post(
                 this._globalService.apiHost + '/user/password-reset',
                 JSON.stringify({
@@ -177,16 +166,12 @@ export class UserService {
                         "password": password
                     }
                 }),
-                {headers}
+                {headers: headers}
             )
             .map(response => response.json())
             .map((response) => {
                 if (response.success) {
-                    // localStorage.setItem('access_token', response.data.access_token);
-                    // this.loggedIn = true;
                 } else {
-                    // localStorage.removeItem('access_token');
-                    // this.loggedIn = false;
                 }
                 return response;
             })
@@ -194,16 +179,16 @@ export class UserService {
     }
 
     public logout(): void {
-        localStorage.removeItem('access_token');
+        localStorage.removeItem('frontend-token');
         this.loggedIn = false;
     }
 
-    public getAccessToken(): any {
-        return localStorage.getItem('access_token');
+    public getToken(): any {
+        return localStorage.getItem('frontend-token');
     }
 
-    private checkAccessToken(): any {
-        return !!localStorage.getItem('access_token');
+    private checkToken(): any {
+        return !!localStorage.getItem('frontend-token');
     }
 
     public unauthorizedAccess(error: any): void {
@@ -212,8 +197,16 @@ export class UserService {
     }
 
     public isLoggedIn(): boolean {
-        this.loggedIn = this.checkAccessToken();
-        return this.loggedIn;
+        return tokenNotExpired('frontend-token');
+    }
+
+    public getJWTValue(): any{
+        if(this.isLoggedIn()) {
+            let token = this.getToken();
+            return this.jwtHelper.decodeToken(token);
+        } else {
+            return null;
+        }
     }
 
     private handleError(error: Response | any) {

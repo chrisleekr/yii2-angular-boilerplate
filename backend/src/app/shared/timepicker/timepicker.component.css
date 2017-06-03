@@ -1,0 +1,733 @@
+/**
+ * @license angular-circular-timepicker  version: 0.1.0
+ * Copyright 2016 sidaudhi.com, Inc. http://www.sidaudhi.com
+ * License: MIT
+ *
+ * @author        Siddharth Audhinarayanan
+ * @since        2016-Jan-31
+ */
+
+.datetimepicker {
+    font-family: Arial;
+}
+
+.datetimepicker div,
+.datetimepicker span,
+.datetimepicker object,
+.datetimepicker iframe,
+.datetimepicker h1,
+.datetimepicker h2,
+.datetimepicker h3,
+.datetimepicker h4,
+.datetimepicker h5,
+.datetimepicker h6,
+.datetimepicker p,
+.datetimepicker pre,
+.datetimepicker a,
+.datetimepicker abbr,
+.datetimepicker acronym,
+.datetimepicker address,
+.datetimepicker code,
+.datetimepicker del,
+.datetimepicker dfn,
+.datetimepicker em,
+.datetimepicker img,
+.datetimepicker dl,
+.datetimepicker dt,
+.datetimepicker dd,
+.datetimepicker ol,
+.datetimepicker ul,
+.datetimepicker li,
+.datetimepicker fieldset,
+.datetimepicker form,
+.datetimepicker label,
+.datetimepicker legend,
+.datetimepicker caption,
+.datetimepicker tbody,
+.datetimepicker tfoot,
+.datetimepicker thead,
+.datetimepicker tr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+.datetimepicker table {
+    border-collapse: separate;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+
+.datetimepicker caption,
+.datetimepicker th,
+.datetimepicker td {
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.datetimepicker a img {
+    border: none;
+}
+
+.datetimepicker .left {
+    float: left;
+}
+
+.datetimepicker .right {
+    float: right;
+}
+
+.datetimepicker .datetimepicker-display {
+    padding: 6px 12px;
+    border: 1px solid rgba(0,0,0,0.15);
+    font-size: 15px;
+    min-height: 34px;
+}
+
+.datetimepicker .datetimepicker-toggle {
+    float: right;
+    padding: 7px;
+    border: 0;
+    cursor: pointer;
+}
+
+.datetimepicker .datetimepicker-modal {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    z-index: 990;
+}
+
+.datetimepicker .datetimepicker-close {
+    position: fixed;
+    right: 10px;
+    top: 5px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.datetimepicker .datetimepicker-preview {
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 32px;
+    background-color: #263238;
+    color: #fff;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-preview {
+        display: inline-block;
+        width: 260px;
+    }
+}
+
+.datetimepicker .datetimepicker-section {
+    width: 100%;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-section {
+        width: 260px;
+        display: inline-block;
+    }
+}
+
+.datetimepicker .datetimepicker-content {
+    min-height: 300px;
+    background-color: #f3f3f4;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-top: 0;
+    position: absolute;
+    width: 290px;
+    z-index: 998;
+}
+
+.datetimepicker .datetimepicker-content.datetimepicker-absolute {
+    position: fixed;
+    top: calc(30% - 100px);
+    left: calc(50% - 145px);
+    border: 0;
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content.datetimepicker-absolute {
+        width: 320px;
+        top: calc(50% - 150px);
+        height: 300px;
+        left: calc(50% - 160px);
+    }
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-tabs {
+    background-color: #263238;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content .datetimepicker-tabs {
+        float: left;
+        width: 60px;
+        height: 100%;
+    }
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-tabs .datetimepicker-tab {
+    width: 50%;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 12px;
+    text-align: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    background-color: #f3f3f4;
+    color: #263238;
+    float: left;
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-tabs .datetimepicker-tab.active {
+    background-color: #263238;
+    color: #f3f3f4;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content .datetimepicker-tabs .datetimepicker-tab {
+        width: 100%;
+        height: 50%;
+    }
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content .datetimepicker-tabs .datetimepicker-tab span {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+        -webkit-transform-origin: right center 0;
+        -moz-transform-origin: right center 0;
+        -o-transform-origin: right center 0;
+        -ms-transform-origin: right center 0;
+        transform-origin: right center 0;
+        display: block;
+        margin-top: 50px;
+        margin-right: 15px;
+        font-size: 18px;
+    }
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-month {
+    border-top: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    background-color: #fff;
+    width: 174px;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content .datetimepicker-month {
+        width: 160px;
+    }
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-month .datetimepicker-current-month {
+    text-align: center;
+    padding: 10px 10px;
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-year {
+    border-top: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    background-color: #fff;
+    width: 115px;
+    display: inline-block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-left: 1px solid rgba(0,0,0,0.2);
+    float:left;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-content .datetimepicker-year {
+        width: 100px;
+    }
+}
+
+.datetimepicker .datetimepicker-content .datetimepicker-year .datetimepicker-current-year {
+    text-align: center;
+    padding: 10px 10px;
+}
+
+.datetimepicker .datetimepicker-calendar {
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-calendar {
+        -webkit-transform: scale(0.9, 0.65);
+        -moz-transform: scale(0.9, 0.65);
+        -o-transform: scale(0.9, 0.65);
+        -ms-transform: scale(0.9, 0.65);
+        transform: scale(0.9, 0.65);
+        width: 270px;
+        margin-left: -5px;
+        -webkit-transform-origin: 50% 0;
+        -moz-transform-origin: 50% 0;
+        -o-transform-origin: 50% 0;
+        -ms-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+    }
+}
+
+.datetimepicker .datetimepicker-calendar .datetimepicker-day {
+    width: 38px;
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #263238;
+    font-size: 15px;
+}
+
+.datetimepicker .datetimepicker-calendar .datetimepicker-day.datetimepicker-leading-day,
+.datetimepicker .datetimepicker-calendar .datetimepicker-day.datetimepicker-trailing-day {
+    font-weight: normal;
+    color: rgba(0,0,0,0.25);
+}
+
+.datetimepicker .datetimepicker-calendar .datetimepicker-day.datetimepicker-active-day {
+    font-weight: normal;
+    color: rgba(0,0,0,0.75);
+    font-size: 14px;
+}
+
+.datetimepicker .datetimepicker-calendar .datetimepicker-day.datetimepicker-active-day.selected,
+.datetimepicker .datetimepicker-calendar .datetimepicker-day.datetimepicker-active-day:hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .datetimepicker-calendar .datetimepicker-day {
+        padding: 8px;
+    }
+}
+
+.datetimepicker .time-circle-outer {
+    width: 240px;
+    height: 240px;
+    border: 3px dashed rgba(0,0,0,0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    margin: 30px auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .datetimepicker .time-circle-outer {
+        -webkit-transform: scale(0.75);
+        -moz-transform: scale(0.75);
+        -o-transform: scale(0.75);
+        -ms-transform: scale(0.75);
+        transform: scale(0.75);
+        margin-top: -15px;
+    }
+}
+
+.datetimepicker .time-circle-outer .time-circle-center {
+    position: absolute;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+    width: 20px;
+    height: 20px;
+    background-color: #263238;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.datetimepicker .time-circle-outer .time-meridian {
+    position: absolute;
+    top: -85px;
+    width: 30px;
+    height: 30px;
+    padding: 7px 5px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+}
+
+.datetimepicker .time-circle-outer .time-meridian.time-left {
+    left: -15px;
+}
+
+.datetimepicker .time-circle-outer .time-meridian.time-right {
+    right: -15px;
+}
+
+.datetimepicker .time-circle-outer .time-meridian.selected {
+    background-color: #fff;
+    color: #263238;
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand {
+    width: 6px;
+    height: 82px;
+    position: absolute;
+    left: calc(50% - 3px);
+    top: calc(50% - 82px);
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    background-color: #263238;
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-1 {
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-2 {
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    transform: rotate(60deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-3 {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-4 {
+    -webkit-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -o-transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+    transform: rotate(120deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-5 {
+    -webkit-transform: rotate(150deg);
+    -moz-transform: rotate(150deg);
+    -o-transform: rotate(150deg);
+    -ms-transform: rotate(150deg);
+    transform: rotate(150deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-6 {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-7 {
+    -webkit-transform: rotate(210deg);
+    -moz-transform: rotate(210deg);
+    -o-transform: rotate(210deg);
+    -ms-transform: rotate(210deg);
+    transform: rotate(210deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-8 {
+    -webkit-transform: rotate(240deg);
+    -moz-transform: rotate(240deg);
+    -o-transform: rotate(240deg);
+    -ms-transform: rotate(240deg);
+    transform: rotate(240deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-9 {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-10 {
+    -webkit-transform: rotate(300deg);
+    -moz-transform: rotate(300deg);
+    -o-transform: rotate(300deg);
+    -ms-transform: rotate(300deg);
+    transform: rotate(300deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-11 {
+    -webkit-transform: rotate(330deg);
+    -moz-transform: rotate(330deg);
+    -o-transform: rotate(330deg);
+    -ms-transform: rotate(330deg);
+    transform: rotate(330deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand.deg-12 {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.datetimepicker .time-circle-outer .time-circle-hand-large {
+    height: 120px;
+    top: calc(50% - 120px);
+}
+
+.datetimepicker .time-circle-outer .time {
+    position: absolute;
+    margin-top: -15px;
+    margin-left: -15px;
+    background-color: #b4b4b4;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    padding: 5px;
+    height: 28px;
+    width: 28px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 13px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.datetimepicker .time-circle-outer .time:hover,
+.datetimepicker .time-circle-outer .time.selected {
+    background-color: #263238;
+    color: #fff;
+}
+
+.datetimepicker .time-circle-outer .time-1 {
+    left: calc(50% + 60px);
+    top: 16.076951545867374px;
+}
+
+.datetimepicker .time-circle-outer .time-2 {
+    left: calc(50% + 103.92304845413263px);
+    top: 60px;
+}
+
+.datetimepicker .time-circle-outer .time-3 {
+    left: calc(50% + 120px);
+    top: 120px;
+}
+
+.datetimepicker .time-circle-outer .time-4 {
+    left: calc(50% + 103.92304845413263px);
+    top: 180px;
+}
+
+.datetimepicker .time-circle-outer .time-5 {
+    left: calc(50% + 60px);
+    top: 223.92304845413264px;
+}
+
+.datetimepicker .time-circle-outer .time-6 {
+    left: 50%;
+    top: 240px;
+}
+
+.datetimepicker .time-circle-outer .time-11 {
+    left: calc(50% - 60px);
+    top: 16.076951545867374px;
+}
+
+.datetimepicker .time-circle-outer .time-10 {
+    left: calc(50% - 103.92304845413263px);
+    top: 60px;
+}
+
+.datetimepicker .time-circle-outer .time-9 {
+    left: calc(50% - 120px);
+    top: 120px;
+}
+
+.datetimepicker .time-circle-outer .time-8 {
+    left: calc(50% - 103.92304845413263px);
+    top: 180px;
+}
+
+.datetimepicker .time-circle-outer .time-7 {
+    left: calc(50% - 60px);
+    top: 223.92304845413264px;
+}
+
+.datetimepicker .time-circle-outer .time-12 {
+    left: 50%;
+    top: 0;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner {
+    width: 164px;
+    height: 164px;
+    border: 3px dashed rgba(0,0,0,0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    margin: 35px auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-1 {
+    left: calc(50% + 41px);
+    top: 10.985916889676034px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-2 {
+    left: calc(50% + 71.01408311032397px);
+    top: 41px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-3 {
+    left: calc(50% + 82px);
+    top: 82px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-4 {
+    left: calc(50% + 71.01408311032397px);
+    top: 123px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-5 {
+    left: calc(50% + 41px);
+    top: 153.01408311032395px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-6 {
+    left: 50%;
+    top: 164px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-11 {
+    left: calc(50% - 41px);
+    top: 10.985916889676034px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-10 {
+    left: calc(50% - 71.01408311032397px);
+    top: 41px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-9 {
+    left: calc(50% - 82px);
+    top: 82px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-8 {
+    left: calc(50% - 71.01408311032397px);
+    top: 123px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-7 {
+    left: calc(50% - 41px);
+    top: 153.01408311032395px;
+}
+
+.datetimepicker .time-circle-outer .time-circle-inner .time-12 {
+    left: 50%;
+    top: 0;
+}
+
+.datetimepicker .datetimepicker-action {
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 10px;
+}
+
+.datetimepicker .datetimepicker-action:hover {
+    background-color: rgba(255,255,255,0.75);
+    cursor: pointer;
+}
+
+
+.datetimepicker-button-wrapper{
+    width: 50%;
+}
+
+.datetimepicker-button-wrapper-left{
+    float: left;
+}
+
+.datetimepicker-button-wrapper-right{
+    float: right;
+}
+
+.datetimepicker-button-wrapper button {
+    width: 100%;
+    border: none;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin: 0;
+    color: #263238;
+}
+
+.datetimepicker-button-wrapper button.datetimepicker-button-clear{
+    background-color: rgba(230, 230, 230, 0.7);
+    color: #263238;
+}
+
+.datetimepicker-button-wrapper button.datetimepicker-button-clear:hover{
+    background-color: rgba(230, 230, 230, 1.0);
+}
+.datetimepicker-button-wrapper button.datetimepicker-button-confirm{
+    background-color: rgba(38, 50, 56, 0.7);
+    color: #FFFFFF;
+}
+
+.datetimepicker-button-wrapper button.datetimepicker-button-confirm:hover {
+    background-color: rgba(38, 50, 56, 1.0);
+}
+
+.datetimepicker-display .datetimepicker-display-placeholder{
+    color: #818181;
+}

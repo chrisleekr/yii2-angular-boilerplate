@@ -18,8 +18,7 @@ import {SmartResizeDirective} from './shared/smart-resize.directive';
 import {AppRoutingModule} from './app.routing';
 
 // Layouts
-import {FullLayoutComponent} from './layouts/full-layout.component';
-import {SimpleLayoutComponent} from './layouts/simple-layout.component';
+import {FrontendLayoutComponent} from './layouts/frontend-layout.component';
 import {P404Component} from './pages/404.component';
 
 // Shared
@@ -44,8 +43,7 @@ import {SettingDataService} from './model/setting-data.service';
     ],
     declarations: [
         AppComponent,
-        FullLayoutComponent,
-        SimpleLayoutComponent,
+        FrontendLayoutComponent,
         NAV_DROPDOWN_DIRECTIVES,
         BreadcrumbsComponent,
         SIDEBAR_TOGGLE_DIRECTIVES,

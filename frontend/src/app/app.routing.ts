@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 // Layouts
-import {FullLayoutComponent} from './layouts/full-layout.component';
-import {SimpleLayoutComponent}  from './layouts/simple-layout.component';
+import {FrontendLayoutComponent} from './layouts/frontend-layout.component';
 import {P404Component} from './pages/404.component';
 
 import {AuthGuard} from './model/auth.guard';
@@ -11,34 +10,24 @@ import {AuthGuard} from './model/auth.guard';
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        component:FrontendLayoutComponent,
         pathMatch: 'full',
+        loadChildren: 'app/index/index.module#IndexModule'
     },
     {
         path: '',
-        component: FullLayoutComponent,
-        data: {
-            title: 'Home'
-        },
+        component: FrontendLayoutComponent,
         canActivate: [AuthGuard],
         children: [
             {
-                path: 'dashboard',
-                loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
-            },
-            {
-                path: 'user',
-                loadChildren: 'app/user/user.module#UserModule'
-            },
-            {
-                path: 'setting',
-                loadChildren: 'app/setting/setting.module#SettingModule'
+                path: 'account',
+                loadChildren: 'app/account/account.module#AccountModule'
             }
         ]
     },
     {
         path: '',
-        component:SimpleLayoutComponent,
+        component:FrontendLayoutComponent,
         children: [
             {
                 path: 'login',
@@ -63,6 +52,10 @@ export const routes: Routes = [
             {
                 path: 'password-reset',
                 loadChildren: 'app/password-reset/password-reset.module#PasswordResetModule'
+            },
+            {
+                path: 'sample-page',
+                loadChildren: 'app/sample-page/sample-page.module#SamplePageModule'
             }
         ],
     },

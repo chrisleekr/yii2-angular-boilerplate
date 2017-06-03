@@ -1,0 +1,64 @@
+<header class="site-banner" role="banner">
+    <nav class="navbar navbar-fixed-top navbar-light bg-faded">
+        <button class="navbar-toggler hidden-lg-up" type="button" mobile-nav-toggle>&#9776;</button>
+        <a class="navbar-brand" href="#"><img src="/assets/img/logo.png" alt="CoreUI Logo"></a>
+        <ul class="nav navbar-nav hidden-md-down">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/']" [routerLinkActiveOptions]="{exact:true}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/sample-page/1']">Page1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/sample-page/2']">Page2</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" *ngIf="this._userService.isLoggedIn() == false">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/login']">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/signup']">Register</a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav pull-right" *ngIf="this._userService.isLoggedIn() == true">
+            <li class="nav-item">
+                <span>{{userData.username}} ({{userData.roleLabel}})</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/account']">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<!-- Main content -->
+<div class="container body-container">
+
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <breadcrumbs></breadcrumbs>
+    </ol>
+
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <span class="text-left">
+            <a href="http://coreui.io">CoreUI</a> &copy; 2016 creativeLabs.
+        </span>
+        <span class="float-xs-right">
+            Powered by <a href="http://coreui.io">CoreUI</a>. Customized by CK Design &amp; Development.
+        </span>
+    </div>
+
+</footer>

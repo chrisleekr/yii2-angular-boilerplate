@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {UserService} from '../model/user.service';
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -13,9 +13,11 @@ export class LoginComponent implements OnInit {
     private _formErrors:any;
     private _submitted:boolean = false;
     private _errorMessage:string = '';
+    private _returnURL:string = '/';
 
     constructor(private _userService:UserService,
                 private _router:Router,
+                private _activatedRoute:ActivatedRoute,
                 private _formBuilder:FormBuilder) {
 
         this._loginForm = _formBuilder.group({
@@ -75,6 +77,9 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this._resetFormErrors();
         this._userService.logout();
+
+        // get return url from route parameters or default to '/'
+        this._returnURL = this._activatedRoute.snapshot.queryParams['r'] || '/';
     }
 
     public onSubmit(elementValues: any) {
@@ -83,7 +88,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 result => {
                     if(result.success) {
-                        this._router.navigate(['/dashboard']);
+                        this._router.navigate([this._returnURL]);
                     } else {
                         this._errorMessage = 'Username or password is incorrect.';
                         this._submitted = false;
