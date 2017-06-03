@@ -45,6 +45,7 @@ $ git clone https://github.com/chrisleekr/yii2-angular2-boilerplate.git
 $ cd yii2-angular2-boilerplate 
 $ cd backend
 $ composer install
+$ ./yii migrate --migrationPath=@yii/rbac/migrations
 $ ./yii migrate/up
 ```
 
@@ -71,27 +72,41 @@ Once setup backend, then run `npm` to start frontend
 ```
 $ cd frontend
 $ npm install
-$ npm start --host 0.0.0.0
+$ ng serve --host 0.0.0.0 --port 4200
 ``` 
+
+If you get an error message like below, then you need to upgrade Angular CLI to a new version.
+
+```
+You have to be inside an angular-cli project in order to use the serve command.
+```
+
+```
+sudo npm uninstall -g @angular/cli
+sudo npm cache clean
+sudo npm install -g @angular/cli@latest
+```
 
 And wait for it is up and running. Once npm is finished compiling, then open the browser.
 
-* Frontend: [http://localhost:4200](http://localhost:4200)
-* Backend: [http://api.boilerplate.local/debug](http://api.boilerplate.local/debug)
+* REST API: [http://api.boilerplate.local/debug](http://api.boilerplate.local/debug)
+* Backend: [http://localhost:4200](http://localhost:4200)
+* Frontend: [http://localhost:4201](http://localhost:4201)
+
 
 Note that if you change backend address, then you will need to update frontend global configuration for pointing new backend address.
 
-1. Open `~/yii2-angular2-boilerplate/frontend/src/app/model/global.service.ts`
-2. Update `apiHost` to new backend address
+1. Open `~/yii2-angular2-boilerplate/backend/src/app/model/global.service.ts` and `~/yii2-angular2-boilerplate/frontend/src/app/model/global.service.ts`
+2. Update `apiHost` to new backend/frontend address
     ```
     this.apiHost = 'http://new.address.local/v1';
     ```
    Make sure you append `/v1` after the backend address.
 
 ## TODO
-- [ ] Enhance user management - send confirmation email 
-- [ ] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
-- [ ] Develop new customer management section
+- [X] Enhance user management - send confirmation email 
+- [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
+- [X] Develop new customer management section
 - [ ] Dockerize application
    
 ## Screenshots

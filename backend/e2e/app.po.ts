@@ -1,6 +1,6 @@
-import { browser, element, by } from 'protractor';
+import { browser, element, by } from 'protractor/globals';
 
-export class FrontendPage {
+export class CoreUIPage {
   navigateTo() {
     return browser.get('/');
   }
