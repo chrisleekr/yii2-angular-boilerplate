@@ -6,12 +6,15 @@ import {AccountComponent} from './account.component';
 import {AccountEditComponent} from './account-edit.component';
 import {AccountRoutingModule} from './account-routing.module';
 
+import {MomentModule} from 'angular2-moment';
+
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        AccountRoutingModule
+        AccountRoutingModule,
+        MomentModule,
     ],
     declarations: [
         AccountComponent,

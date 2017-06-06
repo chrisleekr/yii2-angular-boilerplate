@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label class="col-sm-12">Last Login</label>
                             <div class="col-sm-3">
-                                <span  class="help-text">{{_user.last_login_at | date: 'y-MM-dd HH:mm'}} ({{_user.last_login_ip}}) </span>
+                                <span  class="help-text">{{_user.last_login_at | amDateFormat: 'YYYY-MM-DD HH:mm'}} ({{_user.last_login_ip}}) </span>
                             </div>
                         </div>
                     </div>
