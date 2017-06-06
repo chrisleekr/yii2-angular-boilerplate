@@ -1,31 +1,63 @@
 # Yii2 REST API + Angular 2 Boilerplate
 
-This is a boilerplate project for future use. The project consists of backend developed by Yii2 REST API and frontend developed by Angular2 with Core UI.
+This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular2 with Core UI.
 
 The project involves:
-* Backend
-    - Yii2 REST API
-* Frontend
-    - Angular2 + CoreUI template
+* API
+    - Yii2 REST API, JWT (JSON Web Token)
+* Backend: Staff/Administrator dashboard to manage staffs, users and settings
+    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
+* Frontend: User website to support user registration, login and account management 
+    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert
 
 ## Features
-* User Login/Logout     
-    - Backend generates access token upon successful login.
-    - Frontend will store access token in local storage and use for all requests.
-    - Backend will validate submitted access token prior to process any request. 
-* User Registration
-    - Backend will submit verification email to the email. Note that current backend system will use swift mailer component with file transport. You can check the email content in debug module.  
-* User Email Confirmation 
-    - Frontend will confirm the auth key and update account status if auth key is valid.
-* User Reset Password
-    - Backend will send password reset email to the requested email.
-    - Frontend will display the password reset page if password reset token is valid.
-* Dashboard
-    - Currently, dashbaord is empty page.
-* User Management
-    - User can create/update/delete user information.
-* Setting Management
-    - User can create/update/delete setting information.
+- API
+    * User Controller
+        - GET/POST/PUT/DELETE /v1/user
+        - POST /v1/user/login
+        - POST /v1/user/signup
+        - POST /v1/user/confirm
+        - POST /v1/user/password-reset-request
+        - POST /v1/user/password-reset-token-verification
+        - POST /v1/user/password-reset
+        - GET/POST /v1/me
+    * Staff Controller
+        - GET/POST/PUT/DELETE /v1/staff
+        - POST /v1/staff/login
+        - GET /v1/staff/get-permissions
+    * Setting Controller
+        - GET/POST/PUT/DELETE /v1/setting
+        - GET /v1/setting/public
+- Frontend
+    * User Login/Logout     
+        - User can login with username and password.
+        - API generates JWT(JSON Web Token) upon successful login.
+        - Frontend will store JWT in local storage and use for all requests.
+        - API will validate submitted access token prior to process any request. 
+    * User Registration
+        - User can register new account.
+        - API will submit verification email to the email. Note that current API system will use swift mailer component with file transport. You can check the email content in debug module.  
+    * User Email Confirmation 
+        - Frontend will confirm the auth key and update account status if auth key is valid.
+    * User Reset Password
+        - User can reset their password.
+        - API will send password reset email to the requested email.
+        - Frontend will display the password reset page if password reset token is valid.
+    * User Account 
+        - User can change email address. If change email address, the API will send confirmation email to verify email address.
+        - User can change password.
+- Backend
+    * Staff Login/Logout
+        - API generates JWT(JSON Web Token) upon successful login.
+    * Dashboard
+        - Currently, dashboard is empty page.
+    * Staff Management
+        - Admin or staff who has a permission 'manageStaffs' can create/update/delete staff information.
+        - Staff role can configure permissions for managing staff, user and setting.
+    * User Management
+        - Admin or staff who has a permission 'manageUsers' can create/update/delete user information.
+    * Setting Management
+        - Admin or staff who has a permission 'manageSettings' can create/update/delete setting information.
 
 ## Usage
 Currently, the project is not ready for production use. Following steps are suitable for configuring development environment.
@@ -43,21 +75,21 @@ Open the console and execute following commands.
 ```
 $ git clone https://github.com/chrisleekr/yii2-angular2-boilerplate.git
 $ cd yii2-angular2-boilerplate 
-$ cd backend
+$ cd api
 $ composer install
 $ ./yii migrate --migrationPath=@yii/rbac/migrations
 $ ./yii migrate/up
 ```
 
-Note that if you have different database connection information, you will need to update backend `db.php` before you running `./yii migrate/up`
+Note that if you have different database connection information, you will need to update API `db.php` before you running `./yii migrate/up`
 
-1. Open `~/yii2-angular2-boilerplate/backend/config/db.php`
+1. Open `~/yii2-angular2-boilerplate/api/config/db.php`
 2. Update db config as new database connection credentials
 
-The backend is running under LAMP environment. Setup backend as following configuration.
+The API is running under LAMP environment. Setup API as following configuration.
  
 ```
-document root: ~/yii2-angular2-boilerplate/backend/web
+document root: ~/yii2-angular2-boilerplate/api/web
 host: api.boilerplate.local
 ``` 
 
@@ -67,12 +99,20 @@ Note that you will need to update `/etc/hosts` if required.
 127.0.0.1       api.boilerplate.local
 ```
 
-Once setup backend, then run `npm` to start frontend
+Once setup api, then run `npm` to start backend
+
+```
+$ cd backend
+$ npm install
+$ npm start
+``` 
+
+And open new console and start frontend
 
 ```
 $ cd frontend
 $ npm install
-$ ng serve --host 0.0.0.0 --port 4200
+$ npm start
 ``` 
 
 If you get an error message like below, then you need to upgrade Angular CLI to a new version.
@@ -94,34 +134,42 @@ And wait for it is up and running. Once npm is finished compiling, then open the
 * Frontend: [http://localhost:4201](http://localhost:4201)
 
 
-Note that if you change backend address, then you will need to update frontend global configuration for pointing new backend address.
+Note that if you change API address, then you will need to update frontend global configuration for pointing new API address.
 
-1. Open `~/yii2-angular2-boilerplate/backend/src/app/model/global.service.ts` and `~/yii2-angular2-boilerplate/frontend/src/app/model/global.service.ts`
+1. Open following files
+    - `~/yii2-angular2-boilerplate/backend/src/app/model/global.service.ts` and
+    - `~/yii2-angular2-boilerplate/frontend/src/app/model/global.service.ts`
 2. Update `apiHost` to new backend/frontend address
     ```
     this.apiHost = 'http://new.address.local/v1';
     ```
-   Make sure you append `/v1` after the backend address.
+   Make sure you append `/v1` after the API address.
 
 ## TODO
 - [X] Enhance user management - send confirmation email 
 - [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
 - [X] Develop new customer management section
-- [ ] Dockerize application
+- [X] Apply JWT(JSON Web Token) for user authentication
    
 ## Screenshots
-![Login](/screenshots/01.png?raw=true)
-![Registration](/screenshots/02.png?raw=true)
-![Register Completion](/screenshots/03.png?raw=true)
-![Email Content for confirming account](/screenshots/04.png?raw=true)
-![Account Confirmation](/screenshots/05.png?raw=true)
-![Password Reset Request](/screenshots/06.png?raw=true)
-![Password Reset Request Completion](/screenshots/07.png?raw=true)
-![Email Content for resetting password](/screenshots/08.png?raw=true)
-![Reset Password](/screenshots/09.png?raw=true)
-![Reset Password Confirmation](/screenshots/10.png?raw=true)
-![Dashboard](/screenshots/11.png?raw=true)
-![User Management](/screenshots/12.png?raw=true)
-![Update User Information](/screenshots/13.png?raw=true)
-![Setting Management](/screenshots/14.png?raw=true)
-![Update Setting Information](/screenshots/15.png?raw=true)
+![Frontend - Homepage](/screenshots/01.png?raw=true)
+![Frontend - Sample Page](/screenshots/02.png?raw=true)
+![Frontend - Registration](/screenshots/03.png?raw=true)
+![API - Email content for registration](/screenshots/06.png?raw=true)
+![Frontend - Registration Completion](/screenshots/07.png?raw=true)
+![Frontend - Login](/screenshots/04.png?raw=true)
+![Frontend - Password Reset Request](/screenshots/05.png?raw=true)
+![API - Email content for resetting password](/screenshots/08.png?raw=true)
+![Frontend - Reset Password Form](/screenshots/09.png?raw=true)
+![Frontend - Password Updated](/screenshots/10.png?raw=true)
+![Frontend - Account Page](/screenshots/11.png?raw=true)
+![Backend - Login](/screenshots/12.png?raw=true)
+![Backend - Dashboard](/screenshots/13.png?raw=true)
+![Backend - Staff Management](/screenshots/14.png?raw=true)
+![Backend - Staff Management](/screenshots/15.png?raw=true)
+![Backend - Staff Management](/screenshots/16.png?raw=true)
+![Backend - User Management](/screenshots/17.png?raw=true)
+![Backend - User Management](/screenshots/18.png?raw=true)
+![Backend - User Management](/screenshots/19.png?raw=true)
+![Backend - Setting](/screenshots/20.png?raw=true)
+![Backend - Setting](/screenshots/21.png?raw=true)
