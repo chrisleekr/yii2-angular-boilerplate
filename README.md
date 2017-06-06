@@ -131,7 +131,10 @@ And wait for it is up and running. Once npm is finished compiling, then open the
 
 * REST API: [http://api.boilerplate.local/debug](http://api.boilerplate.local/debug)
 * Backend: [http://localhost:4200](http://localhost:4200)
+    - Administrator username: `admin`, password: `123456`
+    - Staff username: `staff`, password: `123456`
 * Frontend: [http://localhost:4201](http://localhost:4201)
+    - Username: `user`, password `123456`
 
 
 Note that if you change API address, then you will need to update frontend global configuration for pointing new API address.
