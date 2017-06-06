@@ -4,7 +4,7 @@ This is a boilerplate project for future use. The project consists of REST API d
 
 The project involves:
 * API
-    - Yii2 REST API, JWT (JSON Web Token)
+    - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token)
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
     - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
@@ -122,9 +122,9 @@ You have to be inside an angular-cli project in order to use the serve command.
 ```
 
 ```
-sudo npm uninstall -g @angular/cli
-sudo npm cache clean
-sudo npm install -g @angular/cli@latest
+$ sudo npm uninstall -g @angular/cli
+$ sudo npm cache clean
+$ sudo npm install -g @angular/cli@latest
 ```
 
 And wait for it is up and running. Once npm is finished compiling, then open the browser.
@@ -150,6 +150,7 @@ Note that if you change API address, then you will need to update frontend globa
 - [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
 - [X] Develop new customer management section
 - [X] Apply JWT(JSON Web Token) for user authentication
+- [ ] Develop test code 
    
 ## Screenshots
 ![Frontend - Homepage](/screenshots/01.png?raw=true)
