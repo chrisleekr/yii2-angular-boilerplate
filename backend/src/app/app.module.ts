@@ -4,7 +4,7 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {DropdownModule} from 'ng2-bootstrap/dropdown';
+import {DropdownModule} from 'ng2-bootstrap';
 import {TabsModule} from 'ng2-bootstrap/tabs';
 import {NAV_DROPDOWN_DIRECTIVES} from './shared/nav-dropdown.directive';
 

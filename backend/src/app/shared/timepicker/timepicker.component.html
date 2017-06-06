@@ -1,5 +1,5 @@
 <div class="datetimepicker">
-    <div class="datetimepicker-modal" (click)="setState(false)" *ngIf="state && config.modal" style="background-color:{{config.backgroundColor}}"></div>
+    <div class="datetimepicker-modal" (click)="setState(false)" *ngIf="state && config.modal"></div>
     <div (click)="setState(false)" class="datetimepicker-close" [style.color]="config.color" *ngIf="state && config.modal">
         &#10006;</div>
     <input type="hidden" ([ngModel])="dateTime"/>

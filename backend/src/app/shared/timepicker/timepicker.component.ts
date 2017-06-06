@@ -6,7 +6,7 @@
     ----------------------------
     form.component.html
 
-    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time'" [dateTime]="_staff.confirmed_at | date: 'y-MM-dd HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
+     <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the user'" [dateTime]="_user.confirmed_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
     ----------------------------
     form.component.ts
 
@@ -115,7 +115,7 @@ export class TimepickerComponent implements OnInit, OnDestroy{
     }
 
     public toggleState():void{
-        if(this.state == false && this._dateTime == null) {
+        if(this.state == false && (this._dateTime == null || this._dateTime == "")) {
             this.parseDateTime(moment().format('YYYY-MM-DD HH:mm'));
         }
         this.state = !this.state;

@@ -78,7 +78,7 @@
                             <div class="form-group row" [ngClass]="{'has-danger': !_isValid('confirmed_at')}">
                                 <label class="col-sm-12" for="confirmed_at">Confirmed At (Y-M-D H:M)</label>
                                 <div class="col-sm-6">
-                                    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the user'" [dateTime]="_user.confirmed_at | date: 'y-MM-dd HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
+                                    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the user'" [dateTime]="_user.confirmed_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
                                 </div><div class="clearfix"></div>
                                 <div class="col-sm-12" *ngIf="!_formErrors.confirmed_at.valid">
                                     <span class="help-block help-block-error">{{_formErrors.confirmed_at.message}}</span>
@@ -93,7 +93,7 @@
                             <div class="form-group row" [ngClass]="{'has-danger': !_isValid('blocked_at')}">
                                 <label class="col-sm-12" for="blocked_at">Blocked At (Y-M-D H:M)</label>
                                 <div class="col-sm-6">
-                                    <timepicker id="blocked_at" [placeholderText]="'Click to set the date and time for blocking the user'" [dateTime]="_user.blocked_at | date: 'y-MM-dd HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('blocked_at', $event)"></timepicker>
+                                    <timepicker id="blocked_at" [placeholderText]="'Click to set the date and time for blocking the user'" [dateTime]="_user.blocked_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('blocked_at', $event)"></timepicker>
                                 </div><div class="clearfix"></div>
                                 <div class="col-sm-12" *ngIf="!_formErrors.blocked_at.valid">
                                     <span class="help-block help-block-error">{{_formErrors.blocked_at.message}}</span>

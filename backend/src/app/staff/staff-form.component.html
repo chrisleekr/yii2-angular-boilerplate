@@ -79,7 +79,7 @@
                                 <label class="col-sm-12" for="confirmed_at">Confirmed At (Y-M-D H:M)</label>
                                 <div class="col-xs-12 col-sm-5">
 
-                                    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the staff'" [dateTime]="_staff.confirmed_at | date: 'y-MM-dd HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
+                                    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the staff'" [dateTime]="_staff.confirmed_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
 
 
                                 </div><div class="clearfix"></div>
@@ -97,7 +97,7 @@
                                 <label class="col-sm-12" for="blocked_at">Blocked At (Y-M-D H:M)</label>
                                 <div class="col-xs-12 col-sm-5">
 
-                                    <timepicker id="blocked_at" [placeholderText]="'Click to set the date and time for blocking the staff'" [dateTime]="_staff.blocked_at | date: 'y-MM-dd HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('blocked_at', $event)"></timepicker>
+                                    <timepicker id="blocked_at" [placeholderText]="'Click to set the date and time for blocking the staff'" [dateTime]="_staff.blocked_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('blocked_at', $event)"></timepicker>
 
                                 </div><div class="clearfix"></div>
 
