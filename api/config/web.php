@@ -103,6 +103,17 @@ $config = [
                         'OPTIONS public'    =>  'options',
                     ]
                 ],
+                [
+	                'class'         => 'yii\rest\UrlRule',
+	                'controller'    => 'v1/page',
+	                'pluralize'     => false,
+	                'tokens'        => [
+	                ],
+	                'extraPatterns' => [
+		                'GET sse'       =>  'sse',
+		                'OPTIONS sse'    =>  'sse',
+	                ]
+                ],
             ]
         ],
         'response' => [
@@ -138,6 +149,9 @@ $config = [
                 return $response;
             },
         ],
+        'sse' => [
+	        'class' => \odannyc\Yii2SSE\LibSSE::class
+        ]
 
     ],
     'modules' => [

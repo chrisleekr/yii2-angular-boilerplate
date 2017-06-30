@@ -39,7 +39,8 @@
     "sweetalert2": "^6.3.0",
     "ts-helpers": "1.1.2",
     "underscore": "^1.8.3",
-    "zone.js": "0.8.10"
+    "zone.js": "0.8.10",
+    "event-source": "git://github.com/AlexGalays/EventSource.git#923b9a0998fcfd7753040e09aa83764b3cc0230d"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0-rc.1",

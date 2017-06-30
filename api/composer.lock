@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "92eb9fc458f7fad395924fc489477f0b",
-    "content-hash": "1798a27d96ad34181745bd5ae194e899",
+    "hash": "39e372d1ce496b3b5648d0b6430bf11f",
+    "content-hash": "71bfdc4be14517826a4047c37269b5e9",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -360,6 +360,40 @@
             "time": "2016-07-18 04:51:16"
         },
         {
+            "name": "odannyc/yii2-sse",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/odannyc/yii2-sse.git",
+                "reference": "a0352441c82c42ae87cbad73f8c7028d7d7bfb3a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/odannyc/yii2-sse/zipball/a0352441c82c42ae87cbad73f8c7028d7d7bfb3a",
+                "reference": "a0352441c82c42ae87cbad73f8c7028d7d7bfb3a",
+                "shasum": ""
+            },
+            "require": {
+                "tonyhhyip/sse": "^2.1",
+                "yiisoft/yii2": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "odannyc\\Yii2SSE\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Danny Carrillo",
+                    "email": "odannycx@gmail.com"
+                }
+            ],
+            "description": "Yii2 SSE is a wrapper for the library libSSE-php. Its used for managing Server Sent Events in Yii2.",
+            "time": "2016-07-28 18:10:36"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.7",
             "source": {
@@ -412,6 +446,174 @@
                 "mailer"
             ],
             "time": "2017-04-20 17:32:18"
+        },
+        {
+            "name": "symfony/http-foundation",
+            "version": "v3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-foundation.git",
+                "reference": "80eb5a1f968448b77da9e8b2c0827f6e8d767846"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/80eb5a1f968448b77da9e8b2c0827f6e8d767846",
+                "reference": "80eb5a1f968448b77da9e8b2c0827f6e8d767846",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.1"
+            },
+            "require-dev": {
+                "symfony/expression-language": "~2.8|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpFoundation\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony HttpFoundation Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-06-05 13:06:51"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-11-14 01:06:16"
+        },
+        {
+            "name": "tonyhhyip/sse",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tonyhhyip/libSSE-php.git",
+                "reference": "13db192d3fa764c70bf0a7ca4e3d08b080d635b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tonyhhyip/libSSE-php/zipball/13db192d3fa764c70bf0a7ca4e3d08b080d635b2",
+                "reference": "13db192d3fa764c70bf0a7ca4e3d08b080d635b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "symfony/http-foundation": "~2.7 | ~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.2 | ~5.0"
+            },
+            "suggest": {
+                "predis/predis": "For using RedisMechnism",
+                "symfony/polyfill-apcu": "For APCMecnism on PHP < 7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sse\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Licson Lee",
+                    "email": "licson0729@gmail.com",
+                    "homepage": "https://licson.net/",
+                    "role": "Owner"
+                },
+                {
+                    "name": "Tony Yip",
+                    "email": "tony@opensource.hk",
+                    "homepage": "https://github.com/tonyhhyip",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An easy-to-use, object-orienlated library for Server-Sent Events",
+            "homepage": "https://github.com/licson0729/libSSE-php",
+            "keywords": [
+                "sse"
+            ],
+            "time": "2017-02-21 12:32:50"
         },
         {
             "name": "yiisoft/yii2",
@@ -2813,65 +3015,6 @@
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
             "time": "2017-04-12 14:13:17"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "reference": "e79d363049d1c2128f133a2667e4f4190904f7f4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/yaml",

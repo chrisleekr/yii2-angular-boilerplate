@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="starter-template">
+        <h1>Server Send Event Example</h1>
+        <br />
+        <p class="lead">This page demonstrates Server Send Event working with Yii2 and Angular2.<br />Special thanks to <a href="https://github.com/ihormartyniuk" target="_blank">@ihormartyniuk</a></p>
+
+<br /><br />
+        <table class="table">
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Symbol</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Change</th>
+            </tr>
+            <tr *ngIf="!this.stocks">
+                <td colspan="4" class="text-center">Loading... Please wait...</td>
+            </tr>
+            <tr *ngFor="let stock of stocks; let i = index">
+                <td class="text-center">{{i + 1}}</td>
+                <td class="text-center">{{stock.symbol}}</td>
+                <td class="text-right">{{stock.price | currency:'AUD':true:'1.2-2'}}</td>
+                <td class="text-right">{{stock.change | currency:'AUD':true:'1.2-2'}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
