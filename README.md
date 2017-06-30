@@ -4,11 +4,11 @@ This is a boilerplate project for future use. The project consists of REST API d
 
 The project involves:
 * API
-    - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token)
+    - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), SSE (Server Send Event)
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
     - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
-    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert
+    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, SSE (Server Send Event)
 
 ## Features
 - API
@@ -21,6 +21,7 @@ The project involves:
         - POST /v1/user/password-reset-token-verification
         - POST /v1/user/password-reset
         - GET/POST /v1/me
+        - GET /v1/page/sse
     * Staff Controller
         - GET/POST/PUT/DELETE /v1/staff
         - POST /v1/staff/login
@@ -177,3 +178,6 @@ Note that if you change API address, then you will need to update frontend globa
 ![Backend - User Management](/screenshots/19.png?raw=true)
 ![Backend - Setting](/screenshots/20.png?raw=true)
 ![Backend - Setting](/screenshots/21.png?raw=true)
+
+## Thanks to
+@ihormartyniuk
