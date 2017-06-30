@@ -159,6 +159,7 @@ Note that if you change API address, then you will need to update frontend globa
 ## Screenshots
 ![Frontend - Homepage](/screenshots/01.png?raw=true)
 ![Frontend - Sample Page](/screenshots/02.png?raw=true)
+![Frontend - Server Send Event Sample Page](/screenshots/22.png?raw=true)
 ![Frontend - Registration](/screenshots/03.png?raw=true)
 ![API - Email content for registration](/screenshots/06.png?raw=true)
 ![Frontend - Registration Completion](/screenshots/07.png?raw=true)
