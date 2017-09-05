@@ -9,5 +9,18 @@
 class_name: FunctionalTester
 modules:
     enabled:
-      - Filesystem
-      - Yii2
+      - REST
+#      - Filesystem
+#      - Yii2
+#      - Db
+    config:
+      REST:
+        depends: PhpBrowser
+        url: 'http://api.boilerplate.local/index-test.php'
+#     Db:
+#       dsn: 'mysql:host=localhost;dbname=test_db'
+#       user: 'test_user'
+#       password: 'test_password'
+#       dump: 'codeception/_data/dump.sql'
+#       populate: true
+#       cleanup: false

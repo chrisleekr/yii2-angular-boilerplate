@@ -192,7 +192,7 @@
                 $id = implode(',', array_values($user->getPrimaryKey(true)));
 
                 $responseData = [
-                    'id'    =>  $id,
+                    'id'    =>  (int)$id,
                     'access_token' => $user->access_token,
                 ];
 
@@ -235,7 +235,7 @@
 
                 $user = $model->getUser();
                 $responseData = [
-                    'id'    =>  $user->id,
+                    'id'    =>  (int)$user->id,
                     'access_token' => $user->access_token,
                 ];
 

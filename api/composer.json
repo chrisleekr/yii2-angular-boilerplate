@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "firebase/php-jwt": "^4.0",
-        "odannyc/yii2-sse": "^0.1.0"
+        "odannyc/yii2-sse": "^0.1.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -28,7 +29,8 @@
 
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1",
-        "codeception/specify": "~0.4.3"
+        "codeception/specify": "~0.4.3",
+        "flow/jsonpath": "^0.3.4"
     },
     "config": {
         "process-timeout": 1800
