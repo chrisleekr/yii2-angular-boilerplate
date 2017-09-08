@@ -1,5 +1,7 @@
 # Yii2 REST API + Angular 2 Boilerplate
 
+[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate)
+
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular2 with Core UI.
 
 The project involves:
