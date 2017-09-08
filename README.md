@@ -157,6 +157,7 @@ Note that if you change API address, then you will need to update frontend globa
 - [X] Develop new customer management section
 - [X] Apply JWT(JSON Web Token) for user authentication
 - [ ] Develop test code 
+- [ ] Dockerize application
    
 ## Screenshots
 ![Frontend - Homepage](/screenshots/01.png?raw=true)
