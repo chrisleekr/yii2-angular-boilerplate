@@ -33,7 +33,17 @@
         "flow/jsonpath": "^0.3.4"
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            },
+            "vcs-driver-options": {
+                "github-no-api": true
+            },
+            "pattern-skip-version": "(-build|-patch)"
+        }
     },
     "scripts": {
         "post-create-project-cmd": [
@@ -52,10 +62,6 @@
             "generateCookieValidationKey": [
                 "config/web.php"
             ]
-        },
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
         }
     }
 }
