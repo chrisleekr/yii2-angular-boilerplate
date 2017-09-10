@@ -1,4 +1,4 @@
-# Yii2 REST API + Angular 2 Boilerplate
+# Yii2 REST API + Angular 4 Boilerplate
 
 [![Build Status](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate)
 
@@ -8,9 +8,9 @@ The project involves:
 * API
     - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), SSE (Server Send Event)
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
-    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
+    - Angular 4, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
-    - Angular2, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, SSE (Server Send Event)
+    - Angular 4, CoreUI Bootstrap Template, JWT (JSON Web Token), Moment.js, Sweet Alert, SSE (Server Send Event)
 
 ## Features
 - API
@@ -156,32 +156,36 @@ Note that if you change API address, then you will need to update frontend globa
 - [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
 - [X] Develop new customer management section
 - [X] Apply JWT(JSON Web Token) for user authentication
+- [X] Upgrade Angular 2 to Angular 4
 - [ ] Develop test code 
 - [ ] Dockerize application
    
 ## Screenshots
 ![Frontend - Homepage](/screenshots/01.png?raw=true)
 ![Frontend - Sample Page](/screenshots/02.png?raw=true)
-![Frontend - Server Send Event Sample Page](/screenshots/22.png?raw=true)
-![Frontend - Registration](/screenshots/03.png?raw=true)
+![Frontend - Server Send Event Sample Page](/screenshots/03.png?raw=true)
+![Frontend - Registration](/screenshots/04.png?raw=true)
+![Frontend - Registration Completion](/screenshots/05.png?raw=true)
 ![API - Email content for registration](/screenshots/06.png?raw=true)
-![Frontend - Registration Completion](/screenshots/07.png?raw=true)
-![Frontend - Login](/screenshots/04.png?raw=true)
-![Frontend - Password Reset Request](/screenshots/05.png?raw=true)
-![API - Email content for resetting password](/screenshots/08.png?raw=true)
-![Frontend - Reset Password Form](/screenshots/09.png?raw=true)
-![Frontend - Password Updated](/screenshots/10.png?raw=true)
-![Frontend - Account Page](/screenshots/11.png?raw=true)
-![Backend - Login](/screenshots/12.png?raw=true)
-![Backend - Dashboard](/screenshots/13.png?raw=true)
-![Backend - Staff Management](/screenshots/14.png?raw=true)
-![Backend - Staff Management](/screenshots/15.png?raw=true)
-![Backend - Staff Management](/screenshots/16.png?raw=true)
-![Backend - User Management](/screenshots/17.png?raw=true)
-![Backend - User Management](/screenshots/18.png?raw=true)
-![Backend - User Management](/screenshots/19.png?raw=true)
-![Backend - Setting](/screenshots/20.png?raw=true)
-![Backend - Setting](/screenshots/21.png?raw=true)
+![Frontend - Account Confirmation](/screenshots/07.png?raw=true)
+![Frontend - Login](/screenshots/08.png?raw=true)
+![Frontend - Password Reset Request](/screenshots/09.png?raw=true)
+![Frontend - Password Reset Request Completion](/screenshots/10.png?raw=true)
+![API - Email content for resetting password](/screenshots/11.png?raw=true)
+![Frontend - Reset Password Form](/screenshots/12.png?raw=true)
+![Frontend - Password Updated](/screenshots/13.png?raw=true)
+![Frontend - Account Page](/screenshots/14.png?raw=true)
+![Frontend - Account Edit Page](/screenshots/15.png?raw=true)
+![Backend - Login](/screenshots/16.png?raw=true)
+![Backend - Dashboard](/screenshots/17.png?raw=true)
+![Backend - Staff Management](/screenshots/18.png?raw=true)
+![Backend - Staff Management](/screenshots/19.png?raw=true)
+![Backend - Staff Management](/screenshots/20.png?raw=true)
+![Backend - User Management](/screenshots/21.png?raw=true)
+![Backend - User Management](/screenshots/22.png?raw=true)
+![Backend - User Management](/screenshots/23.png?raw=true)
+![Backend - Setting](/screenshots/24.png?raw=true)
+![Backend - Setting](/screenshots/25.png?raw=true)
 
 ## Thanks to
 @ihormartyniuk
