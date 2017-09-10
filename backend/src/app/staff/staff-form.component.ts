@@ -11,7 +11,6 @@ import {StaffService} from "../model/staff.service";
 
 import * as moment from "moment";
 import * as _ from "underscore";
-import formatErrorMsg = jasmine.formatErrorMsg;
 
 @Component({
     templateUrl: './staff-form.component.html',

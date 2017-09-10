@@ -12,40 +12,36 @@
   border-radius: 1rem !important;
 }
 
-//time & datepicker
-.glyphicon {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.glyphicon-chevron-up::before {
-  content: "\f077";
-}
-.glyphicon-chevron-down::before {
-  content: "\f078";
-}
-.glyphicon-chevron-left::before {
-  content: "\f053";
-}
-.glyphicon-chevron-right::before {
-  content: "\f054";
+// temp fix for Vue-Strap
+
+// Open state for the dropdown
+.open, .show {
+  // Show the menu
+  > .dropdown-menu {
+    display: block;
+  }
+
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
 }
 
-.well.well-sm.bg-faded {
-  .btn-sm {
-    @extend .btn;
-    background: #fff;
-    &:hover {
-      @extend .btn-primary;
-    }
-    &.active {
-      @extend .btn-primary;
-    }
+//
+.modal-open .modal {
+  display: block;
+}
+
+// navbar dropdown fix
+.navbar .dropdown-toggle {
+  @extend .nav-link;
+
+  .img-avatar {
+    height: $navbar-height - 20px;
+    margin: 0 10px;
   }
-  .text-center {
-    @extend .text-xs-center;
-  }
+}
+
+.card-block {
+  @extend .card-body;
 }

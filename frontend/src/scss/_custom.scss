@@ -9,6 +9,10 @@ p {
   margin: 0;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 .body-container {
   //padding-bottom: 60px;
 }
@@ -56,6 +60,9 @@ p {
   border-radius: 50%;
   width: 27px;
   height: 27px;
+}
+.spinner.spinner-login{
+  margin-top: 4px;
 }
 .spinner {
   margin: 0;
@@ -141,18 +148,7 @@ p {
   text-align: center;
 }
 
-.navbar-nav .nav-link{
-  height: 40px;
-  line-height: 40px;
-  padding:0;
-}
 
-.nav-item span {
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  padding: 0;
-}
 
 th.text-center, td.text-center{
   text-align: center;
@@ -160,4 +156,8 @@ th.text-center, td.text-center{
 
 th.text-right, td.text-right{
   text-align: right;
+}
+
+.app-header.navbar .navbar-brand {
+  background-size: 120px auto;
 }

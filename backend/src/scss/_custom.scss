@@ -37,6 +37,9 @@ p {
   width: 27px;
   height: 27px;
 }
+.spinner.spinner-login{
+  margin-top: 4px;
+}
 .spinner {
   margin: 0;
   font-size: 10px;
@@ -60,7 +63,7 @@ p {
     transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
+    -webkit-tra0nsform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

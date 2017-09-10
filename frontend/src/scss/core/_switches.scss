@@ -43,20 +43,13 @@
     font-weight: 600;
     text-transform: uppercase;
     @if $type == ddd {
-      background-color: $gray-lightest;
+      background-color: $gray-100;
     } @else {
       background-color: #fff;
     }
     border: 1px solid $border-color;
     border-radius: 2px;
-    -moz-transition: 0.15s ease-out;
-    -o-transition: 0.15s ease-out;
-    -webkit-transition: 0.15s ease-out;
-    transition: 0.15s ease-out;
-    -moz-transition-property: opacity background;
-    -o-transition-property: opacity background;
-    -webkit-transition-property: opacity background;
-    transition-property: opacity background;
+    transition: opacity background .15s ease-out;
   }
   @if $type == text or $type == icon {
     .switch-label::before,
@@ -67,14 +60,11 @@
       margin-top: -.5em;
       line-height: 1;
       text-align: center;
-      -moz-transition: inherit;
-      -o-transition: inherit;
-      -webkit-transition: inherit;
       transition: inherit;
     }
     .switch-label::before {
       right: 1px;
-      color: $gray-lighter;
+      color: $gray-200;
       content: attr(data-off);
     }
     .switch-label::after {
@@ -103,13 +93,10 @@
     background: #fff;
     border: 1px solid $border-color;
     border-radius: 1px;
-    -moz-transition: left 0.15s ease-out;
-    -o-transition: left 0.15s ease-out;
-    -webkit-transition: left 0.15s ease-out;
-    transition: left 0.15s ease-out;
+    transition: left .15s ease-out;
     @if $type == ddd {
       border: 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
     }
   }
 
@@ -298,17 +285,17 @@ $switch-icon-xs-font-size: 7px;
   }
 }
 
-@each $variant, $color in (primary: $brand-primary, secondary: $gray-lighter, success: $brand-success, info: $brand-info, warning: $brand-warning, danger: $brand-danger) {
+@each $color, $value in $theme-colors {
   //normal style
-  .switch-#{$variant} {
-    @include switch-variant($color);
+  .switch-#{$color} {
+    @include switch-variant($value);
   }
   //outline style
-  .switch-#{$variant}-outline {
-    @include switch-outline-variant($color);
+  .switch-#{$color}-outline {
+    @include switch-outline-variant($value);
   }
   //outline alternative style
-  .switch-#{$variant}-outline-alt {
-    @include switch-outline-alt-variant($color);
+  .switch-#{$color}-outline-alt {
+    @include switch-outline-alt-variant($value);
   }
 }
