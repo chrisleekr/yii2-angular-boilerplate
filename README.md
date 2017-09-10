@@ -1,6 +1,6 @@
 # Yii2 REST API + Angular 4 Boilerplate
 
-[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular2-boilerplate)
+[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular4-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular4-boilerplate)
 
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular2 with Core UI.
 
@@ -157,7 +157,8 @@ Note that if you change API address, then you will need to update frontend globa
 - [X] Develop new customer management section
 - [X] Apply JWT(JSON Web Token) for user authentication
 - [X] Upgrade Angular 2 to Angular 4
-- [ ] Develop test code 
+- [ ] Develop file uploader
+- [ ] Develop more test code 
 - [ ] Dockerize application
    
 ## Screenshots
