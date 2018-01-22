@@ -133,6 +133,7 @@ $ sudo npm install -g @angular/cli@latest
 And wait for it is up and running. Once npm is finished compiling, then open the browser.
 
 * REST API: [http://api.boilerplate.local/debug](http://api.boilerplate.local/debug)
+    - To make sure API is working, go to [http://api.boilerplate.local/ping](http://api.boilerplate.local/ping). You must see `pong` message.
 * Backend: [http://localhost:4200](http://localhost:4200)
     - Administrator username: `admin`, password: `123456`
     - Staff username: `staff`, password: `123456`
