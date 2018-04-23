@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 import {CustomValidators} from 'ng2-validation';
-import {ContainsValidators} from "../shared/contains-validator.directive";
 import {FormGroup, FormBuilder, Validators, FormArray} from "@angular/forms";
 
 
@@ -58,7 +57,6 @@ export class StaffFormComponent implements OnInit, OnDestroy{
             blocked_at: ['', Validators.compose([])],
             role: ['', Validators.compose([
                 Validators.required,
-                ContainsValidators.contains('value', StaffDataService.getRoleTypes())
             ])],
             // permissions: _formBuilder.array([]),
             permissions: ['', Validators.compose([
@@ -67,7 +65,6 @@ export class StaffFormComponent implements OnInit, OnDestroy{
             status: ['', Validators.compose([
                 Validators.required,
                 // Custom validator for checking value against list of values
-                ContainsValidators.contains('value', StaffDataService.getStatusTypes())
             ])],
         }, {
             validator: validateDateTime(['confirmed_at', 'blocked_at'])

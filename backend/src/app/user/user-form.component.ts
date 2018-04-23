@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 import {CustomValidators} from 'ng2-validation';
-import {ContainsValidators} from "../shared/contains-validator.directive";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 
 
@@ -54,8 +53,6 @@ export class UserFormComponent implements OnInit, OnDestroy{
             blocked_at: ['', Validators.compose([])],
             status: ['', Validators.compose([
                 Validators.required,
-                // Custom validator for checking value against list of values
-                ContainsValidators.contains('value', UserDataService.getStatusTypes())
             ])],
         }, {
             validator: validateDateTime(['confirmed_at', 'blocked_at'])

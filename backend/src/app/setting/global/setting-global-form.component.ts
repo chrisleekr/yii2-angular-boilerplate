@@ -8,7 +8,6 @@ import {SettingDataService} from "../../model/setting-data.service";
 import {Setting} from "../../model/setting";
 import {StaffService} from "../../model/staff.service";
 import {GlobalService} from "../../model/global.service";
-import {ContainsValidators} from "../../shared/contains-validator.directive";
 
 @Component({
     templateUrl: './setting-global-form.component.html',
@@ -53,8 +52,6 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy{
             ])],
             meta_type: ['', Validators.compose([
                 Validators.required,
-                // Custom validator for checking value against list of values
-                ContainsValidators.contains('value', SettingDataService.getMetaTypes())
             ])],
             meta_desc: ['', Validators.compose([
                 Validators.required,
@@ -69,8 +66,6 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy{
             ])],
             is_public: ['', Validators.compose([
                 Validators.required,
-                // Custom validator for checking value against list of values
-                ContainsValidators.contains('value', SettingDataService.getIsPublicTypes())
             ])],
         },{
             // Custom validator for multiple fields to check meta type, meta attribute and meta value

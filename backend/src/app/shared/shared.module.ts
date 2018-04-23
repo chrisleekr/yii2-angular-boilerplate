@@ -7,7 +7,6 @@ import {MomentModule} from 'angular2-moment';
 import {LimitToPipe} from './limit-to.pipe';
 import {Nl2BrPipe} from './nl2br.pipe';
 import {KeysPipe} from './keys.pipe';
-import {ContainsValidator} from './contains-validator.directive';
 import {AuthModule} from './auth.module';
 import {TimepickerComponent} from './timepicker/timepicker.component';
 
@@ -24,7 +23,6 @@ import {TimepickerComponent} from './timepicker/timepicker.component';
         LimitToPipe,
         Nl2BrPipe,
         KeysPipe,
-        ContainsValidator,
         TimepickerComponent,
     ],
     exports: [
@@ -34,7 +32,6 @@ import {TimepickerComponent} from './timepicker/timepicker.component';
         LimitToPipe,
         Nl2BrPipe,
         KeysPipe,
-        ContainsValidator,
         TimepickerComponent,
     ],
     providers: []

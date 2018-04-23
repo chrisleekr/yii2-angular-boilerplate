@@ -32,7 +32,7 @@
     "chart.js": "2.6.0",
     "ngx-bootstrap": "1.8.1",
     "core-js": "2.5.0",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "ng-validators": "^0.2.1",
     "ng2-charts": "1.6.0",
     "ng2-validation": "^3.1.3",
