@@ -1,14 +1,13 @@
-import {Component} from '@angular/core';
-import {SettingDataService} from "./model/setting-data.service";
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'body',
-    template: '<router-outlet></router-outlet>'
+  selector: 'app-root',
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
-    constructor(private _settingDataService: SettingDataService) {
-        // get settings
-        this._settingDataService.refreshGlobalSettings();
+  title = 'app';
 
-    }
+  constructor() {
+
+  }
 }

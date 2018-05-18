@@ -1,64 +1,65 @@
-<div class="app flex-row align-items-center">
-    <div class="container">
-        <div class="row justify-content-center mb-3">
-            <div class="col-sm-12 text-sm-center">
-                <img src="assets/img/logo.png" width="350px" />
-            </div>
-        </div>
+<div class="row justify-content-center mb-3">
+    <div class="col-sm-12 text-sm-center">
+        <img src="assets/img/ngx-bootstrap-logo.svg" width="50" />
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card-group mb-0">
+            <div class="card p-2">
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+                        <h1>Login</h1>
+                        <p class="text-muted">Sign In to your account</p>
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card-group mb-0">
-                    <div class="card p-4">
-                        <div class="card-body">
-                            <form [formGroup]="_loginForm" (ngSubmit)="onSubmit(_loginForm.value)">
-                                <h1>Login</h1>
-                                <p class="text-muted">Sign In to your account</p>
-
-                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('username')}">
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-user"></i></span>
-                                            <input class="form-control" type="text" placeholder="Username" [formControl]="_loginForm.controls['username']" [ngClass]="{'form-control-danger': !_isValid('username')}">
-                                        </div>
-                                        <span class="help-block help-block-error" *ngIf="!_formErrors.username.valid">{{_formErrors.username.message}}</span>
-                                    </div>
+                        <div class="form-group row" [ngClass]="{'has-danger': !isValid('username')}">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="icon-user"></i>
+                  </span>
+                                    <input class="form-control" type="text" placeholder="Username" [formControl]="loginForm.controls['username']" [ngClass]="{'form-control-danger': !isValid('username')}">
                                 </div>
-                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('password')}">
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-lock"></i></span>
-                                            <input class="form-control" type="password" placeholder="Password" [formControl]="_loginForm.controls['password']" [ngClass]="{'form-control-danger': !_isValid('password')}">
-                                        </div>
-                                        <span class="help-block help-block-error" *ngIf="!_formErrors.password.valid">{{_formErrors.password.message}}</span>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <button type="submit" class="btn btn-primary px-2" [disabled]="!_loginForm.valid || _submitted == true">Login</button>
-                                        <div class="spinner spinner-login" *ngIf="_submitted"></div>
-                                    </div>
-                                    <div class="col-xs-6 text-xs-right">
-                                        <a [routerLink]="['/password-reset-request']" class="btn btn-link px-0">Forgot password?</a>
-                                    </div>
-                                    <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
-                                        <div class="alert alert-danger">{{_errorMessage}}</div>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-                        <div class="card-body text-center">
-                            <div>
-                                <h2>Sign up</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <br />
-                                <a [routerLink]="['/signup']" class="btn btn-primary active mt-1">Register Now!</a>
+                                <span class="help-block help-block-error" *ngIf="!formErrors.username.valid">{{formErrors.username.message}}</span>
                             </div>
                         </div>
+                        <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="icon-lock"></i>
+                  </span>
+                                    <input class="form-control" type="password" placeholder="Password" [formControl]="loginForm.controls['password']" [ngClass]="{'form-control-danger': !isValid('password')}">
+                                </div>
+                                <span class="help-block help-block-error" *ngIf="!formErrors.password.valid">{{formErrors.password.message}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary px-2" [disabled]="!loginForm.valid || submitted == true">Login
+                                    <spinner *ngIf="submitted"></spinner>
+                                </button>
+
+                            </div>
+                            <div class="col-6 text-right">
+                                <a [routerLink]="['/password-reset-request']" class="btn btn-link px-0">Forgot password?</a>
+                            </div>
+                            <div *ngIf="errorMessage" class="col-12 error-block mt-2">
+                                <div class="alert alert-danger">{{errorMessage}}</div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card text-white bg-primary" style="width:44%">
+                <div class="card-body text-center">
+                    <div>
+                        <h2>Sign up</h2>
+                        <br />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                            magna aliqua.</p>
+                        <a [routerLink]="['/signup']" class="btn btn-primary active mt-1">Register Now!</a>
                     </div>
                 </div>
             </div>

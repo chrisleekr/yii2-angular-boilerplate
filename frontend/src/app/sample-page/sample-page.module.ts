@@ -1,22 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
-import {SamplePageComponent} from './sample-page.component';
-import {SamplePageSSEComponent} from './sample-page-sse.component';
-import {SamplePageRoutingModule} from './sample-page-routing.module';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
+import { SamplePageRoutingModule } from './sample-page-routing.module';
+import { SamplePageComponent } from './sample-page.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SamplePageRoutingModule
-    ],
-    declarations: [
-        SamplePageComponent,
-        SamplePageSSEComponent,
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    SamplePageRoutingModule
+  ],
+  declarations: [SamplePageComponent]
 })
 export class SamplePageModule {
 }

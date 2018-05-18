@@ -1,111 +1,126 @@
-<div class="row" *ngIf="_errorMessage">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" *ngIf="mode == 'create'">New Staff</h1>
+    <h1 class="h2" *ngIf="mode == 'update'">Update Staff - {{staff.username}}</h1>
+</div>
+
+<div class="row" *ngIf="errorMessage">
     <div class="col-sm-12">
-        <p class="alert alert-danger">{{_errorMessage}}</p>
+        <p class="alert alert-danger">{{errorMessage}}</p>
     </div>
 </div>
-<div class="animated fadeIn" *ngIf="!_mode && !_errorMessage">
-    <span class="spinner"></span>
 
+<div *ngIf="!mode && !errorMessage">
+    <spinner></spinner>
 </div>
-<div class="animated fadeIn" *ngIf="_mode">
+
+<div *ngIf="mode">
     <div class="row">
         <div class="col-sm-12">
-            <form [formGroup]="_form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-create" *ngIf="_mode == 'create'">
-                            <strong>Create new staff</strong>
-                        </div>
-                        <div class="update" *ngIf="_mode == 'update'">
-                            <strong>Staff - {{_staff.username}}</strong><br />
-                            <small>Update staff</small>
-                        </div>
-                    </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('username')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('username')}">
                                 <label class="col-sm-12" for="username">Username <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="username" placeholder="Enter username" [formControl]="_form.controls['username']" [ngClass]="{'form-control-danger': !_isValid('username')}" [(ngModel)]="_staff.username" />
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.username.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.username.message}}</span>
+                                    <input type="text" class="form-control" id="username" placeholder="Enter username" [formControl]="form.controls['username']" [ngClass]="{'form-control-danger': !isValid('username')}" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.username.valid">
+                                    <span class="help-block help-block-error">{{formErrors.username.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Username only allows alphanumeric, underscore and dashboard between 3 and 15 characters. i.e. sampleusername</p>
+                                    <small class="form-text text-muted">Username only allows alphanumeric, underscore and dashboard between 3 and 15 characters. i.e. sampleusername</small>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('email')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('email')}">
                                 <label class="col-sm-12" for="email">Email Address <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" [formControl]="_form.controls['email']" [ngClass]="{'form-control-danger': !_isValid('email')}" [(ngModel)]="_staff.email" />
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.email.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.email.message}}</span>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" [formControl]="form.controls['email']" [ngClass]="{'form-control-danger': !isValid('email')}" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.email.valid">
+                                    <span class="help-block help-block-error">{{formErrors.email.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Email must be valid email address. i.e. sample@username.com.</p>
+                                    <small class="form-text text-muted">Email must be valid email address. i.e. sample@username.com.</small>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('password')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
                                 <label class="col-sm-12" for="password">Password</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="password" placeholder="Enter the password" [formControl]="_form.controls['password']" [ngClass]="{'form-control-danger': !_isValid('password')}" [(ngModel)]="_staff.password"/>
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.password.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.password.message}}</span>
+                                    <input type="text" class="form-control" id="password" placeholder="Enter the password" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger': !isValid('password')}" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.password.valid">
+                                    <span class="help-block help-block-error">{{formErrors.password.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Password must be more than 6 characters.</p>
+                                    <small class="form-text text-muted">Password must be more than 6 characters.</small>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="form-group-wrapper" *ngIf="_mode == 'update'">
+                        <div class="form-group-wrapper" *ngIf="mode == 'update'">
                             <div class="form-group row">
                                 <label class="col-sm-12">Last Login</label>
                                 <div class="col-sm-3">
-                                    <span *ngIf="_staff.last_login_ip == null" class="help-text">Never Logged In</span>
-                                    <p *ngIf="_staff.last_login_ip != null" class="help-text">{{_staff.last_login_ip}}<br />({{_staff.last_login_at}})</p>
+                                    <span *ngIf="staff.last_login_ip == null" class="form-text text-muted">Never Logged In</span>
+                                    <p *ngIf="staff.last_login_ip != null" class="form-text text-muted">{{staff.last_login_ip}}<br />({{(staff.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}})</p>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('confirmed_at')}">
-                                <label class="col-sm-12" for="confirmed_at">Confirmed At (Y-M-D H:M)</label>
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('confirmed_at')}">
+                                <label class="col-sm-12" for="confirmed_at">Confirmed At (yyyy-mm-dd hh:mm)</label>
                                 <div class="col-xs-12 col-sm-5">
-
-                                    <timepicker id="confirmed_at" [placeholderText]="'Click to set the date and time for confirming the staff'" [dateTime]="_staff.confirmed_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('confirmed_at', $event)"></timepicker>
-
-
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.confirmed_at.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.confirmed_at.message}}</span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-outline-light-gray" type="button" [owlDateTimeTrigger]="dt1"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                        <input class="form-control bg-white" id="confirmed_at" placeholder="Enter confirmed date/time" [formControl]="form.controls['confirmed_at']" [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-light-gray" type="button" (click)="setFormField('confirmed_at', null)"><i class="fa fa-undo"></i></button>
+                                        </div>
+                                    </div>
+                                    <owl-date-time #dt1></owl-date-time>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.confirmed_at.valid">
+                                    <span class="help-block help-block-error">{{formErrors.confirmed_at.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Confirmed at field indicates the staff has been confirmed. If empty, then staff cannot log in to the system as the account is not confirmed. The value must be valid format - Y/M/D H:M:S. i.e. 2017-01-01 12:00</p>
+                                    <small class="form-text text-muted">Confirmed at field indicates the staff has been confirmed. If empty, then staff cannot log in to the system as the account is not confirmed. The value must be valid format - Y/M/D H:M:S. i.e. 2017-01-01 12:00</small>
                                 </div>
                             </div>
 
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('blocked_at')}">
-                                <label class="col-sm-12" for="blocked_at">Blocked At (Y-M-D H:M)</label>
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('blocked_at')}">
+                                <label class="col-sm-12" for="blocked_at">Blocked At (yyyy-mm-dd hh:mm)</label>
                                 <div class="col-xs-12 col-sm-5">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-outline-light-gray" type="button" [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></button>
+                                        </div>
+                                        <input class="form-control bg-white" id="blocked_at" placeholder="Enter blocked date/time" [formControl]="form.controls['blocked_at']" [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-light-gray" type="button" (click)="setFormField('blocked_at', null)"><i class="fa fa-undo"></i></button>
+                                        </div>
+                                    </div>
+                                    <owl-date-time #dt2></owl-date-time>
+                                </div>
+                                <div class="clearfix"></div>
 
-                                    <timepicker id="blocked_at" [placeholderText]="'Click to set the date and time for blocking the staff'" [dateTime]="_staff.blocked_at | amDateFormat: 'YYYY-MM-DD HH:mm'" [dateTimeFormat]="'YYYY-MM-DD HH:mm'" [clearLabel]="'Clear'" [confirmLabel]="'Confirm'" (onChangedDateTime)="onChangeDateTime('blocked_at', $event)"></timepicker>
-
-                                </div><div class="clearfix"></div>
-
-                                <div class="col-sm-12" *ngIf="!_formErrors.blocked_at.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.blocked_at.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.blocked_at.valid">
+                                    <span class="help-block help-block-error">{{formErrors.blocked_at.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Blocked at field indicates the staff has been blocked. If not empty, then staff cannot log in to the system as the account is blocked. The value must be valid format - Y/M/D H:M:S. i.e. 2017-01-01 12:00</p>
+                                    <small class="form-text text-muted">Blocked at field indicates the staff has been blocked. If not empty, then staff cannot log in to the system as the account is blocked. The value must be valid format - Y/M/D H:M:S. i.e. 2017-01-01 12:00</small>
                                 </div>
                             </div>
 
@@ -114,28 +129,29 @@
                             <div class="form-group row">
                                 <label class="col-sm-12" for="role">Role <span class="required">*</span></label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="role" [formControl]="_form.controls['role']" [ngClass]="{'form-control-danger': !_isValid('role')}" [(ngModel)]="_staff.role">
-                                        <option *ngFor="let roleType of _roleTypes" [value]="roleType.value" [selected]="">{{roleType.label}}</option>
+                                    <select class="form-control" id="role" [formControl]="form.controls['role']" [ngClass]="{'form-control-danger': !isValid('role')}">
+                                        <option *ngFor="let roleType of roleTypes" [value]="roleType.value" [selected]="">{{roleType.label}}</option>
                                     </select>
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.role.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.role.message}}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.role.valid">
+                                    <span class="help-block help-block-error">{{formErrors.role.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Role field is configuring what the role of the user is.</p>
+                                    <small class="form-text text-muted">Role field is configuring what the role of the user is.</small>
                                 </div>
                             </div>
                         </div>
                         <!-- Only if role is staff -->
-                        <div class="form-group-wrapper" *ngIf="_staff.role == 50">
+                        <div class="form-group-wrapper" *ngIf="(form.controls['role'].value+'') == '50'">
                             <div class="form-group row">
                                 <label class="col-sm-12">Permission</label>
                                 <div class="col-sm-6">
                                     <div class="card">
-                                        <div class="card-block">
-                                            <div class="checkbox" *ngFor="let permission of _staff.permissions; let i = index">
-                                                <label for="permission_{{permission.name}}">
-                                                    <input type="checkbox" id="permission_{{permission.name}}" [formControl]="_form.controls['permissions']" name="permissions[]" [(value)]="_staff.permissions[i].checked" [checked]="permission.checked" (change)="_staff.permissions[i].checked = $event.target.checked"/> {{permission.description}}
+                                        <div class="card-body">
+                                            <div class="checkbox" *ngFor="let permission of form.controls['permissions'].controls; let i = index">
+                                                <label for="permission_{{staff.permissions[i].name}}">
+                                                    <input type="checkbox" id="permission_{{staff.permissions[i].name}}" [formControl]="permission" /> {{staff.permissions[i].description}}
                                                 </label>
                                             </div>
                                         </div>
@@ -148,15 +164,16 @@
                             <div class="form-group row">
                                 <label class="col-sm-12" for="status">Status <span class="required">*</span></label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="status" [formControl]="_form.controls['status']" [ngClass]="{'form-control-danger': !_isValid('status')}" [(ngModel)]="_staff.status">
-                                        <option *ngFor="let statusType of _statusTypes" [value]="statusType.value" [selected]="">{{statusType.label}}</option>
+                                    <select class="form-control" id="status" [formControl]="form.controls['status']" [ngClass]="{'form-control-danger': !isValid('status')}">
+                                        <option *ngFor="let statusType of statusTypes" [value]="statusType.value" [selected]="">{{statusType.label}}</option>
                                     </select>
-                                </div><div class="clearfix"></div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.status.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.status.message}}</span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-12" *ngIf="!formErrors.status.valid">
+                                    <span class="help-block help-block-error">{{formErrors.status.message}}</span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <p class="help-text">* Status field is configuring whether the staff is active or disabled.</p>
+                                    <small class="form-text text-muted">Status field is configuring whether the staff is active or disabled.</small>
                                 </div>
                             </div>
                         </div>
@@ -164,14 +181,15 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button type="submit" class="btn btn-sm btn-primary" [disabled]="!_form.valid || _submitted == true"><i class="fa fa-dot-circle-o"></i> Save</button>
-                                <div *ngIf="_submitted" class="spinner"></div>
+                                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true"><i class="fa fa-dot-circle-o"></i> Save
+                                    <spinner *ngIf="submitted"></spinner>
+                                </button>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a [routerLink]="['/staff']" class="btn btn-sm btn-warning"><i class="fa fa-arrow-left"></i> Back to list</a>
+                                <a [routerLink]="['/staff']" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Back to list</a>
                             </div>
-                            <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
-                                <div class="alert alert-danger">{{_errorMessage}}</div>
+                            <div *ngIf="errorMessage" class="col-xs-12 error-block mt-h">
+                                <div class="alert alert-danger">{{errorMessage}}</div>
                             </div>
                         </div>
                     </div>

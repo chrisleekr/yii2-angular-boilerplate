@@ -1,40 +1,35 @@
-import {NgModule}           from '@angular/core';
-import {CommonModule}       from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MomentModule } from 'ngx-moment';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+import { environment } from '../../environments/environment';
 
-
-import {FormsModule, ReactiveFormsModule}        from '@angular/forms';
-import {MomentModule} from 'angular2-moment';
-import {LimitToPipe} from './limit-to.pipe';
-import {Nl2BrPipe} from './nl2br.pipe';
-import {KeysPipe} from './keys.pipe';
-import {AuthModule} from './auth.module';
-import {TimepickerComponent} from './timepicker/timepicker.component';
-
+// See the Moment.js docs for the meaning of these formats:
+// https://momentjs.com/docs/#/displaying/format/
+export const CUSTOM_DATETIME_FORMATS = environment.customDateTimeFormat;
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AuthModule,
-        MomentModule,
-    ],
-    declarations: [
-        LimitToPipe,
-        Nl2BrPipe,
-        KeysPipe,
-        TimepickerComponent,
-    ],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MomentModule,
-        LimitToPipe,
-        Nl2BrPipe,
-        KeysPipe,
-        TimepickerComponent,
-    ],
-    providers: []
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MomentModule,
+    OwlDateTimeModule, OwlMomentDateTimeModule
+  ],
+  declarations: [
+    SpinnerComponent,
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MomentModule,
+    SpinnerComponent,
+    OwlDateTimeModule, OwlMomentDateTimeModule
+  ],
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: CUSTOM_DATETIME_FORMATS },
+  ],
 })
 export class SharedModule {
 }

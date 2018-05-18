@@ -1,26 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-sample-page',
-    templateUrl: './sample-page.component.html',
+  selector: 'app-sample-page',
+  templateUrl: './sample-page.component.html'
 })
 export class SamplePageComponent implements OnInit {
-    private _id:number;
-    private _parameters:any;
+  id: number;
+  parameters: any;
 
-    constructor(private _activatedRoute:ActivatedRoute) {
-    }
+  constructor(private activatedRoute: ActivatedRoute) {
+  }
 
-    ngOnInit() {
-        this._parameters = this._activatedRoute.params.subscribe(params => {
-            if(typeof params['id'] !== "undefined") {
-                this._id = Number.parseInt(params['id']);
-            } else {
-                // do something here
-            }
-        });
-    }
-
-
+  ngOnInit() {
+    this.parameters = this.activatedRoute.params.subscribe(params => {
+      if (typeof params['id'] !== 'undefined') {
+        this.id = Number.parseInt(params['id']);
+      } else {
+        // do something here
+      }
+    });
+  }
 }

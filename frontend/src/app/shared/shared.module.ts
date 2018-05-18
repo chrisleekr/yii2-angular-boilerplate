@@ -1,35 +1,24 @@
-import {NgModule}           from '@angular/core';
-import {CommonModule}       from '@angular/common';
-
-
-import {FormsModule, ReactiveFormsModule}        from '@angular/forms';
-import {MomentModule} from 'angular2-moment';
-import {LimitToPipe} from './limit-to.pipe';
-import {Nl2BrPipe} from './nl2br.pipe';
-import {KeysPipe} from './keys.pipe';
-import {AuthModule} from './auth.module';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MomentModule } from 'ngx-moment';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AuthModule,
-    ],
-    declarations: [
-        LimitToPipe,
-        Nl2BrPipe,
-        KeysPipe,
-    ],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
-        MomentModule,
-        LimitToPipe,
-        Nl2BrPipe,
-        KeysPipe,
-    ],
-    providers: []
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MomentModule
+  ],
+  declarations: [
+    SpinnerComponent
+  ],
+  exports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MomentModule,
+    SpinnerComponent
+  ],
+  providers: []
 })
 export class SharedModule {
 }

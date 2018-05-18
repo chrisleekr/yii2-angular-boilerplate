@@ -1,202 +1,192 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, Response} from '@angular/http';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
-import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
 
-import {GlobalService} from './global.service';
-import {UserService} from './user.service';
-import {Setting} from './setting';
-import {AuthHttp} from 'angular2-jwt';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { GlobalService } from './global.service';
+import { Setting } from './setting';
+import { UserService } from './user.service';
+import { ResponseBody } from './response-body';
 
 @Injectable()
 export class SettingDataService {
+  public static getMetaTypes(): Array<any> {
+    return [
+      {
+        label: 'Select',
+        value: 'select'
+      },
+      {
+        label: 'Number',
+        value: 'number'
+      },
+      {
+        label: 'Text',
+        value: 'text'
+      }
+    ];
+  }
 
-    constructor(private _globalService:GlobalService,
-                private _userService:UserService,
-                private _authHttp: AuthHttp){
-    }
+  public static getIsPublicTypes(): Array<any> {
+    return [
+      {
+        label: 'Public',
+        value: 1
+      },
+      {
+        label: 'Private',
+        value: 0
+      }
+    ];
+  }
 
-    // POST /v1/setting
-    addSetting(setting:Setting):Observable<any>{
-        let headers = this.getHeaders();
+  constructor(
+      private globalService: GlobalService,
+      private userService: UserService,
+      private http: HttpClient
+  ) {
+  }
 
-        return this._authHttp.post(
-            this._globalService.apiHost+'/setting',
-            JSON.stringify(setting),
-            {
-                headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return response;
-            })
-            .catch(this.handleError);
-    }
+  // POST /v1/setting
+  addSetting(setting: Setting): Observable<any> {
+    const headers = this.getHeaders();
 
-    // DELETE /v1/setting/1
-    deleteSettingById(id:number):Observable<boolean>{
-        let headers = this.getHeaders();
+    return this.http
+               .post<ResponseBody>(
+                   this.globalService.apiHost + '/setting',
+                   JSON.stringify(setting),
+                   {
+                     headers: headers
+                   }
+               )
+               .map(response => {
+                 return response;
+               })
+               .catch(this.handleError);
+  }
 
-        return this._authHttp.delete(
-            this._globalService.apiHost+'/setting/'+id,
-            {
-                headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return response;
-            })
-            .catch(this.handleError);
-    }
+  // DELETE /v1/setting/1
+  deleteSettingById(id: number): Observable<any> {
+    const headers = this.getHeaders();
 
-    // PUT /v1/setting/1
-    updateSettingById(setting:Setting):Observable<any>{
-        let headers = this.getHeaders();
+    return this.http
+               .delete<ResponseBody>(this.globalService.apiHost + '/setting/' + id, {
+                 headers: headers
+               })
+               .map(response => {
+                 return response;
+               })
+               .catch(this.handleError);
+  }
 
-        return this._authHttp.put(
-            this._globalService.apiHost+'/setting/'+setting.id,
-            JSON.stringify(setting),
-            {
-                headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return response;
-            })
-            .catch(this.handleError);
-    }
+  // PUT /v1/setting/1
+  updateSettingById(setting: Setting): Observable<any> {
+    const headers = this.getHeaders();
 
-    private getHeaders():Headers {
-        return new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+this._userService.getToken(),
-        });
-    }
-    // GET /v1/setting
-    getAllSettings(): Observable<Setting[]> {
-        let headers = this.getHeaders();
+    return this.http
+               .put<ResponseBody>(
+                   this.globalService.apiHost + '/setting/' + setting.id,
+                   JSON.stringify(setting),
+                   {
+                     headers: headers
+                   }
+               )
+               .map(response => {
+                 return response;
+               })
+               .catch(this.handleError);
+  }
 
-        return this._authHttp.get(
-            this._globalService.apiHost+'/setting?sort=meta_key',
-            {
-                headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return <Setting[]>response.data;
-            })
-            .catch(this.handleError);
-    }
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.userService.getToken()
+    });
+  }
 
-    refreshGlobalSettings():void{
-        // get settings
-        this._globalService.loadGlobalSettingsFromSessionStorage();
+  // GET /v1/setting
+  getAllSettings(): Observable<Setting[]> {
+    const headers = this.getHeaders();
 
-        this.getAllSettingsPublic()
-            .subscribe(
-                settings => {
-                    settings.forEach(setting => {
-                        switch(setting.meta_type) {
-                            case 'select':
-                            case 'text':
-                                this._globalService.setting[setting.meta_key] = setting.meta_value;
-                                break;
-                            case 'number':
-                                this._globalService.setting[setting.meta_key] = +setting.meta_value;
-                                break;
-                        }
-                        sessionStorage.setItem('frontend-setting', JSON.stringify(this._globalService.setting));
-                    });
+    return this.http
+               .get<ResponseBody>(
+                   this.globalService.apiHost + '/setting?sort=meta_key',
+                   {
+                     headers: headers
+                   }
+               )
+               .map(response => {
+                 return <Setting[]>response.data;
+               })
+               .catch(this.handleError);
+  }
 
+  refreshGlobalSettings(): void {
+    // get settings
+    this.globalService.loadGlobalSettingsFromSessionStorage();
 
-                }
-            );
-    }
-
-    // GET /v1/setting/public
-    getAllSettingsPublic(): Observable<Array<any>> {
-        let headers = this.getHeaders();
-
-        return this._authHttp.get(
-            this._globalService.apiHost+'/setting/public',
-            {
-                // headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return <Array<any>>response.data;
-            })
-            .catch(this.handleError);
-    }
-
-    getSettingById(id:number):Observable<Setting> {
-        let headers = this.getHeaders();
-
-        return this._authHttp.get(
-            this._globalService.apiHost+'/setting/'+id,
-            {
-                headers: headers
-            }
-        )
-            .map(response => response.json())
-            .map((response) => {
-                return <Setting>response.data;
-            })
-            .catch(this.handleError);
-    }
-
-    private handleError (error: Response | any) {
-        let errorMessage:any = {};
-
-        // Connection error
-        if(error.status == 0) {
-            errorMessage = {
-                success: false,
-                status: 0,
-                data: "Sorry, there was a connection error occurred. Please try again.",
-            };
+    this.getAllSettingsPublic().subscribe(settings => {
+      settings.forEach(setting => {
+        switch (setting.meta_type) {
+          case 'select':
+          case 'text':
+            this.globalService.setting[setting.meta_key] = setting.meta_value;
+            break;
+          case 'number':
+            this.globalService.setting[setting.meta_key] = +setting.meta_value;
+            break;
         }
-        else {
-            errorMessage = error.json();
-        }
-        return Observable.throw(errorMessage);
+        sessionStorage.setItem(
+            'frontend-setting',
+            JSON.stringify(this.globalService.setting)
+        );
+      });
+    });
+  }
+
+  // GET /v1/setting/public
+  getAllSettingsPublic(): Observable<Array<any>> {
+    const headers = this.getHeaders();
+
+    return this.http
+               .get<ResponseBody>(this.globalService.apiHost + '/setting/public', {
+                 // headers: headers
+               })
+               .map(response => {
+                 return <Array<any>>response.data;
+               })
+               .catch(this.handleError);
+  }
+
+  getSettingById(id: number): Observable<Setting> {
+    const headers = this.getHeaders();
+
+    return this.http
+               .get<ResponseBody>(this.globalService.apiHost + '/setting/' + id, {
+                 headers: headers
+               })
+               .map(response => {
+                 return <Setting>response.data;
+               })
+               .catch(this.handleError);
+  }
+
+  private handleError(response: any) {
+    let errorMessage: any = {};
+    // Connection error
+    if (response.error.status === 0) {
+      errorMessage = {
+        success: false,
+        status: 0,
+        data: 'Sorry, there was a connection error occurred. Please try again.'
+      };
+    } else {
+      errorMessage = response.error;
     }
 
-    public static getMetaTypes():Array<any>{
-        return [
-            {
-                label: 'Select',
-                value: 'select'
-            },
-            {
-                label: 'Number',
-                value: 'number'
-            },
-            {
-                label: 'Text',
-                value: 'text'
-            }
-        ];
-    }
-
-    public static getIsPublicTypes():Array<any>{
-        return [
-            {
-                label: 'Public',
-                value: 1
-            },
-            {
-                label: 'Private',
-                value: 0
-            }
-        ];
-    }
+    return Observable.throw(errorMessage);
+  }
 }

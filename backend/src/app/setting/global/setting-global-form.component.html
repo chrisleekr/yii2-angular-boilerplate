@@ -1,135 +1,132 @@
-<div class="row" *ngIf="_errorMessage">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2" *ngIf="mode == 'create'">Create new setting</h1>
+    <h1 class="h2" *ngIf="mode == 'update'">Update setting - {{setting.meta_name}}</h1>
+</div>
+
+<div class="row" *ngIf="errorMessage">
     <div class="col-sm-12">
-        <p class="alert alert-danger">{{_errorMessage}}</p>
+        <p class="alert alert-danger">{{errorMessage}}</p>
     </div>
 </div>
-<div class="animated fadeIn" *ngIf="!_mode && !_errorMessage">
-    <span class="spinner"></span>
 
+<div *ngIf="!mode && !errorMessage">
+    <spinner></spinner>
 </div>
-<div class="animated fadeIn" *ngIf="_mode">
+
+<div *ngIf="mode">
     <div class="row">
         <div class="col-sm-12">
-            <form [formGroup]="_form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="card-header-create" *ngIf="_mode == 'create'">
-                            <strong>Create new Setting</strong>
-                        </div>
-                        <div class="update" *ngIf="_mode == 'update'">
-                            <strong>Setting - {{_setting.meta_name}}</strong>
-                            <small>Update setting</small>
-                        </div>
-                    </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('meta_key')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('meta_key')}">
                                 <label class="col-sm-12" for="meta_key">Key <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="meta_key" placeholder="Enter setting meta key (string)" [formControl]="_form.controls['meta_key']" [ngClass]="{'form-control-danger': !_isValid('meta_key')}" [(ngModel)]="_setting.meta_key" />
-                                    <p class="help-text">* Meta Key is the identifier of the setting. It requires to be only string, no space or special characters except _ (underscore). Maximum length 100 characters.</p>
+                                    <input type="text" class="form-control" id="meta_key" placeholder="Enter setting meta key (string)" [formControl]="form.controls['meta_key']" [ngClass]="{'form-control-danger': !isValid('meta_key')}" />
+                                    <small class="form-text text-muted">* Meta Key is the identifier of the setting. It requires to be only string, no space or special characters except _ (underscore). Maximum length 100 characters.</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_key.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_key.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_key.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_key.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('meta_name')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('meta_name')}">
                                 <label class="col-sm-12" for="meta_name">Name <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="meta_name" placeholder="Enter setting meta name (string)" [formControl]="_form.controls['meta_name']" [ngClass]="{'form-control-danger': !_isValid('meta_name')}" [(ngModel)]="_setting.meta_name" />
-                                    <p class="help-text">* Meta Name is the name of the setting. Maximum length 200 characters.</p>
+                                    <input type="text" class="form-control" id="meta_name" placeholder="Enter setting meta name (string)" [formControl]="form.controls['meta_name']" [ngClass]="{'form-control-danger': !isValid('meta_name')}" />
+                                    <small class="form-text text-muted">* Meta Name is the name of the setting. Maximum length 200 characters.</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_name.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_name.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_name.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_name.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row"[ngClass]="{'has-danger': !_isValid('meta_type')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('meta_type')}">
                                 <label class="col-sm-12" for="meta_type">Type <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="meta_type" [formControl]="_form.controls['meta_type']" [ngClass]="{'form-control-danger': !_isValid('meta_type')}" [(ngModel)]="_setting.meta_type">
-                                        <option *ngFor="let metaType of _metaTypes" [value]="metaType.value" [selected]="">{{metaType.label}}</option>
+                                    <select class="form-control" id="meta_type" [formControl]="form.controls['meta_type']" [ngClass]="{'form-control-danger': !isValid('meta_type')}">
+                                        <option *ngFor="let metaType of metaTypes" [value]="metaType.value" [selected]="">{{metaType.label}}</option>
                                     </select>
 
-                                    <p class="help-text">* Meta Type is the type of the setting. Select - the meta attribute needs to be configured as JSON format to provide selection of setting value. Number - the meta value will be validated as numeric format. Text - the meta value will be accepted any value.</p>
+                                    <small class="form-text text-muted">* Meta Type is the type of the setting. Select - the meta attribute needs to be configured as JSON format to provide selection of setting value. Number - the meta value will be validated as numeric format. Text - the meta value will be accepted any value.</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_type.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_type.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_type.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_type.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('meta_desc')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('meta_desc')}">
                                 <label class="col-sm-12" for="meta_desc">Description <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" id="meta_desc" placeholder="Enter setting description (text)" [formControl]="_form.controls['meta_desc']" [ngClass]="{'form-control-danger': !_isValid('meta_desc')}" [(ngModel)]="_setting.meta_desc"></textarea>
-                                    <p class="help-text">* Description is to describe what the setting is about. Maximum length 1000 characters.</p>
+                                    <textarea class="form-control" id="meta_desc" placeholder="Enter setting description (text)" [formControl]="form.controls['meta_desc']" [ngClass]="{'form-control-danger': !isValid('meta_desc')}"></textarea>
+                                    <small class="form-text text-muted">* Description is to describe what the setting is about. Maximum length 1000 characters.</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_desc.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_desc.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_desc.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_desc.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" *ngIf="_setting.meta_type == 'select'" [ngClass]="{'has-danger': !_isValid('meta_attribute')}">
+                            <div class="form-group row" *ngIf="selectedMetaType == 'select'" [ngClass]="{'has-danger': !isValid('meta_attribute')}">
                                 <label class="col-sm-12" for="meta_attribute">Attribute <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" id="meta_attribute" placeholder="Enter setting attribute (JSON)" [formControl]="_form.controls['meta_attribute']" [ngClass]="{'form-control-danger': !_isValid('meta_attribute')}" [(ngModel)]="_setting.meta_attribute"></textarea>
-                                    <p class="help-text">* Attribute is JSON format that list up selection values for 'Select' type. Recommend to use http://www.jsoneditoronline.org/ for modifying JSON. Sample JSON: {{'{"list":[{"value":"SAMPLE VALUE1","label":"SAMPLE LABEL 1"},{"value":"SAMPLE VALUE2","label":"SAMPLE LABEL 2"}]}'}}</p>
+                                    <textarea class="form-control" id="meta_attribute" placeholder="Enter setting attribute (JSON)" [formControl]="form.controls['meta_attribute']" [ngClass]="{'form-control-danger': !isValid('meta_attribute')}"></textarea>
+                                    <small class="form-text text-muted">* Attribute is JSON format that list up selection values for 'Select' type. Recommend to use http://www.jsoneditoronline.org/ for modifying JSON. Sample JSON: {{'{"list":[{"value":"SAMPLE VALUE1","label":"SAMPLE LABEL 1"},{"value":"SAMPLE VALUE2","label":"SAMPLE LABEL 2"}]}'}}</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_attribute.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_attribute.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_attribute.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_attribute.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" *ngIf="_selectedMetaType == 'select'" [ngClass]="{'has-danger': !_isValid('meta_value')}">
+                            <div class="form-group row" *ngIf="selectedMetaType == 'select'" [ngClass]="{'has-danger': !isValid('meta_value')}">
                                 <label class="col-sm-12" for="meta_value_select">Value <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <select id="meta_value_select" class="form-control" [formControl]="_form.controls['meta_value']" [ngClass]="{'form-control-danger': !_isValid('meta_value')}" [(ngModel)]="_setting.meta_value">
-                                        <option *ngFor="let listValue of _enteredMetaAttributes.list" [value]="listValue.value" [selected]="">{{listValue.label}}</option>
+                                    <select id="meta_value_select" class="form-control" [formControl]="form.controls['meta_value']" [ngClass]="{'form-control-danger': !isValid('meta_value')}">
+                                        <option *ngFor="let listValue of enteredMetaAttributes.list" [value]="listValue.value" [selected]="">{{listValue.label}}</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_value.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_value.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_value.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_value.message}}</span>
                                 </div>
                             </div>
 
-                            <div class="form-group row" *ngIf="_selectedMetaType == 'number'" [ngClass]="{'has-danger': !_isValid('meta_value')}">
+                            <div class="form-group row" *ngIf="selectedMetaType == 'number'" [ngClass]="{'has-danger': !isValid('meta_value')}">
                                 <label class="col-sm-12" for="meta_value_number">Value <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="meta_value_number" placeholder="Enter setting value (number)" [formControl]="_form.controls['meta_value']" [ngClass]="{'form-control-danger': !_isValid('meta_value')}" [(ngModel)]="_setting.meta_value" [max]="_setting.meta_attribute.max" [min]="_setting.meta_attribute.min" />
+                                    <input type="number" class="form-control" id="meta_value_number" placeholder="Enter setting value (number)" [formControl]="form.controls['meta_value']" [ngClass]="{'form-control-danger': !isValid('meta_value')}" [max]="setting.meta_attribute.max" [min]="setting.meta_attribute.min" />
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_value.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_value.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_value.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_value.message}}</span>
                                 </div>
                             </div>
 
-                            <div class="form-group row" *ngIf="_selectedMetaType == 'text'" [ngClass]="{'has-danger': !_isValid('meta_value')}">
+                            <div class="form-group row" *ngIf="selectedMetaType == 'text'" [ngClass]="{'has-danger': !isValid('meta_value')}">
                                 <label class="col-sm-12" for="meta_value_string">Value <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="meta_value_string" placeholder="Enter setting value (text)" [formControl]="_form.controls['meta_value']" [ngClass]="{'form-control-danger': !_isValid('meta_value')}" [(ngModel)]="_setting.meta_value" />
+                                    <input type="text" class="form-control" id="meta_value_string" placeholder="Enter setting value (text)" [formControl]="form.controls['meta_value']" [ngClass]="{'form-control-danger': !isValid('meta_value')}" />
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.meta_value.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.meta_value.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.meta_value.valid">
+                                    <span class="help-block help-block-error">{{formErrors.meta_value.message}}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group-wrapper">
-                            <div class="form-group row" [ngClass]="{'has-danger': !_isValid('is_public')}">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('is_public')}">
                                 <label class="col-sm-12" for="is_public">Is Public? <span class="required">*</span></label>
                                 <div class="col-sm-8">
-                                    <select class="form-control" id="is_public" [formControl]="_form.controls['is_public']" [ngClass]="{'form-control-danger': !_isValid('is_public')}" [(ngModel)]="_setting.is_public">
-                                        <option *ngFor="let isPublicType of _isPublicTypes" [value]="isPublicType.value" [selected]="">{{isPublicType.label}}</option>
+                                    <select class="form-control" id="is_public" [formControl]="form.controls['is_public']" [ngClass]="{'form-control-danger': !isValid('is_public')}">
+                                        <option *ngFor="let isPublicType of isPublicTypes" [value]="isPublicType.value" [selected]="">{{isPublicType.label}}</option>
                                     </select>
 
-                                    <p class="help-text">* Is Public field is a configuration whether the setting is public or not public.</p>
+                                    <small class="form-text text-muted">* Is Public field is a configuration whether the setting is public or not public.</small>
                                 </div>
-                                <div class="col-sm-12" *ngIf="!_formErrors.is_public.valid">
-                                    <span class="help-block help-block-error">{{_formErrors.is_public.message}}</span>
+                                <div class="col-sm-12" *ngIf="!formErrors.is_public.valid">
+                                    <span class="help-block help-block-error">{{formErrors.is_public.message}}</span>
                                 </div>
                             </div>
                         </div>
@@ -138,14 +135,15 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button type="submit" class="btn btn-sm btn-primary" [disabled]="!_form.valid || _submitted == true"><i class="fa fa-dot-circle-o"></i> Save</button>
-                                <div *ngIf="_submitted" class="spinner"></div>
+                                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true"><i class="fa fa-dot-circle-o"></i> Save
+                                    <spinner *ngIf="submitted"></spinner>
+                                </button>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a [routerLink]="['/setting', 'global']" class="btn btn-sm btn-warning"><i class="fa fa-arrow-left"></i> Back to list</a>
+                                <a [routerLink]="['/setting', 'global']" class="btn btn-warning"><i class="fa fa-arrow-left"></i> Back to list</a>
                             </div>
-                            <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
-                                <div class="alert alert-danger">{{_errorMessage}}</div>
+                            <div *ngIf="errorMessage" class="col-xs-12 error-block mt-h">
+                                <div class="alert alert-danger">{{errorMessage}}</div>
                             </div>
                         </div>
                     </div>

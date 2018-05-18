@@ -1,87 +1,79 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, Response} from '@angular/http';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
-import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/map';
 
-import {GlobalService} from './global.service';
-import {UserService} from './user.service';
-import {User} from './user';
-import {AuthHttp} from 'angular2-jwt';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
+import { GlobalService } from './global.service';
+import { User } from './user';
+import { UserService } from './user.service';
+import { ResponseBody } from './response-body';
 
 @Injectable()
 export class UserDataService {
+  constructor(
+      private globalService: GlobalService,
+      private userService: UserService,
+      private http: HttpClient
+  ) {
+  }
 
-    constructor(private _globalService:GlobalService,
-                private _userService:UserService,
-                private _authHttp: AuthHttp){
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.userService.getToken()
+    });
+  }
+
+  // GET /v1/user/me
+  getMe(): Observable<User> {
+    const headers = this.getHeaders();
+
+    return this.http
+               .get<ResponseBody>(this.globalService.apiHost + '/user/me', {
+                 headers: headers
+               })
+               .map(response => {
+                 return <User>response.data;
+               })
+               .catch(this.handleError);
+  }
+
+  updateUser(userData): Observable<any> {
+    const headers = this.getHeaders();
+
+    return this.http
+               .post<ResponseBody>(
+                   this.globalService.apiHost + '/user/me',
+                   JSON.stringify({
+                     UserEditForm: userData
+                   }),
+                   { headers: headers }
+               )
+               .map(response => {
+                 if (response.success) {
+                 } else {
+                 }
+                 return response;
+               })
+               .catch(this.handleError);
+  }
+
+  private handleError(response: any) {
+    let errorMessage: any = {};
+    // Connection error
+    if (response.error.status === 0) {
+      errorMessage = {
+        success: false,
+        status: 0,
+        data: 'Sorry, there was a connection error occurred. Please try again.'
+      };
+    } else {
+      errorMessage = response.error;
     }
 
-
-
-    private getHeaders():Headers {
-        return new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+this._userService.getToken(),
-        });
-    }
-
-    // GET /v1/user/me
-    getMe():Observable<User> {
-        let headers = this.getHeaders();
-
-        return this._authHttp.get(
-                this._globalService.apiHost+'/user/me',
-                {
-                    headers: headers
-                }
-            )
-            .map(response => response.json())
-            .map((response) => {
-                return <User>response.data;
-            })
-            .catch(this.handleError);
-    }
-
-    updateUser(userData):Observable<any>{
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json; charset=UTF-8');
-
-        return this._authHttp
-            .post(
-                this._globalService.apiHost + '/user/me',
-                JSON.stringify({
-                    "UserEditForm": userData
-                }),
-                {headers: headers}
-            )
-            .map(response => response.json())
-            .map((response) => {
-                if (response.success) {
-                } else {
-                }
-                return response;
-            })
-            .catch(this.handleError);
-    }
-
-    private handleError (error: Response | any) {
-
-        let errorMessage:any = {};
-        // Connection error
-        if(error.status == 0) {
-            errorMessage = {
-                success: false,
-                status: 0,
-                data: "Sorry, there was a connection error occurred. Please try again.",
-            };
-        }
-        else {
-            errorMessage = error.json();
-        }
-        return Observable.throw(errorMessage);
-    }
+    return Observable.throw(errorMessage);
+  }
 }

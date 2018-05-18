@@ -1,93 +1,82 @@
-<div class="row" *ngIf="_errorMessage">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Users</h1>
+</div>
+
+<div class="row" *ngIf="errorMessage">
     <div class="col-sm-12">
-        <p class="alert alert-danger">{{_errorMessage}}</p>
+        <p class="alert alert-danger">{{errorMessage}}</p>
     </div>
 </div>
 
-<div class="animated fadeIn" *ngIf="!_users && !_errorMessage">
-    <span class="spinner"></span>
+<div *ngIf="!users && !errorMessage">
+    <spinner></spinner>
 </div>
-<div class="animated fadeIn" *ngIf="_users">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fa fa-align-justify"></i> Users
-                </div>
-                <div class="card-block">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-condensed">
-                            <thead>
-                            <tr>
-                                <th class="text-xs-center">ID</th>
-                                <th>Username</th>
-                                <th>Email Address<br >(Confirmed At)</th>
-                                <th width="15%" class="text-xs-center">Last Login</th>
 
-                                <th width="15%" class="text-xs-center">Status<br />(Last Updated At)</th>
-                                <th width="20%" class="text-xs-center">Functions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let user of _users">
-                                <td class="text-xs-center">
-                                    {{user.id}}
-                                </td>
-                                <td>
-                                    {{user.username}}
-                                </td>
-                                <td>
-                                    <p *ngIf="user.confirmed_at == null">
-                                        {{user.unconfirmed_email}}
-                                        <br /><span class="help-text text-danger">(Not Confirmed)</span>
-                                    </p>
-                                    <p *ngIf="user.confirmed_at != null">
-                                        {{user.email}}
-                                        <br /><span class="help-text" title="{{user.confirmed_at}}">({{user.confirmed_at | amTimeAgo}})</span>
-                                    </p>
-                                </td>
-                                <td class="text-xs-center">
-                                    <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
-                                    <p *ngIf="user.last_login_ip != null" class="help-text" title="{{user.last_login_at}}">{{user.last_login_ip}}<br />({{user.last_login_at | amTimeAgo}})</p>
-                                </td>
-                                <!--<td class="text-xs-center">-->
-                                    <!--<span *ngIf="user.blocked_at == null" class="help-text text-success">Not Blocked</span>-->
-                                    <!--<span *ngIf="user.blocked_at != null" class="text-danger">Blocked since {{user.blocked_at}}</span>-->
-                                <!--</td>-->
-                                <td class="text-xs-center">
-                                    <div *ngIf="user.blocked_at == null">
-                                        <span [ngClass]="{
-                                            'text-success': user.status == 10,
-                                            'text-info': user.status == 1,
-                                            'text-danger': user.status == 0 || user.status == -1
-                                        }">{{user.status_label}}</span>
+<div *ngIf="users">
+    <div class="table-responsive">
+        <table class="table table-sm table-striped table-bordered table-valign-middle">
+            <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th>Username</th>
+                <th>Email Address<br>(Confirmed At)</th>
+                <th width="15%" class="text-center">Last Login</th>
+                <th width="15%" class="text-center">Status<br />(Last Updated At)</th>
+                <th width="20%" class="text-center">Functions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users">
+                <td class="text-center">
+                    {{user.id}}
+                </td>
+                <td>
+                    {{user.username}}
+                </td>
+                <td>
+                    <p *ngIf="user.confirmed_at == null">
+                        {{user.unconfirmed_email}}
+                        <br /><span class="help-text text-danger">(Not Confirmed)</span>
+                    </p>
+                    <p *ngIf="user.confirmed_at != null">
+                        {{user.email}}
+                        <br /><span class="help-text" title="{{(user.confirmed_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(user.confirmed_at | amFromUnix) | amTimeAgo}})</span>
+                    </p>
+                </td>
+                <td class="text-center">
+                    <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
+                    <p *ngIf="user.last_login_ip != null" class="help-text" title="{{(user.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">{{user.last_login_ip}}<br />({{(user.last_login_at | amFromUnix) | amTimeAgo}})</p>
+                </td>
+                <td class="text-center">
+                    <div *ngIf="user.blocked_at == null">
+                        <span [ngClass]="{
+                            'text-success': user.status == 10,
+                            'text-info': user.status == 1,
+                            'text-danger': user.status == 0 || user.status == -1
+                        }">{{user.status_label}}</span>
 
-                                        <br /><span class="help-text" title="{{user.updated_at}}">({{user.updated_at | amTimeAgo}})</span>
-                                    </div>
-                                    <div *ngIf="user.blocked_at != null">
-                                        <span *ngIf="user.blocked_at != null" class="text-danger" title="{{user.blocked_at}}">Blocked since {{user.blocked_at | amTimeAgo}}</span>
-                                    </div>
-
-                                </td>
-                                <td class="text-xs-center">
-                                    <div *ngIf="user.status != -1">
-                                        <button class="btn btn-primary btn-sm" type="button" (click)="viewUser(user)">
-                                            <i class="fa fa-edit"></i> Edit
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteUser(user)">
-                                            <i class="fa fa-remove"></i> Remove
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <br /><span class="help-text" title="{{(user.updated_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(user.updated_at | amFromUnix) | amTimeAgo}})</span>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <a class="btn btn-primary btn-sm" [routerLink]="['/user', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New User</a>
-                </div>
-            </div>
-        </div>
+                    <div *ngIf="user.blocked_at != null">
+                        <span *ngIf="user.blocked_at != null" class="text-danger" title="{{user.blocked_at}}">Blocked since {{(user.blocked_at | amFromUnix) | amTimeAgo}}</span>
+                    </div>
+
+                </td>
+                <td class="text-center">
+                    <div *ngIf="user.status != -1">
+                        <button class="btn btn-primary btn-sm" type="button" (click)="viewUser(user)">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteUser(user)">
+                            <i class="fa fa-remove"></i> Remove
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
+
+    <a class="btn btn-primary" [routerLink]="['/user', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New User</a>
 </div>

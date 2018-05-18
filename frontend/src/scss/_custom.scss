@@ -1,163 +1,19 @@
-@import '~sweetalert2/dist/sweetalert2.min.css';
+/* You can add any custom style. */
 
-span.help-block.help-block-error {
-  font-size: 0.8rem;
-  color: #ff0000;
+a:hover {
+    text-decoration: none;
 }
 
-p {
-  margin: 0;
+.help-text {
+    font-size: 0.8rem;
+    margin-bottom: 0;
 }
 
-body {
-  overflow-y: scroll;
+.help-block {
+    font-size: 0.8rem;
 }
 
-.body-container {
-  //padding-bottom: 60px;
-}
-
-.d-90vh-va-middle {
-  display: table-cell;
-  height: 90vh;
-  vertical-align: middle;
-}
-
-.m-t-md{
-  margin-top: 25px;
-}
-.m-b-md{
-  margin-bottom: 25px;
-}
-
-.nl2line{
-  white-space: pre;
-}
-
-.required{
-  color: #ff0000;
-}
-
-.help-text{
-  font-size:0.8rem;
-  font-style:italic;
-  margin-bottom:0;
-}
-
-.table thead th, .table td{
-  vertical-align: middle;
-}
-
-
-.mt-4, .spinner.mt-4{
-  margin-top: 4px;
-}
-
-
-
-.spinner,
-.spinner:after {
-  border-radius: 50%;
-  width: 27px;
-  height: 27px;
-}
-.spinner.spinner-login{
-  margin-top: 4px;
-}
-.spinner {
-  margin: 0;
-  font-size: 10px;
-  position: absolute;
-  margin-left: 5px;
-  display: inline-block;
-  text-indent: -9999em;
-  border-top: 1.1em solid rgba(100,193,227, 0.2);
-  border-right: 1.1em solid rgba(100,193,227, 0.2);
-  border-bottom: 1.1em solid rgba(100,193,227, 0.2);
-  border-left: 1.1em solid #64c1e3;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-animation: load8 1.1s infinite linear;
-  animation: load8 1.1s infinite linear;
-}
-@-webkit-keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-
-
-.navbar {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24)
-}
-
-.navbar-brand img {
-  height: 30px
-}
-
-.site-header {
-  position: relative;
-  z-index: 1;
-  padding: 75px 0 15px 0;
-  color: #fff;
-  background-repeat: repeat-x;
-  background-image: linear-gradient(45deg, #5dc3e7, #20a8d8)
-}
-
-.site-header:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: url("/assets/img/hexagon4.png") repeat;
-  z-index: 2
-}
-.site-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 50px;
-  line-height: 50px;
-  border-top: 1px solid #cfd8dc;
-  background: #2a2c36;
-  color: #fff;
-}
-
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
-}
-
-
-
-th.text-center, td.text-center{
-  text-align: center;
-}
-
-th.text-right, td.text-right{
-  text-align: right;
-}
-
-.app-header.navbar .navbar-brand {
-  background-size: 120px auto;
+.help-block.help-block-error {
+    font-size: 0.8rem;
+    color: #ff0000;
 }

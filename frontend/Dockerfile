@@ -1,0 +1,46 @@
+#################################
+# STEP 1: Build
+#################################
+FROM node:10.1-alpine as build
+
+# Create app folder
+RUN mkdir /app
+WORKDIR /app
+
+# Add path
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Add configuration files
+COPY image-files/ /
+
+RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
+
+# Copy package*.json to app folder
+COPY package.json package-lock.json /app/
+
+# Install app dependencies
+RUN npm set progress=false
+RUN npm install
+
+# Copy all files to app folder
+COPY . /app
+
+# Build the app
+RUN npm run build -- --prod --build-optimizer
+
+#################################
+# STEP 2: Deployment
+#################################
+FROM nginx:1.13.9-alpine
+
+# Add path
+ENV PATH /usr/local/bin:$PATH
+
+# Copy dist files from build step
+COPY --from=build /app/dist /srv/
+
+# Expose port 80
+EXPOSE 80
+
+# Run entry point
+ENTRYPOINT ["docker-entrypoint.sh"]

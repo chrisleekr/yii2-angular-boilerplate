@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "setting".
@@ -23,11 +22,10 @@ use yii\db\Expression;
  */
 class Setting extends \yii\db\ActiveRecord
 {
-	const SETTING_PUBLIC = 1;
-	const SETTING_PRIVATE = 0;
-
-	const STATUS_ACTIVE = 1;
-	const STATUS_DISABLED = 0;
+    const SETTING_PUBLIC = 1;
+    const SETTING_PRIVATE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_DISABLED = 0;
 
     /**
      * @inheritdoc
@@ -72,10 +70,10 @@ class Setting extends \yii\db\ActiveRecord
         // $model->touch('blocked_at');
         return [
             [
-                'class' =>  TimestampBehavior::className(),
+                'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => date('Y-m-d H:i:s')
+                'value' => time()
             ]
         ];
     }

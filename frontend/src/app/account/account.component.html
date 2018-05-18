@@ -1,61 +1,60 @@
-<div class="container mt-3">
-    <h1>Account Page</h1>
-    <br />
+<h1>
+    Account Page</h1>
+<br />
 
-    <div class="row" *ngIf="_errorMessage">
-        <div class="col-sm-12">
-            <p class="alert alert-danger">{{_errorMessage}}</p>
-        </div>
+<div class="row" *ngIf="errorMessage">
+    <div class="col-12">
+        <p class="alert alert-danger">{{errorMessage}}</p>
     </div>
-    <div class="animated fadeIn" *ngIf="!_mode && !_errorMessage">
-        <span class="spinner"></span>
-
-    </div>
-    <div class="animated fadeIn" *ngIf="_mode == 'view'">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="view" *ngIf="_mode == 'view'">
-                            <strong>Your information</strong>
-                        </div>
+</div>
+<div *ngIf="mode === '' && errorMessage === ''">
+    <spinner></spinner>
+</div>
+<div *ngIf="mode === 'view'">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="view">
+                        <strong>Your information</strong>
                     </div>
-                    <div class="card-block">
-                        <div class="form-group-wrapper">
-                            <div class="form-group row">
-                                <label class="col-sm-12">Username</label>
-                                <div class="col-sm-3">
-                                    <span  class="help-text">{{_user.username}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group-wrapper">
-                            <div class="form-group row">
-                                <label class="col-sm-12">Email</label>
-                                <div class="col-sm-3">
-                                    <span  class="help-text">{{_user.email}}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group-wrapper">
-                            <div class="form-group row">
-                                <label class="col-sm-12">Last Login</label>
-                                <div class="col-sm-3">
-                                    <span  class="help-text">{{_user.last_login_at | amDateFormat: 'YYYY-MM-DD HH:mm'}} ({{_user.last_login_ip}}) </span>
-                                </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group-wrapper">
+                        <div class="form-group row">
+                            <label class="col-12">Username</label>
+                            <div class="col-3">
+                                <span class="help-text">{{user.username}}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <a [routerLink]="['/account', 'edit']" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Update information</a>
+
+                    <div class="form-group-wrapper">
+                        <div class="form-group row">
+                            <label class="col-12">Email</label>
+                            <div class="col-3">
+                                <span class="help-text">{{user.email}}</span>
                             </div>
-                            <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
-                                <div class="alert alert-danger">{{_errorMessage}}</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-wrapper">
+                        <div class="form-group row">
+                            <label class="col-12">Last Login</label>
+                            <div class="col-3">
+                                <span class="help-text">{{(user.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}} ({{user.last_login_ip}}) </span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6">
+                            <a [routerLink]="['/account', 'edit']" class="btn btn-primary">
+                                <i class="fa fa-edit"></i> Update information</a>
+                        </div>
+                        <div *ngIf="errorMessage" class="col-xs-12 error-block mt-2">
+                            <div class="alert alert-danger">{{errorMessage}}</div>
                         </div>
                     </div>
                 </div>

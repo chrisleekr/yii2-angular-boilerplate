@@ -1,81 +1,87 @@
-<div class="container mt-3">
-    <h1>Account Page</h1>
-    <br />
+<h1>
+    Account Page</h1>
+<br />
 
-    <div class="row" *ngIf="_errorMessage">
-        <div class="col-sm-12">
-            <p class="alert alert-danger">{{_errorMessage}}</p>
-        </div>
+<div class="row" *ngIf="errorMessage">
+    <div class="col-12">
+        <p class="alert alert-danger">{{errorMessage}}</p>
     </div>
-    <div class="animated fadeIn" *ngIf="!_mode && !_errorMessage">
-        <span class="spinner"></span>
-
-    </div>
-    <div class="animated fadeIn" *ngIf="_mode == 'update'">
-        <div class="row">
-            <div class="col-sm-12">
-                <form [formGroup]="_form" (ngSubmit)="onSubmit()">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>Update your information</strong>
+</div>
+<div *ngIf="!mode && !errorMessage">
+    <spinner></spinner>
+</div>
+<div *ngIf="mode == 'update'">
+    <div class="row">
+        <div class="col-12">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Update your information</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group-wrapper">
+                            <div class="form-group row">
+                                <label class="col-12">Username</label>
+                                <div class="col-3">
+                                    <span class="help-text">{{user.username}}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-block">
-                            <div class="form-group-wrapper">
-                                <div class="form-group row">
-                                    <label class="col-sm-12">Username</label>
-                                    <div class="col-sm-3">
-                                        <span  class="help-text">{{_user.username}}</span>
-                                    </div>
+
+                        <div class="form-group-wrapper">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('email')}">
+                                <label class="col-12" for="email">Email Address
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" [formControl]="form.controls['email']"
+                                           [ngClass]="{'form-control-danger': !isValid('email')}" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-12" *ngIf="!formErrors.email.valid">
+                                    <span class="help-block help-block-error">{{formErrors.email.message}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <p class="help-text">* Email must be valid email address. i.e. sample@username.com. If you change new email address, then the
+                                        email must be confirmed.</p>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="form-group-wrapper">
-                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('email')}">
-                                    <label class="col-sm-12" for="email">Email Address <span class="required">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email address" [formControl]="_form.controls['email']" [ngClass]="{'form-control-danger': !_isValid('email')}" [(ngModel)]="_user.email" />
-                                    </div><div class="clearfix"></div>
-                                    <div class="col-sm-12" *ngIf="!_formErrors.email.valid">
-                                        <span class="help-block help-block-error">{{_formErrors.email.message}}</span>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <p class="help-text">* Email must be valid email address. i.e. sample@username.com. If you change new email address, then the email must be confirmed.</p>
-                                    </div>
+                        <div class="form-group-wrapper">
+                            <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
+                                <label class="col-12" for="password">Password</label>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" id="password" placeholder="Enter the password" [formControl]="form.controls['password']"
+                                           [ngClass]="{'form-control-danger': !isValid('password')}" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-12" *ngIf="!formErrors.password.valid">
+                                    <span class="help-block help-block-error">{{formErrors.password.message}}</span>
+                                </div>
+                                <div class="col-12">
+                                    <p class="help-text">* Password must be more than 6 characters.</p>
                                 </div>
                             </div>
-
-                            <div class="form-group-wrapper">
-                                <div class="form-group row" [ngClass]="{'has-danger': !_isValid('password')}">
-                                    <label class="col-sm-12" for="password">Password</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control" id="password" placeholder="Enter the password" [formControl]="_form.controls['password']" [ngClass]="{'form-control-danger': !_isValid('password')}" [(ngModel)]="_user.password"/>
-                                    </div><div class="clearfix"></div>
-                                    <div class="col-sm-12" *ngIf="!_formErrors.password.valid">
-                                        <span class="help-block help-block-error">{{_formErrors.password.message}}</span>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <p class="help-text">* Password must be more than 6 characters.</p>
-                                    </div>
-                                </div>
-
-                            </div>
-
 
                         </div>
-                        <div class="card-footer">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-sm btn-primary" [disabled]="!_form.valid || _submitted == true"><i class="fa fa-dot-circle-o"></i> Save</button>
-                                    <div *ngIf="_submitted" class="spinner"></div>
-                                </div>
-                                <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
-                                    <div class="alert alert-danger">{{_errorMessage}}</div>
-                                </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                                    <i class="fa fa-dot-circle-o"></i> Save
+                                </button>
+                                <div *ngIf="submitted" class="spinner"></div>
+                            </div>
+                            <div *ngIf="errorMessage" class="col-12 error-block mt-2">
+                                <div class="alert alert-danger">{{errorMessage}}</div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

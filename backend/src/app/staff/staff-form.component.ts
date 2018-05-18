@@ -1,293 +1,340 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from "@angular/router";
-import {CustomValidators} from 'ng2-validation';
-import {FormGroup, FormBuilder, Validators, FormArray} from "@angular/forms";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CustomValidators } from 'ng2-validation';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { StaffDataService } from '../model/staff-data.service';
+import { Staff } from '../model/staff';
+import { StaffService } from '../model/staff.service';
 
-import {StaffDataService} from "../model/staff-data.service";
-import {Staff} from "../model/staff";
-import {StaffService} from "../model/staff.service";
-
-import * as moment from "moment";
-import * as _ from "underscore";
+import * as moment from 'moment';
+import _ from 'lodash';
+import { environment } from '../../environments/environment';
 
 @Component({
-    templateUrl: './staff-form.component.html',
+  templateUrl: './staff-form.component.html',
 })
-export class StaffFormComponent implements OnInit, OnDestroy{
-    private _mode = '';
+export class StaffFormComponent implements OnInit, OnDestroy {
+  mode = '';
 
-    private _id:number;
-    private _parameters:any;
-    private _staff:Staff;
+  id: number;
+  parameters: any;
+  staff: Staff;
 
-    private _errorMessage:string;
+  errorMessage: string;
 
-    private _form:FormGroup;
-    private _formErrors:any;
-    private _submitted:boolean = false;
+  form: FormGroup;
+  formErrors: any;
+  submitted: boolean = false;
 
-    // Status Types
-    private _statusTypes:any = {};
+  // Status Types
+  statusTypes: any = {};
 
-    // Roles
-    private _roleTypes:any = {};
+  // Roles
+  roleTypes: any = {};
 
-    constructor(private _staffDataService:StaffDataService,
-                private _staffService:StaffService,
-                private _router:Router,
-                private _activatedRoute:ActivatedRoute,
-                private _formBuilder:FormBuilder) {
+  constructor(private staffDataService: StaffDataService,
+      private staffService: StaffService,
+      private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private formBuilder: FormBuilder) {
 
-        // Construct form group
-        this._form = _formBuilder.group({
-            username: ['', Validators.compose([
-                Validators.required,
-                CustomValidators.rangeLength([3, 15]),
-                Validators.pattern('^[A-Za-z0-9_-]{3,15}$'),
-            ])],
-            email: ['', Validators.compose([
-                Validators.required,
-                CustomValidators.email,
-            ])],
-            password: ['', Validators.compose([
-                Validators.minLength(6)
-            ])],
-            confirmed_at: ['', Validators.compose([])],
-            blocked_at: ['', Validators.compose([])],
-            role: ['', Validators.compose([
-                Validators.required,
-            ])],
-            // permissions: _formBuilder.array([]),
-            permissions: ['', Validators.compose([
+    // Construct form group
+    this.form = formBuilder.group({
+      username: ['', Validators.compose([
+        Validators.required,
+        CustomValidators.rangeLength([3, 15]),
+        Validators.pattern('^[A-Za-z0-9_-]{3,15}$'),
+      ])],
+      email: ['', Validators.compose([
+        Validators.required,
+        CustomValidators.email,
+      ])],
+      password: ['', Validators.compose([
+        Validators.minLength(6)
+      ])],
+      confirmed_at: ['', Validators.compose([])],
+      blocked_at: ['', Validators.compose([])],
+      role: ['', Validators.compose([
+        Validators.required,
+      ])],
+      // permissions: ['', Validators.compose([])],
+      permissions: formBuilder.array([]),
+      status: ['', Validators.compose([
+        Validators.required,
+      ])],
+    }, {
+      validator: validateDateTime(['confirmed_at', 'blocked_at'])
+    });
 
-            ])],
-            status: ['', Validators.compose([
-                Validators.required,
-                // Custom validator for checking value against list of values
-            ])],
-        }, {
-            validator: validateDateTime(['confirmed_at', 'blocked_at'])
-        });
+    this.statusTypes = StaffDataService.getStatusTypes();
+    this.roleTypes = StaffDataService.getRoleTypes();
 
-        this._statusTypes = StaffDataService.getStatusTypes();
-        this._roleTypes = StaffDataService.getRoleTypes();
+    this.form.valueChanges
+        .subscribe(data => this.onValueChanged(data));
 
-        this._form.valueChanges
-            .subscribe(data => this.onValueChanged(data));
+  }
 
+  setFormErrors(errorFields: any): void {
+    for (let key in errorFields) {
+      let errorField = errorFields[key];
+      // skip loop if the property is from prototype
+      if (!this.formErrors.hasOwnProperty(key)) continue;
+
+      // let message = errorFields[error.field];
+      this.formErrors[key].valid = false;
+      this.formErrors[key].message = errorField;
     }
+  }
 
-    private _setFormErrors(errorFields:any):void{
-        for (let key in errorFields) {
-            let errorField = errorFields[key];
-            // skip loop if the property is from prototype
-            if (!this._formErrors.hasOwnProperty(key)) continue;
+  setFormField(field, value) {
+    this.form.controls[field].setValue(value);
+  }
 
-            // let message = errorFields[error.field];
-            this._formErrors[key].valid = false;
-            this._formErrors[key].message = errorField;
+  resetFormErrors(): void {
+    this.formErrors = {
+      username: { valid: true, message: '' },
+      email: { valid: true, message: '' },
+      password: { valid: true, message: '' },
+      confirmed_at: { valid: true, message: '' },
+      blocked_at: { valid: true, message: '' },
+      role: { valid: true, message: '' },
+      permissions: { valid: true, message: '' },
+      status: { valid: true, message: '' },
+
+    };
+  }
+
+  isValid(field): boolean {
+    let isValid: boolean = false;
+
+    // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
+    if (this.form.controls[field].touched == false) {
+      isValid = true;
+    }
+    // If the field is touched and valid value, then it is considered as valid.
+    else if (this.form.controls[field].touched == true && this.form.controls[field].valid == true) {
+      isValid = true;
+    }
+    return isValid;
+  }
+
+  public onValueChanged(data?: any) {
+    if (!this.form) {
+      return;
+    }
+    const form = this.form;
+    for (let field in this.formErrors) {
+      // clear previous error message (if any)
+      let control = form.get(field);
+      if (control && control.dirty) {
+        this.formErrors[field].valid = true;
+        this.formErrors[field].message = '';
+      }
+    }
+  }
+
+  resetStaff() {
+    this.staff = new Staff();
+    this.staff.username = '';
+    this.staff.email = '';
+    this.staff.password = '';
+    this.staff.confirmed_at = '';
+    this.staff.blocked_at = '';
+    this.staff.role = 50;
+    this.staff.permissions = [];
+    this.staff.status = 10;
+
+    this.setStaffToForm();
+  }
+
+  private setStaffToForm() {
+    _.forIn(this.staff, (value, key) => {
+      if (typeof this.form.controls[key] !== 'undefined') {
+        if (key === 'permissions') {
+          const formControls = value.map((v, k) => {
+            return this.formBuilder.control(v.checked);
+          });
+          const formArray = this.formBuilder.array(formControls);
+          this.form.setControl(key, formArray);
+        } else if (key === 'confirmed_at' || key === 'blocked_at') {
+
+          if (moment.isMoment(value)) {
+            this.form.controls[key].setValue(value.format(environment.customDateTimeFormat.apiFormat));
+          } else if (moment(value).isValid()) {
+            this.form.controls[key].setValue(moment(value).format(environment.customDateTimeFormat.apiFormat))
+          } else {
+            this.form.controls[key].setValue('');
+          }
+
+          this.form.controls[key].setValue(value !== null && value !== '' ? moment.unix(value).format(environment.customDateTimeFormat.apiFormat) : '');
+        } else {
+          this.form.controls[key].setValue(value);
         }
-    }
+      }
+    });
+  }
 
-    private _resetFormErrors():void{
-        this._formErrors = {
-            username: {valid: true, message: ''},
-            email: {valid: true, message: ''},
-            password: {valid: true, message: ''},
-            confirmed_at: {valid: true, message: ''},
-            blocked_at: {valid: true, message: ''},
-            role: {valid: true, message: ''},
-            permissions: {valid: true, message: ''},
-            status: {valid: true, message: ''},
-
-        };
-    }
-
-    private _isValid(field):boolean {
-        let isValid:boolean = false;
-
-        // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
-        if(this._form.controls[field].touched == false) {
-            isValid = true;
+  private setFormToStaff() {
+    _.forIn(this.form.getRawValue(), (value, key) => {
+      if (typeof this.staff[key] !== 'undefined') {
+        if (key === 'permissions') {
+          this.staff[key] = value.map((v, k) => {
+            const newPermission = this.staff[key][k];
+            newPermission.checked = v;
+            return newPermission;
+          });
+        } else if (key === 'confirmed_at' || key === 'blocked_at') {
+          if (moment.isMoment(value)) {
+            this.staff[key] = value.unix();
+          } else if (moment(value).isValid()) {
+            this.staff[key] = moment(value).unix()
+          } else {
+            this.staff[key] = null;
+          }
+        } else {
+          this.staff[key] = value;
         }
-        // If the field is touched and valid value, then it is considered as valid.
-        else if(this._form.controls[field].touched == true && this._form.controls[field].valid == true) {
-            isValid = true;
-        }
+      }
+    });
+  }
 
-        return isValid;
+  public ngOnInit() {
+    this.resetFormErrors();
+    this.resetStaff();
+
+    // _route is activated route service. this.route.params is observable.
+    // subscribe is method that takes function to retrieve parameters when it is changed.
+    this.parameters = this.activatedRoute.params.subscribe(params => {
+      // plus(+) is to convert 'id' to number
+      if (typeof params['id'] !== 'undefined') {
+        this.id = Number.parseInt(params['id']);
+        this.errorMessage = '';
+        this.staffDataService.getStaffById(this.id)
+            .subscribe(
+                staff => {
+                  this.staff = staff;
+                  this.setStaffToForm();
+                  this.mode = 'update';
+                },
+                error => {
+                  // unauthorized access
+                  if (error.status == 401 || error.status == 403) {
+                    this.staffService.unauthorizedAccess(error);
+                  } else {
+                    this.errorMessage = error.data.message;
+                  }
+                }
+            );
+      } else {
+        this.mode = 'create';
+
+        this.staffDataService.getPermissionTypes()
+            .subscribe(
+                result => {
+                  let permissions = result;
+                  if (permissions.length > 0) {
+                    permissions.forEach((permission, index) => {
+                      permissions[index]['checked'] = true;
+                    });
+                  }
+
+                  this.staff.permissions = permissions;
+                  this.setStaffToForm();
+                },
+                error => {
+                  // unauthorized access
+                  if (error.status == 401 || error.status == 403) {
+                    this.staffService.unauthorizedAccess(error);
+                  } else {
+                    this.errorMessage = error.data.message;
+                  }
+                }
+            );
+      }
+    });
+  }
+
+  public ngOnDestroy() {
+    this.parameters.unsubscribe();
+    this.staff = new Staff();
+    this.setStaffToForm();
+  }
+
+  public onSubmit() {
+    this.submitted = true;
+    this.resetFormErrors();
+
+    this.setFormToStaff();
+
+    if (this.mode == 'create') {
+      this.staffDataService.addStaff(this.staff)
+          .subscribe(
+              result => {
+                if (result.success) {
+                  this.router.navigate(['/staff']);
+                } else {
+                  this.submitted = false;
+                }
+              },
+              error => {
+                this.submitted = false;
+                // Validation errors
+                if (error.status == 422) {
+                  let errorFields = JSON.parse(error.data.message);
+                  this.setFormErrors(errorFields);
+                }
+                // Unauthorized Access
+                if (error.status == 401 || error.status == 403) {
+                  this.staffService.unauthorizedAccess(error);
+                }
+                // All other errors
+                else {
+                  this.errorMessage = error.data.message;
+                }
+              }
+          );
+    } else if (this.mode == 'update') {
+      this.staffDataService.updateStaffById(this.staff)
+          .subscribe(
+              result => {
+                if (result.success) {
+                  this.router.navigate(['/staff']);
+                } else {
+                  this.submitted = false;
+                }
+              },
+              error => {
+                this.submitted = false;
+                // Validation errors
+                if (error.status == 422) {
+                  let errorFields = JSON.parse(error.data.message);
+                  this.setFormErrors(errorFields);
+                  //this.setFormErrors(error.data);
+                }
+                // Unauthorized Access
+                else if (error.status == 401 || error.status == 403) {
+                  this.staffService.unauthorizedAccess(error);
+                }
+                // All other errors
+                else {
+                  this.errorMessage = error.data.message;
+                }
+              }
+          );
     }
-
-    public onValueChanged(data?: any) {
-        if (!this._form) { return; }
-        const form = this._form;
-        for (let field in this._formErrors) {
-            // clear previous error message (if any)
-            let control = form.get(field);
-            if (control && control.dirty) {
-                this._formErrors[field].valid = true;
-                this._formErrors[field].message = '';
-            }
-        }
-    }
-
-    private _resetStaff(){
-        this._staff = new Staff();
-        this._staff.username = '';
-        this._staff.email = '';
-        this._staff.password = '';
-        this._staff.confirmed_at = '';
-        this._staff.blocked_at = '';
-        this._staff.role = 50;
-        this._staff.permissions = [];
-        this._staff.status = 10;
-    }
-
-    public ngOnInit() {
-        this._resetFormErrors();
-        this._resetStaff();
-
-
-        // _route is activated route service. this._route.params is observable.
-        // subscribe is method that takes function to retrieve parameters when it is changed.
-        this._parameters = this._activatedRoute.params.subscribe(params => {
-            // plus(+) is to convert 'id' to number
-            if(typeof params['id'] !== "undefined") {
-                this._id = Number.parseInt(params['id']);
-                this._errorMessage = "";
-                this._staffDataService.getStaffById(this._id)
-                    .subscribe(
-                        staff => {
-                            this._staff = staff;
-                            this._mode = 'update';
-                        },
-                        error => {
-                            // unauthorized access
-                            if(error.status == 401 || error.status == 403) {
-                                this._staffService.unauthorizedAccess(error);
-                            } else {
-                                this._errorMessage = error.data.message;
-                            }
-                        }
-                    );
-            } else {
-                this._mode = 'create';
-
-                this._staffDataService.getPermissionTypes()
-                    .subscribe(
-                        result => {
-                            let permissions = result;
-                            if(permissions.length > 0) {
-                                permissions.forEach((permission, index) => {
-                                    permissions[index]['checked'] = true;
-                                });
-                            }
-
-                            this._staff.permissions = permissions;
-                        },
-                        error => {
-                            // unauthorized access
-                            if(error.status == 401 || error.status == 403) {
-                                this._staffService.unauthorizedAccess(error);
-                            } else {
-                                this._errorMessage = error.data.message;
-                            }
-                        }
-                    );
-            }
-        });
-    }
-
-    public ngOnDestroy() {
-        this._parameters.unsubscribe();
-        this._staff = new Staff();
-    }
-
-    public onSubmit() {
-        this._submitted = true;
-        this._resetFormErrors();
-        if(this._mode == 'create') {
-            this._staffDataService.addStaff(this._staff)
-                .subscribe(
-                    result => {
-                        if(result.success) {
-                            this._router.navigate(['/staff']);
-                        } else {
-                            this._submitted = false;
-                        }
-                    },
-                    error => {
-                        this._submitted = false;
-                        // Validation errors
-                        if(error.status == 422) {
-                            let errorFields = JSON.parse(error.data.message);
-                            this._setFormErrors(errorFields);
-                        }
-                        // Unauthorized Access
-                        if(error.status == 401 || error.status == 403) {
-                            this._staffService.unauthorizedAccess(error);
-                        }
-                        // All other errors
-                        else {
-                            this._errorMessage = error.data.message;
-                        }
-                    }
-                );
-        } else if(this._mode == 'update') {
-            this._staffDataService.updateStaffById(this._staff)
-                .subscribe(
-                    result => {
-                        if(result.success) {
-                            this._router.navigate(['/staff']);
-                        } else {
-                            this._submitted = false;
-                        }
-                    },
-                    error => {
-                        this._submitted = false;
-                        // Validation errors
-                        if(error.status == 422) {
-                            let errorFields = JSON.parse(error.data.message);
-                            this._setFormErrors(errorFields);
-                            //this._setFormErrors(error.data);
-                        }
-                        // Unauthorized Access
-                        else if(error.status == 401 || error.status == 403) {
-                            this._staffService.unauthorizedAccess(error);
-                        }
-                        // All other errors
-                        else {
-                            this._errorMessage = error.data.message;
-                        }
-                    }
-                );
-        }
-    }
-
-    public onChangeDateTime(type:string, dateTime:string) {
-        let formattedDateTime:string = null;
-        if(moment(dateTime).isValid()) {
-            formattedDateTime = moment(dateTime).format("YYYY-MM-DD HH:mm:ss");
-        }
-
-        if(type == 'confirmed_at') {
-            this._staff.confirmed_at = formattedDateTime;
-        } else if(type == 'blocked_at') {
-            this._staff.blocked_at = formattedDateTime;
-        }
-    }
+  }
 }
 
-function validateDateTime(fieldKeys:any){
-    return (group: FormGroup) => {
-        for(let i = 0; i < fieldKeys.length; i++) {
-            let field = group.controls[fieldKeys[i]];
-            if(typeof field !== "undefined" && (field.value != "" && field.value != null)) {
-                if(moment(field.value, "YYYY-MM-DD HH:mm:ss", true).isValid() == false) {
-                    return field.setErrors({validateDateTime: true});
-                }
-            }
+function validateDateTime(fieldKeys: any) {
+  return (group: FormGroup) => {
+    for (let i = 0; i < fieldKeys.length; i++) {
+      let field = group.controls[fieldKeys[i]];
+      if (typeof field !== 'undefined' && (field.value != '' && field.value != null)) {
+        if (moment(field.value, environment.customDateTimeFormat.parseInput, false).isValid() == false) {
+          return field.setErrors({ validateDateTime: true });
         }
+      }
     }
+  }
 }

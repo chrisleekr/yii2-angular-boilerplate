@@ -1,25 +1,21 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 
-import {AccountComponent} from './account.component';
-import {AccountEditComponent} from './account-edit.component';
-import {AccountRoutingModule} from './account-routing.module';
+import { AccountComponent } from './account.component';
+import { AccountEditComponent } from './account-edit.component';
+import { AccountRoutingModule } from './account-routing.module';
 
-import {MomentModule} from 'angular2-moment';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AccountRoutingModule,
-        MomentModule,
-    ],
-    declarations: [
-        AccountComponent,
-        AccountEditComponent,
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    AccountRoutingModule,
+    MomentModule
+  ],
+  declarations: [AccountComponent, AccountEditComponent]
 })
 export class AccountModule {
 }
