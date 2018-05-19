@@ -8,7 +8,7 @@ $config = [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
-            'cookieValidationKey' => 'K0I9yOJPLBqbaam4IWrqtelfxp1m1zEXB04f5H6D',
+            'cookieValidationKey' => getenv('COOKIE_VALIDATION_KEY'),
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
@@ -16,12 +16,14 @@ $config = [
         'cache' => [
 //            'class' => 'yii\caching\FileCache',
             'class' => 'yii\caching\MemCache',
-            'useMemcached' => true,
+            'useMemcached' => getenv('CACHE_USE_MEMCACHED'),
+            'username' => getenv('CACHE_USERNAME'),
+            'password' => getenv('CACHE_PASSWORD'),
             'servers' => [
                 [
-                    'host' => 'memcached',
-                    'port' => 11211,
-                    'weight' => 60,
+                    'host' => getenv('CACHE_SERVERS'),
+                    'port' => getenv('CACHE_PORT'),
+                    'weight' => getenv('CACHE_WEIGHT'),
                 ],
             ],
         ],

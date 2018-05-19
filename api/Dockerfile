@@ -124,4 +124,4 @@ RUN chown -R www-data:www-data /srv/ \
     && chmod 777 -R /srv/runtime
 
 EXPOSE 80
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["docker-entrypoint.sh"]

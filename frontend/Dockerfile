@@ -10,11 +10,6 @@ WORKDIR /app
 # Add path
 ENV PATH /app/node_modules/.bin:$PATH
 
-# Add configuration files
-COPY image-files/ /
-
-RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
-
 # Copy package*.json to app folder
 COPY package.json package-lock.json /app/
 
@@ -33,6 +28,10 @@ RUN npm run build -- --prod --build-optimizer
 #################################
 FROM nginx:1.13.9-alpine
 
+# Add configuration files
+COPY image-files/ /
+RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
+
 # Add path
 ENV PATH /usr/local/bin:$PATH
 
@@ -43,4 +42,4 @@ COPY --from=build /app/dist /srv/
 EXPOSE 80
 
 # Run entry point
-ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["docker-entrypoint.sh"]
