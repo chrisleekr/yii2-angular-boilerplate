@@ -3,6 +3,7 @@ export const environment = {
   apiHost: '//localhost/api/v1',
   tokenName: 'backend-token',
   customDateTimeFormat: {
+    apiFormat: 'YYYY-MM-DD HH:mm:ss',
     parseInput: 'YYYY/MM/DD HH:mm',
     fullPickerInput: 'YYYY/MM/DD HH:mm',
     datePickerInput: 'YYYY/MM/DD',
