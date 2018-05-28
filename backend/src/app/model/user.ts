@@ -1,5 +1,6 @@
 export class User {
   id: number;
+  row_num: number;
   username: string;
   email: string;
   password: string;

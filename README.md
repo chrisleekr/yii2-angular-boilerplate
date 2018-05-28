@@ -163,6 +163,7 @@ As mentioned earlier, you have to open `Developer Tool` to prevent cache if you 
 - [X] Apply JWT(JSON Web Token) for user authentication
 - [X] Upgrade Angular 4 to Angular 6
 - [X] Dockerize application
+- [X] Develop pagination and search features
 - [ ] Develop file uploader
 - [ ] Develop more test code 
 

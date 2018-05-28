@@ -1,33 +1,77 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 import { StaffDataService } from '../model/staff-data.service';
 import { Staff } from '../model/staff';
 import { StaffService } from '../model/staff.service';
+import { StaffList } from '../model/staff-list';
 
 @Component({
   templateUrl: './staff-list.component.html',
 })
 export class StaffListComponent implements OnInit {
-  staffs: Staff[];
+  staffList: StaffList;
   errorMessage: string;
+  loading: boolean;
+
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+
+  searchParams: any;
 
   constructor(private staffDataService: StaffDataService,
       private staffService: StaffService,
-      private router: Router) {
+      private router: Router,
+      private activatedRoute: ActivatedRoute) {
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    this.currentPage = typeof queryParams['page'] !== 'undefined' ? +queryParams['page'] : 1;
+
+    this.searchParams = {
+      page: this.currentPage,
+    };
+
+    if (typeof queryParams['q'] !== 'undefined') {
+      this.searchParams.q = queryParams['q'] + '';
+    }
   }
 
   ngOnInit() {
     this.getStaffs();
   }
 
+  onSearchFormSubmit() {
+    this.searchParams.page = 1;
+    this.currentPage = 1;
+    this.getStaffs();
+  }
+
+  /**
+   * Handle page changed from pagination
+   *
+   * @param event
+   */
+  pageChanged(event: any): void {
+    if (event.page !== this.currentPage) {
+      this.currentPage = event.page;
+      this.searchParams.page = this.currentPage;
+
+      this.getStaffs();
+    }
+  }
+
   public getStaffs() {
-    this.staffs = null;
-    this.staffDataService.getAllStaffs()
+    this.staffList = null;
+    this.loading = true;
+    this.router.navigate([], { queryParams: this.searchParams });
+
+    this.staffDataService.getAllStaffs(this.searchParams)
         .subscribe(
-            staffs => {
-              this.staffs = staffs
+            staffList => {
+              this.staffList = staffList;
+              this.totalCount = this.staffList.pagination.totalCount;
+              this.pageSize = this.staffList.pagination.defaultPageSize;
             },
             error => {
               // unauthorized access
@@ -36,6 +80,9 @@ export class StaffListComponent implements OnInit {
               } else {
                 this.errorMessage = error.data.message;
               }
+            },
+            () => {
+              this.loading = false;
             }
         );
   }
@@ -61,6 +108,7 @@ export class StaffListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
       preConfirm: function () {
+        parent.loading = true;
         return new Promise(function (resolve, reject) {
           parent.staffDataService.deleteStaffById(staff.id)
                 .subscribe(
@@ -76,7 +124,9 @@ export class StaffListComponent implements OnInit {
                         parent.errorMessage = error.data.message;
                       }
                       resolve();
-
+                    },
+                    () => {
+                      parent.loading = false;
                     }
                 );
         })

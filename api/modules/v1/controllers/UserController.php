@@ -11,12 +11,14 @@ use app\models\SignupConfirmForm;
 use app\models\SignupForm;
 use app\models\User;
 use app\models\UserEditForm;
+use app\models\UserSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
@@ -112,18 +114,19 @@ class UserController extends ActiveController
      * List users
      *
      * @return ActiveDataProvider
+     * @throws BadRequestHttpException
      */
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => User::find()->where([
-                '!=',
-                'status',
-                -1
-            ])->andWhere([
-                'role' => User::ROLE_USER
-            ])
-        ]);
+        $search = new UserSearch();
+        $search->load(\Yii::$app->request->get());
+        $search->in_roles = [User::ROLE_USER];
+        $search->not_in_status = [User::STATUS_DELETED];
+        if (!$search->validate()) {
+            throw new BadRequestHttpException('Invalid parameters: '.json_encode($search->getErrors()));
+        }
+
+        return $search->getDataProvider();
     }
 
     /**

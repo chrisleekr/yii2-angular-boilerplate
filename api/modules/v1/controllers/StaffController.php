@@ -5,6 +5,7 @@ namespace app\modules\v1\controllers;
 use app\filters\auth\HttpBearerAuth;
 use app\models\LoginForm;
 use app\models\User;
+use app\models\UserSearch;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
@@ -13,6 +14,7 @@ use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
 use yii\rbac\Permission;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
@@ -95,20 +97,19 @@ class StaffController extends ActiveController
      * Return list of staff members
      *
      * @return ActiveDataProvider
+     * @throws BadRequestHttpException
      */
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => User::find()->where([
-                '!=',
-                'status',
-                -1
-            ])->andWhere([
-                'in',
-                'role',
-                [User::ROLE_STAFF, User::ROLE_ADMIN]
-            ])
-        ]);
+        $search = new UserSearch();
+        $search->load(\Yii::$app->request->get());
+        $search->in_roles = [User::ROLE_STAFF, User::ROLE_ADMIN];
+        $search->not_in_status = [User::STATUS_DELETED];
+        if (!$search->validate()) {
+            throw new BadRequestHttpException('Invalid parameters: '.json_encode($search->getErrors()));
+        }
+
+        return $search->getDataProvider();
     }
 
     /**

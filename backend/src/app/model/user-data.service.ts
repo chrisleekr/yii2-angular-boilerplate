@@ -10,7 +10,9 @@ import { GlobalService } from './global.service';
 import { User } from './user';
 import { StaffService } from './staff.service';
 import { ResponseBody } from './response-body';
-
+import { SharedService } from '../shared/shared.service';
+import { UserList } from './user-list';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 @Injectable()
 export class UserDataService {
@@ -19,8 +21,8 @@ export class UserDataService {
       private globalService: GlobalService,
       private staffService: StaffService,
       private http: HttpClient
-  ) {}
-
+  ) {
+  }
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
@@ -48,7 +50,7 @@ export class UserDataService {
 
     return this.http
                .post<ResponseBody>(
-                   this.globalService.apiHost + '/user',
+                   this.getURLList(),
                    JSON.stringify(user),
                    {
                      headers: headers
@@ -66,7 +68,7 @@ export class UserDataService {
 
     return this.http
                .delete<ResponseBody>(
-                   this.globalService.apiHost + '/user/' + id,
+                   this.getURLList() + '/' + id,
                    {
                      headers: headers
                    }
@@ -83,11 +85,11 @@ export class UserDataService {
 
     return this.http
                .put<ResponseBody>(
-                   this.globalService.apiHost + '/user/' + user.id,
+                   this.getURLList() + '/' + user.id,
                    JSON.stringify(user),
                    {
                      headers: headers
-        }
+                   }
                )
                .map((response) => {
                  return response;
@@ -96,18 +98,27 @@ export class UserDataService {
   }
 
   // GET /v1/user
-  getAllUsers(): Observable<User[]> {
+  getAllUsers(extendedQueries?: any): Observable<UserList> {
     let headers = this.getHeaders();
+
+    let queries = {
+      'sort': '-id'
+    };
+    if (extendedQueries) {
+      queries = Object.assign(queries, extendedQueries);
+    }
+
+    let url = this.getURLList() + '?' + SharedService.serializeQueryString(queries);
 
     return this.http
                .get<ResponseBody>(
-                   this.globalService.apiHost + '/user?sort=-id',
+                   url,
                    {
                      headers: headers
                    }
                )
                .map((response) => {
-                 return <User[]>response.data;
+                 return new UserList(response.data);
                })
                .catch(this.handleError);
   }
@@ -118,7 +129,7 @@ export class UserDataService {
 
     return this.http
                .get<ResponseBody>(
-                   this.globalService.apiHost + '/user/' + id,
+                   this.getURLList() + '/' + id,
                    {
                      headers: headers
                    }
@@ -141,8 +152,10 @@ export class UserDataService {
     } else {
       errorMessage = response.error;
     }
-
-    return Observable.throw(errorMessage);
+    return throwError(errorMessage);
   }
 
+  private getURLList() {
+    return this.globalService.apiHost + '/user';
+  }
 }

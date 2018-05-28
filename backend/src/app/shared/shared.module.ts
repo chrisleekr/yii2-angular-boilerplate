@@ -5,6 +5,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { OwlDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 import { environment } from '../../environments/environment';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -15,7 +16,8 @@ export const CUSTOM_DATETIME_FORMATS = environment.customDateTimeFormat;
     FormsModule,
     ReactiveFormsModule,
     MomentModule,
-    OwlDateTimeModule, OwlMomentDateTimeModule
+    OwlDateTimeModule, OwlMomentDateTimeModule,
+    PaginationModule.forRoot(),
   ],
   declarations: [
     SpinnerComponent,
@@ -25,7 +27,8 @@ export const CUSTOM_DATETIME_FORMATS = environment.customDateTimeFormat;
     ReactiveFormsModule,
     MomentModule,
     SpinnerComponent,
-    OwlDateTimeModule, OwlMomentDateTimeModule
+    OwlDateTimeModule, OwlMomentDateTimeModule,
+    PaginationModule,
   ],
   providers: [
     { provide: OWL_DATE_TIME_FORMATS, useValue: CUSTOM_DATETIME_FORMATS },

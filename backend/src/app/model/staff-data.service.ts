@@ -10,6 +10,9 @@ import { GlobalService } from './global.service';
 import { Staff } from './staff';
 import { StaffService } from './staff.service';
 import { ResponseBody } from './response-body';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { SharedService } from '../shared/shared.service';
+import { StaffList } from './staff-list';
 
 @Injectable()
 export class StaffDataService {
@@ -64,7 +67,7 @@ export class StaffDataService {
 
     return this.http
                .post<ResponseBody>(
-                   this.globalService.apiHost + '/staff',
+                   this.getURLList(),
                    JSON.stringify(staff),
                    { headers: headers }
                )
@@ -80,7 +83,7 @@ export class StaffDataService {
 
     return this.http
                .delete<ResponseBody>(
-                   this.globalService.apiHost + '/staff/' + id,
+                   this.getURLList() + '/' + id,
                    { headers: headers }
                )
                .map(response => {
@@ -95,7 +98,7 @@ export class StaffDataService {
 
     return this.http
                .put<ResponseBody>(
-                   this.globalService.apiHost + '/staff/' + staff.id,
+                   this.getURLList() + '/' + staff.id,
                    JSON.stringify(staff),
                    { headers: headers }
                )
@@ -106,16 +109,25 @@ export class StaffDataService {
   }
 
   // GET /v1/staff
-  getAllStaffs(): Observable<Staff[]> {
+  getAllStaffs(extendedQueries?: any): Observable<StaffList> {
     let headers = this.getHeaders();
+
+    let queries = {
+      'sort': '-id'
+    };
+    if (extendedQueries) {
+      queries = Object.assign(queries, extendedQueries);
+    }
+
+    let url = this.getURLList() + '?' + SharedService.serializeQueryString(queries);
 
     return this.http
                .get<ResponseBody>(
-                   this.globalService.apiHost + '/staff?sort=-id',
+                   url,
                    { headers: headers }
                )
                .map(response => {
-                 return <Staff[]>response.data;
+                 return new StaffList(response.data);
                })
                .catch(this.handleError);
   }
@@ -126,7 +138,7 @@ export class StaffDataService {
 
     return this.http
                .get<ResponseBody>(
-                   this.globalService.apiHost + '/staff/' + id,
+                   this.getURLList() + '/' + id,
                    { headers: headers }
                )
                .map(response => {
@@ -140,7 +152,7 @@ export class StaffDataService {
 
     return this.http
                .get<ResponseBody>(
-                   this.globalService.apiHost + '/staff/get-permissions',
+                   this.getURLList() + '/get-permissions',
                    { headers: headers }
                )
                .map(response => {
@@ -163,6 +175,11 @@ export class StaffDataService {
       errorMessage = response.error;
     }
 
-    return Observable.throw(errorMessage);
+    return throwError(errorMessage);
   }
+
+  private getURLList() {
+    return this.globalService.apiHost + '/staff';
+  }
+
 }

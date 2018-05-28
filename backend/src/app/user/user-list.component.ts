@@ -1,33 +1,80 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 import { UserDataService } from '../model/user-data.service';
 import { User } from '../model/user';
 import { StaffService } from '../model/staff.service';
+import { UserList } from '../model/user-list';
 
 @Component({
   templateUrl: './user-list.component.html',
 })
 export class UserListComponent implements OnInit {
-  users: User[];
+  userList: UserList;
   errorMessage: string;
+
+  loading: boolean;
+
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+
+  searchParams: any;
 
   constructor(private userDataService: UserDataService,
       private staffService: StaffService,
-      private router: Router) {
+      private router: Router,
+      private activatedRoute: ActivatedRoute) {
+
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    this.currentPage = typeof queryParams['page'] !== 'undefined' ? +queryParams['page'] : 1;
+
+    this.searchParams = {
+      page: this.currentPage,
+    };
+
+    if (typeof queryParams['q'] !== 'undefined') {
+      this.searchParams.q = queryParams['q'] + '';
+    }
   }
 
   ngOnInit() {
     this.getUsers();
   }
 
+  onSearchFormSubmit() {
+    this.searchParams.page = 1;
+    this.currentPage = 1;
+    this.getUsers();
+  }
+
+  /**
+   * Handle page changed from pagination
+   *
+   * @param event
+   */
+  pageChanged(event: any): void {
+    if (event.page !== this.currentPage) {
+      this.currentPage = event.page;
+      this.searchParams.page = this.currentPage;
+
+      this.getUsers();
+    }
+  }
+
+
   public getUsers() {
-    this.users = null;
-    this.userDataService.getAllUsers()
+    this.userList = null;
+    this.loading = true;
+    this.router.navigate([], { queryParams: this.searchParams });
+
+    this.userDataService.getAllUsers(this.searchParams)
         .subscribe(
-            users => {
-              this.users = users
+            userList => {
+              this.userList = userList;
+              this.totalCount = this.userList.pagination.totalCount;
+              this.pageSize = this.userList.pagination.defaultPageSize;
             },
             error => {
               // unauthorized access
@@ -36,6 +83,9 @@ export class UserListComponent implements OnInit {
               } else {
                 this.errorMessage = error.data.message;
               }
+            },
+            () => {
+              this.loading = false;
             }
         );
   }
@@ -61,6 +111,7 @@ export class UserListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
       preConfirm: function () {
+        parent.loading = true;
         return new Promise(function (resolve, reject) {
           parent.userDataService.deleteUserById(user.id)
                 .subscribe(
@@ -77,6 +128,9 @@ export class UserListComponent implements OnInit {
                       }
                       resolve();
 
+                    },
+                    () => {
+                      parent.loading = false;
                     }
                 );
         })
