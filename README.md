@@ -77,8 +77,8 @@ To run the application, you will need `docker` and `docker-compose` installed.
 Open the console and execute following commands.
 
 ```
-$ git clone https://github.com/chrisleekr/yii2-ngx-boilerplate.git
-$ cd yii2-ngx-boilerplate 
+$ git clone https://github.com/chrisleekr/yii2-angular-boilerplate.git
+$ cd yii2-angular-boilerplate 
 $ cp .env-dist .env
 $ docker-compose up -d
 ```
