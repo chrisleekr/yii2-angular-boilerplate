@@ -102,11 +102,12 @@ With `docker-compose`, following containers will be configured. Please make sure
 Once all containers are finished compiling, then open the browser.
 
 * **REST API - Yii 2**: [http://localhost/api/debug](http://localhost/api/debug)
-    - To make sure API is working, go to [http://localhost/api/ping](http://localhost/api/ping). You must see `pong` message.
+    - To make sure API is working, go to [http://localhost/api/ping](http://localhost/api/ping). You must see `pong` message.
     - To access docker container, use following command:
         ```
         $ docker exec -it api /bin/sh
         ```
+        
 * **Backend - Angular**: [http://localhost/backend](http://localhost/backend)
     - Administrator username: `admin`, password: `123456`
     - Staff username: `staff`, password: `123456`
@@ -120,6 +121,7 @@ Once all containers are finished compiling, then open the browser.
         ```
     - Note that the **live reloading feature has been disabled** due to restriction. 
     - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/backend/image-files/usr/local/bin/docker-entrypoint-dev.sh`. 
+    
 * **Frontend - Angular**: [http://localhost/frontend](http://localhost/frontend)
     - Username: `user`, password `123456`
     - To see compile process, use following command:
