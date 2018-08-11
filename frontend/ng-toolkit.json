@@ -1,0 +1,7 @@
+{
+  "universal": {
+    "skipInstall": false,
+    "directory": ".",
+    "project": "boilerplate-frontend"
+  }
+}

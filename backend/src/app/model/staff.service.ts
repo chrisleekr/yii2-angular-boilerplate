@@ -76,7 +76,7 @@ export class StaffService {
 
   public unauthorizedAccess(error: any): void {
     this.logout();
-    this.router.navigate([ '/login' ]);
+    this.router.navigate(['/login']);
   }
 
   public isLoggedIn(): boolean {

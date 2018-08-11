@@ -111,9 +111,9 @@ class UserController extends ActiveController
     }
 
     /**
-     * List users
+     * Search users
      *
-     * @return ActiveDataProvider
+     * @return array
      * @throws BadRequestHttpException
      */
     public function actionIndex()

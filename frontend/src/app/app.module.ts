@@ -1,7 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { JwtModule } from '@auth0/angular-jwt';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 // Routing Module
@@ -20,9 +19,15 @@ import { UserDataService } from './model/user-data.service';
 import { SettingDataService } from './model/setting-data.service';
 // 3rd Party
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgtUniversalModule } from '@ng-toolkit/universal';
+import { LOCAL_STORAGE } from '@ng-toolkit/universal';
 
-export function tokenGetter() {
-  return localStorage.getItem(environment.tokenName);
+export function jwtOptionsFactory(localStorage) {
+  return {
+    tokenGetter: () => {
+      return localStorage.getItem(environment.tokenName) || '';
+    }
+  }
 }
 
 @NgModule({
@@ -32,15 +37,17 @@ export function tokenGetter() {
     P404Component
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
     BsDropdownModule.forRoot(),
+    NgtUniversalModule,
     JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: [environment.apiHost]
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [LOCAL_STORAGE]
       }
     })
   ],
@@ -55,7 +62,6 @@ export function tokenGetter() {
     SettingDataService,
     UserDataService
   ],
-  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

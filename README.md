@@ -1,6 +1,6 @@
 # Yii2 REST API + Angular 6 Boilerplate
 
-This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 6 with Bootstrap 4.
+This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 6 with Bootstrap 4. Frontend project is compatible to provide server-side rendering(Angular Universal) using [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit).
 
 The project involves:
 * API
@@ -8,7 +8,7 @@ The project involves:
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
     - Angular 6, Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
-    - Angular 6, Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert
+    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert
 
 **Architecture Diagram**
 
@@ -18,6 +18,9 @@ The project involves:
 
 ![Demo](screenshots/demo.gif)
 
+**Frontend - Server-side rendering (Angular Universal)**
+
+![Service Side Rendering](screenshots/universal-server-side-rendering.jpg)
 
 ## Features
 - API
@@ -51,6 +54,7 @@ The project involves:
     * Setting Management
         - Admin or staff who has a permission 'manageSettings' can create/update/delete setting information.
 - Frontend
+    * Support Angular Universal/server-side rendering
     * User Login/Logout     
         - User can login with username and password.
         - API generates JWT(JSON Web Token) upon successful login.
@@ -77,8 +81,8 @@ To run the application, you will need `docker` and `docker-compose` installed.
 Open the console and execute following commands.
 
 ```
-$ git clone https://github.com/chrisleekr/yii2-angular-boilerplate.git
-$ cd yii2-angular-boilerplate 
+$ git clone https://github.com/chrisleekr/yii2-ngx-boilerplate.git
+$ cd yii2-ngx-boilerplate 
 $ cp .env-dist .env
 $ docker-compose up -d
 ```
@@ -148,6 +152,7 @@ Once all containers are finished compiling, then open the browser.
     - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to `dockerfile: ./Dockerfile`.
 2. Frontend
     - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to `dockerfile: ./Dockerfile`.
+    - Note that production Dockerfile will use [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit) to provide server side rendering, which means you will be able to provide compiled HTML for search engine.
 
 
 ## Troubleshootings
@@ -163,7 +168,7 @@ As mentioned earlier, you have to open `Developer Tool` to prevent cache if you 
 - [X] Apply JWT(JSON Web Token) for user authentication
 - [X] Upgrade Angular 4 to Angular 6
 - [X] Dockerize application
-- [X] Develop pagination and search features
+- [X] Apply [server side rendering](https://github.com/maciejtreder/ng-toolkit) for Frontend project
 - [ ] Develop file uploader
 - [ ] Develop more test code 
 

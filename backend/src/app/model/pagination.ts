@@ -1,7 +1,6 @@
 export class Pagination {
   pageParam: string;
   pageSizeParam: string;
-  forcePageParam: boolean;
   params: any;
   totalCount: number;
   defaultPageSize: number;

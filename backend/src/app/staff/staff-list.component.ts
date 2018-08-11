@@ -13,13 +13,12 @@ import { StaffList } from '../model/staff-list';
 export class StaffListComponent implements OnInit {
   staffList: StaffList;
   errorMessage: string;
-  loading: boolean;
 
+  loading: boolean;
+  searchParams: any;
   totalCount: number;
   currentPage: number;
   pageSize: number;
-
-  searchParams: any;
 
   constructor(private staffDataService: StaffDataService,
       private staffService: StaffService,
@@ -28,22 +27,30 @@ export class StaffListComponent implements OnInit {
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.currentPage = typeof queryParams['page'] !== 'undefined' ? +queryParams['page'] : 1;
 
-    this.searchParams = {
-      page: this.currentPage,
-    };
+    // Load search params
+    this.searchParams = {};
+
+    // Override page
+    this.searchParams.page = this.currentPage;
 
     if (typeof queryParams['q'] !== 'undefined') {
       this.searchParams.q = queryParams['q'] + '';
     }
   }
 
-  ngOnInit() {
-    this.getStaffs();
-  }
-
   onSearchFormSubmit() {
     this.searchParams.page = 1;
     this.currentPage = 1;
+    this.getStaffs();
+  }
+
+  /**
+   * Clear search params
+   */
+  clearSearchParams() {
+    // Load search params
+    this.searchParams = {};
+
     this.getStaffs();
   }
 
@@ -61,9 +68,14 @@ export class StaffListComponent implements OnInit {
     }
   }
 
+  ngOnInit() {
+    this.getStaffs();
+  }
+
   public getStaffs() {
     this.staffList = null;
     this.loading = true;
+
     this.router.navigate([], { queryParams: this.searchParams });
 
     this.staffDataService.getAllStaffs(this.searchParams)
@@ -72,6 +84,7 @@ export class StaffListComponent implements OnInit {
               this.staffList = staffList;
               this.totalCount = this.staffList.pagination.totalCount;
               this.pageSize = this.staffList.pagination.defaultPageSize;
+              this.loading = false;
             },
             error => {
               // unauthorized access
@@ -80,9 +93,6 @@ export class StaffListComponent implements OnInit {
               } else {
                 this.errorMessage = error.data.message;
               }
-            },
-            () => {
-              this.loading = false;
             }
         );
   }
@@ -114,6 +124,7 @@ export class StaffListComponent implements OnInit {
                 .subscribe(
                     result => {
                       parent.getStaffs();
+                      parent.loading = false;
                       resolve();
                     },
                     error => {
@@ -124,9 +135,7 @@ export class StaffListComponent implements OnInit {
                         parent.errorMessage = error.data.message;
                       }
                       resolve();
-                    },
-                    () => {
-                      parent.loading = false;
+
                     }
                 );
         })

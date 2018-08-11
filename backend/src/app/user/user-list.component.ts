@@ -15,37 +15,42 @@ export class UserListComponent implements OnInit {
   errorMessage: string;
 
   loading: boolean;
-
+  searchParams: any;
   totalCount: number;
   currentPage: number;
   pageSize: number;
-
-  searchParams: any;
 
   constructor(private userDataService: UserDataService,
       private staffService: StaffService,
       private router: Router,
       private activatedRoute: ActivatedRoute) {
-
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.currentPage = typeof queryParams['page'] !== 'undefined' ? +queryParams['page'] : 1;
 
-    this.searchParams = {
-      page: this.currentPage,
-    };
+    // Load search params
+    this.searchParams = {};
+
+    // Override page
+    this.searchParams.page = this.currentPage;
 
     if (typeof queryParams['q'] !== 'undefined') {
       this.searchParams.q = queryParams['q'] + '';
     }
   }
 
-  ngOnInit() {
-    this.getUsers();
-  }
-
   onSearchFormSubmit() {
     this.searchParams.page = 1;
     this.currentPage = 1;
+    this.getUsers();
+  }
+
+  /**
+   * Clear search params
+   */
+  clearSearchParams() {
+    // Load search params
+    this.searchParams = {};
+
     this.getUsers();
   }
 
@@ -63,18 +68,24 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  ngOnInit() {
+    this.getUsers();
+  }
 
   public getUsers() {
     this.userList = null;
     this.loading = true;
+
     this.router.navigate([], { queryParams: this.searchParams });
 
     this.userDataService.getAllUsers(this.searchParams)
         .subscribe(
             userList => {
               this.userList = userList;
+              console.log(userList);
               this.totalCount = this.userList.pagination.totalCount;
               this.pageSize = this.userList.pagination.defaultPageSize;
+              this.loading = false;
             },
             error => {
               // unauthorized access
@@ -83,8 +94,6 @@ export class UserListComponent implements OnInit {
               } else {
                 this.errorMessage = error.data.message;
               }
-            },
-            () => {
               this.loading = false;
             }
         );
@@ -117,6 +126,7 @@ export class UserListComponent implements OnInit {
                 .subscribe(
                     result => {
                       parent.getUsers();
+                      parent.loading = false;
                       resolve();
                     },
                     error => {
@@ -126,11 +136,8 @@ export class UserListComponent implements OnInit {
                       } else {
                         parent.errorMessage = error.data.message;
                       }
-                      resolve();
-
-                    },
-                    () => {
                       parent.loading = false;
+                      resolve();
                     }
                 );
         })

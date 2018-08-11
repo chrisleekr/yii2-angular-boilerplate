@@ -94,9 +94,9 @@ class StaffController extends ActiveController
     }
 
     /**
-     * Return list of staff members
+     * Search staff
      *
-     * @return ActiveDataProvider
+     * @return array
      * @throws BadRequestHttpException
      */
     public function actionIndex()
@@ -110,6 +110,7 @@ class StaffController extends ActiveController
         }
 
         return $search->getDataProvider();
+
     }
 
     /**

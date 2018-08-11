@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { Pagination } from './pagination';
 import { Staff } from './staff';
+import { Pagination } from './pagination';
 
 export class StaffList {
   rows: Staff[];

@@ -4,7 +4,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs/Observable';
@@ -12,6 +12,8 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from './../../environments/environment';
 import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
+
+import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 
 @Injectable()
 export class UserService {
@@ -22,7 +24,9 @@ export class UserService {
       private globalService: GlobalService,
       private router: Router,
       private jwtHelper: JwtHelperService,
-      private http: HttpClient
+      private http: HttpClient,
+      @Inject(WINDOW) private window: Window,
+      @Inject(LOCAL_STORAGE) private localStorage: any
   ) {
     this.loggedIn = this.isLoggedIn();
   }
@@ -47,13 +51,13 @@ export class UserService {
                )
                .map(response => {
                  if (response.success) {
-                   localStorage.setItem(
+                   this.localStorage.setItem(
                        environment.tokenName,
                        response.data.access_token
                    );
                    this.loggedIn = true;
                  } else {
-                   localStorage.removeItem(environment.tokenName);
+                   this.localStorage.removeItem(environment.tokenName);
                    this.loggedIn = false;
                  }
                  return response;
@@ -186,12 +190,12 @@ export class UserService {
   }
 
   public logout(): void {
-    localStorage.removeItem(environment.tokenName);
+    this.localStorage.removeItem(environment.tokenName);
     this.loggedIn = false;
   }
 
   public getToken(): any {
-    return localStorage.getItem(environment.tokenName);
+    return this.localStorage.getItem(environment.tokenName) || '';
   }
 
   public unauthorizedAccess(error: any): void {
@@ -200,7 +204,7 @@ export class UserService {
   }
 
   public isLoggedIn(): boolean {
-    return this.jwtHelper.isTokenExpired() !== true;
+    return this.jwtHelper.isTokenExpired(this.getToken()) !== true;
   }
 
   public getJWTValue(): any {
@@ -213,7 +217,7 @@ export class UserService {
   }
 
   private checkToken(): any {
-    return !!localStorage.getItem(environment.tokenName);
+    return !!this.localStorage.getItem(environment.tokenName);
   }
 
   private handleError(response: any) {

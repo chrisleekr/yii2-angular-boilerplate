@@ -19,7 +19,6 @@
             <strong>Total Count:</strong> {{totalCount}}
         </div>
     </div>
-
     <div class="table-responsive">
         <table class="table table-sm table-striped table-bordered table-valign-middle">
             <thead>
@@ -71,7 +70,7 @@
                 </td>
                 <td class="text-center">
                     <div *ngIf="user.status != -1">
-                        <button class="btn btn-primary btn-sm" type="button" (click)="viewUser(user)">
+                        <button class="btn btn-secondary btn-sm" type="button" (click)="viewUser(user)">
                             <i class="fa fa-edit"></i> Edit
                         </button>
                         &nbsp;
@@ -86,16 +85,24 @@
     </div>
 
     <div class="row">
-        <div class="col-5">
-            <pagination [totalItems]="totalCount" [(ngModel)]="currentPage" [boundaryLinks]="false" [directionLinks]="true" [maxSize]="5" [itemsPerPage]="pageSize" (pageChanged)="pageChanged($event)"></pagination>
+        <div class="col-12 col-sm-8">
+            <pagination [totalItems]="totalCount" [(ngModel)]="currentPage" [boundaryLinks]="true" [directionLinks]="true" [maxSize]="5" [itemsPerPage]="pageSize" (pageChanged)="pageChanged($event)"></pagination>
         </div>
-        <div class="col-4">
-            <form (ngSubmit)="onSearchFormSubmit()" novalidate>
-                <input type="text" class="form-control" id="search-q" placeholder="Enter any keyword to search" [(ngModel)]="searchParams['q']" name="q">
+        <div class="col-12 col-sm-4 text-right">
+            <a class="btn btn-primary ml-1" [routerLink]="['/user', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New User</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-6">
+
+        </div>
+        <div class="col-12 col-sm-6 text-right">
+            <form class="form-inline float-right" (ngSubmit)="onSearchFormSubmit()" novalidate>
+                <input type="text" class="form-control" id="search-q" placeholder="" [(ngModel)]="searchParams['q']" name="q">
+                <button class="btn btn-info ml-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+
             </form>
-        </div>
-        <div class="text-right col-3">
-            <a class="btn btn-block btn-primary" [routerLink]="['/user', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New User</a>
+
         </div>
     </div>
 
