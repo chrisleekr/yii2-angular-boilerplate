@@ -8,26 +8,33 @@
             <div class="form-group row mb-0" [ngClass]="{'has-danger': !isValid('username')}">
                 <div class="col-12">
                     <label for="username" class="sr-only">Username</label>
-                    <input type="email" id="username" class="form-control" placeholder="Username" [formControl]="loginForm.controls['username']" [ngClass]="{'form-control-danger': !isValid('username')}" required autofocus>
+                    <input type="email" id="username" class="form-control" placeholder="Username"
+                           [formControl]="loginForm.controls['username']"
+                           [ngClass]="{'form-control-danger': !isValid('username')}" required autofocus>
                 </div>
             </div>
             <div class="form-group row mb-0" [ngClass]="{'has-danger': !isValid('password')}">
                 <div class="col-12">
                     <label for="password" class="sr-only">Password</label>
-                    <input class="form-control" id="password" type="password" placeholder="Password" [formControl]="loginForm.controls['password']" [ngClass]="{'form-control-danger': !isValid('password')}" required>
+                    <input class="form-control" id="password" type="password" placeholder="Password"
+                           [formControl]="loginForm.controls['password']"
+                           [ngClass]="{'form-control-danger': !isValid('password')}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid || submitted == true">Sign in
-                        <spinner *ngIf="submitted"></spinner>
+                    <button type="submit" class="btn btn-lg btn-primary btn-block"
+                            [disabled]="!loginForm.valid || submitted == true">Sign in
+                        <app-spinner *ngIf="submitted"></app-spinner>
                     </button>
                 </div>
 
                 <div class="col-12 error-block mt-2">
                     <div *ngIf="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
-                    <div *ngIf="!formErrors.username.valid" class="alert alert-danger">{{formErrors.username.message}}</div>
-                    <div *ngIf="!formErrors.password.valid" class="alert alert-danger">{{formErrors.password.message}}</div>
+                    <div *ngIf="!formErrors.username.valid" class="alert alert-danger">{{formErrors.username.message}}
+                    </div>
+                    <div *ngIf="!formErrors.password.valid" class="alert alert-danger">{{formErrors.password.message}}
+                    </div>
                 </div>
             </div>
             <p class="mt-1 text-muted">&copy; {{today | amDateFormat:'Y'}}</p>

@@ -24,8 +24,8 @@ class m170125_081951_create_setting_table extends Migration
             'meta_value' => 'LONGTEXT',
             'is_public' => $this->boolean(),
             'status' => $this->boolean(),
-            'created_at' => Schema::TYPE_TIMESTAMP.' DEFAULT CURRENT_TIMESTAMP',
-            'updated_at' => Schema::TYPE_TIMESTAMP.' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+            'created_at' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP',
+            'updated_at' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
 
         // creates index for table `setting`

@@ -1,34 +1,35 @@
 <?php
-	/**
-	 * RBAC Controller
-	 *
-	 * Assigning a role to specific user
-	 *
-	 * $ ./yii rbac/assign {role} {username}
-	 * $ ./yii rbac/assign admin chris
-	 * $ ./yii rbac/assign staff alex
-	 */
-	namespace app\commands;
+/**
+ * RBAC Controller
+ *
+ * Assigning a role to specific user
+ *
+ * $ ./yii rbac/assign {role} {username}
+ * $ ./yii rbac/assign admin chris
+ * $ ./yii rbac/assign staff alex
+ */
 
-	use app\models\User;
-	use yii\base\InvalidParamException;
-	use yii\console\Controller;
+namespace app\commands;
 
-	class RbacController extends Controller
-	{
-		public function actionAssign($role, $username)
-		{
-			$user = User::find()->where(['username' => $username])->one();
-			if (!$user) {
-				throw new InvalidParamException("There is no user \"$username\".");
-			}
+use app\models\User;
+use yii\base\InvalidParamException;
+use yii\console\Controller;
 
-			$auth = \Yii::$app->authManager;
-			$roleObject = $auth->getRole($role);
-			if (!$roleObject) {
-				throw new InvalidParamException("There is no role \"$role\".");
-			}
+class RbacController extends Controller
+{
+    public function actionAssign($role, $username)
+    {
+        $user = User::find()->where(['username' => $username])->one();
+        if (!$user) {
+            throw new InvalidParamException("There is no user \"$username\".");
+        }
 
-			$auth->assign($roleObject, $user->id);
-		}
-	}
+        $auth = \Yii::$app->authManager;
+        $roleObject = $auth->getRole($role);
+        if (!$roleObject) {
+            throw new InvalidParamException("There is no role \"$role\".");
+        }
+
+        $auth->assign($roleObject, $user->id);
+    }
+}

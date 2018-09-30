@@ -1,6 +1,6 @@
 <div class="row justify-content-center mb-3">
     <div class="col-8 text-sm-center">
-        <img src="assets/img/ngx-bootstrap-logo.svg" width="50" />
+        <img src="assets/img/ngx-bootstrap-logo.svg" width="50"/>
     </div>
 </div>
 
@@ -9,7 +9,7 @@
         <div class="card mx-4" *ngIf="errorMessage != ''">
             <div class="card-body p-4">
                 <h1>Error occurred</h1>
-                <br />
+                <br/>
                 <p class="text-muted" style="white-space: pre;">{{errorMessage}}</p>
                 <div class="row">
                     <div class="col-6">
@@ -21,15 +21,15 @@
         <div class="card mx-4" *ngIf="submitted == true && isConfirmed == false">
             <div class="card-body p-4">
                 <h1>Confirming your account</h1>
-                <br />
-                <spinner></spinner>
-        
+                <br/>
+                <app-spinner></app-spinner>
+
             </div>
         </div>
         <div class="card mx-4" *ngIf="submitted == true && isConfirmed == true">
             <div class="card-body p-4">
                 <h1>Account Confirmed</h1>
-                <br />
+                <br/>
                 <p class="text-muted">
                     Your account has been confirmed. Please login now.
                 </p>

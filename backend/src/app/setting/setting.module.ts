@@ -6,7 +6,7 @@ import {SettingRoutingModule} from './setting-routing.module';
     imports: [
         SettingRoutingModule,
     ],
-    declarations: [
-    ]
+    declarations: []
 })
-export class SettingModule { }
+export class SettingModule {
+}

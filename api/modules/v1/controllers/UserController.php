@@ -13,7 +13,6 @@ use app\models\User;
 use app\models\UserEditForm;
 use app\models\UserSearch;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
@@ -123,7 +122,9 @@ class UserController extends ActiveController
         $search->in_roles = [User::ROLE_USER];
         $search->not_in_status = [User::STATUS_DELETED];
         if (!$search->validate()) {
-            throw new BadRequestHttpException('Invalid parameters: '.json_encode($search->getErrors()));
+            throw new BadRequestHttpException(
+                'Invalid parameters: ' . json_encode($search->getErrors())
+            );
         }
 
         return $search->getDataProvider();
@@ -189,15 +190,21 @@ class UserController extends ActiveController
      */
     public function actionView($id)
     {
-        $staff = User::find()->where([
-            'id' => $id
-        ])->andWhere([
-            '!=',
-            'status',
-            -1
-        ])->andWhere([
-            'role' => User::ROLE_USER
-        ])->one();
+        $staff = User::find()->where(
+            [
+                'id' => $id
+            ]
+        )->andWhere(
+            [
+                '!=',
+                'status',
+                -1
+            ]
+        )->andWhere(
+            [
+                'role' => User::ROLE_USER
+            ]
+        )->one();
 
         if ($staff) {
             return $staff;
@@ -226,7 +233,7 @@ class UserController extends ActiveController
 
         $response = \Yii::$app->getResponse();
         $response->setStatusCode(204);
-        return "ok";
+        return 'ok';
     }
 
     /**
@@ -280,7 +287,7 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(201);
 
-            $responseData = "true";
+            $responseData = 'true';
 
             return $responseData;
         } else {
@@ -332,7 +339,7 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(200);
 
-            $responseData = "true";
+            $responseData = 'true';
 
             return $responseData;
         } else {
@@ -356,7 +363,7 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(200);
 
-            $responseData = "true";
+            $responseData = 'true';
 
             return $responseData;
         } else {
@@ -380,7 +387,7 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(200);
 
-            $responseData = "true";
+            $responseData = 'true';
 
             return $responseData;
         } else {
@@ -411,7 +418,7 @@ class UserController extends ActiveController
             ];
         } else {
             // Validation error
-            throw new NotFoundHttpException("Object not found");
+            throw new NotFoundHttpException('Object not found');
         }
     }
 
@@ -435,7 +442,7 @@ class UserController extends ActiveController
                 $response = \Yii::$app->getResponse();
                 $response->setStatusCode(200);
 
-                $responseData = "true";
+                $responseData = 'true';
 
                 return $responseData;
             } else {
@@ -444,7 +451,7 @@ class UserController extends ActiveController
             }
         } else {
             // Validation error
-            throw new NotFoundHttpException("Object not found");
+            throw new NotFoundHttpException('Object not found');
         }
     }
 
@@ -456,6 +463,6 @@ class UserController extends ActiveController
      */
     public function actionOptions($id = null)
     {
-        return "ok";
+        return 'ok';
     }
 }

@@ -1,6 +1,6 @@
 <h1>
     Account Page</h1>
-<br />
+<br/>
 
 <div class="row" *ngIf="errorMessage">
     <div class="col-12">
@@ -8,7 +8,7 @@
     </div>
 </div>
 <div *ngIf="!mode && !errorMessage">
-    <spinner></spinner>
+    <app-spinner></app-spinner>
 </div>
 <div *ngIf="mode == 'update'">
     <div class="row">
@@ -34,15 +34,17 @@
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-8">
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email address" [formControl]="form.controls['email']"
-                                           [ngClass]="{'form-control-danger': !isValid('email')}" />
+                                    <input type="email" class="form-control" id="email"
+                                           placeholder="Enter email address" [formControl]="form.controls['email']"
+                                           [ngClass]="{'form-control-danger': !isValid('email')}"/>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-12" *ngIf="!formErrors.email.valid">
                                     <span class="help-block help-block-error">{{formErrors.email.message}}</span>
                                 </div>
                                 <div class="col-12">
-                                    <p class="help-text">* Email must be valid email address. i.e. sample@username.com. If you change new email address, then the
+                                    <p class="help-text">* Email must be valid email address. i.e. sample@username.com.
+                                        If you change new email address, then the
                                         email must be confirmed.</p>
                                 </div>
                             </div>
@@ -52,8 +54,9 @@
                             <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
                                 <label class="col-12" for="password">Password</label>
                                 <div class="col-6">
-                                    <input type="text" class="form-control" id="password" placeholder="Enter the password" [formControl]="form.controls['password']"
-                                           [ngClass]="{'form-control-danger': !isValid('password')}" />
+                                    <input type="text" class="form-control" id="password"
+                                           placeholder="Enter the password" [formControl]="form.controls['password']"
+                                           [ngClass]="{'form-control-danger': !isValid('password')}"/>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-12" *ngIf="!formErrors.password.valid">
@@ -70,7 +73,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                                <button type="submit" class="btn btn-primary"
+                                        [disabled]="!form.valid || submitted == true">
                                     <i class="fa fa-dot-circle-o"></i> Save
                                 </button>
                                 <div *ngIf="submitted" class="spinner"></div>

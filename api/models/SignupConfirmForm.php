@@ -89,7 +89,7 @@ class SignupConfirmForm extends Model
 
     public function sendSignupSuccessEmail()
     {
-        $loginURL = \Yii::$app->params['frontendURL'].'#/login';
+        $loginURL = \Yii::$app->params['frontendURL'] . '#/login';
 
         $email = \Yii::$app->mailer
             ->compose(

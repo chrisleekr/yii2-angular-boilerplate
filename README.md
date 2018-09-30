@@ -10,13 +10,18 @@ The project involves:
 * Frontend: User website to support user registration, login and account management 
     - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert
 
+**Demo**
+
+| Service        | Endpoint |
+| ------------- |-------------|
+| Frontend      | [https://boilerplate.chrislee.kr](https://boilerplate.chrislee.kr) | 
+| Backend      | [https://boilerplate-backend.chrislee.kr](https://boilerplate-backend.chrislee.kr)      | 
+| API | [https://boilerplate-api.chrislee.kr](https://boilerplate-api.chrislee.kr/ping)      | 
+
 **Architecture Diagram**
 
 ![Architecture Diagram](screenshots/network-diagram.png)
 
-**Demo**
-
-![Demo](screenshots/demo.gif)
 
 **Frontend - Server-side rendering (Angular Universal)**
 

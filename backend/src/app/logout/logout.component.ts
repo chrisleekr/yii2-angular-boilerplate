@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { StaffService } from '../model/staff.service';
-import {Router} from "@angular/router";
+import {StaffService} from '../model/staff.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-logout',
@@ -9,15 +9,15 @@ import {Router} from "@angular/router";
 })
 export class LogoutComponent implements OnInit {
 
-    public submitted:boolean = false;
-    public error:string = '';
+    public submitted: boolean = false;
+    public error: string = '';
 
-    constructor(private _staffService:StaffService, private _router:Router) { }
+    constructor(private _staffService: StaffService, private _router: Router) {
+    }
 
     ngOnInit() {
         this._staffService.logout();
         this._router.navigate(['/']);
     }
-
 
 }

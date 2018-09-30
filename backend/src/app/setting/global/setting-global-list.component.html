@@ -9,7 +9,7 @@
 </div>
 
 <div *ngIf="!settings && !errorMessage">
-    <spinner></spinner>
+    <app-spinner></app-spinner>
 </div>
 
 <div *ngIf="settings">
@@ -27,7 +27,7 @@
                 <td>
                     {{setting.meta_name}}
                     <small class="small-help-text">({{setting.meta_key}})</small>
-                    <br />
+                    <br/>
                     <small class="small-help-text nl2line">{{setting.meta_desc}}</small>
 
                 </td>
@@ -35,7 +35,9 @@
                     {{setting.meta_value}}
                 </td>
                 <td class="text-center">
-                    <button class="btn btn-primary btn-sm" type="button" (click)="viewSetting(setting)"><i class="fa fa-edit"></i> Edit</button>
+                    <button class="btn btn-primary btn-sm" type="button" (click)="viewSetting(setting)"><i
+                            class="fa fa-edit"></i> Edit
+                    </button>
                     &nbsp;
                     <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteSetting(setting)">
                         <i class="fa fa-remove"></i> Remove
@@ -46,5 +48,6 @@
         </table>
     </div>
 
-    <a class="btn btn-primary" [routerLink]="['/setting', 'global', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New Setting</a>
+    <a class="btn btn-primary" [routerLink]="['/setting', 'global', 'create']" routerLinkActive="active"><i
+            class="fa fa-plus-square"></i> Create New Setting</a>
 </div>

@@ -1,6 +1,6 @@
 <h1>
     Account Page</h1>
-<br />
+<br/>
 
 <div class="row" *ngIf="errorMessage">
     <div class="col-12">
@@ -8,7 +8,7 @@
     </div>
 </div>
 <div *ngIf="mode === '' && errorMessage === ''">
-    <spinner></spinner>
+    <app-spinner></app-spinner>
 </div>
 <div *ngIf="mode === 'view'">
     <div class="row">

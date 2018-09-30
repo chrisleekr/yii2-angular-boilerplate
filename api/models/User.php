@@ -193,6 +193,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return static::findByJTI($id);
     }
 
+    protected static function getSecretKey()
+    {
+        return Yii::$app->params['jwtSecretCode'];
+    }
+
+    /**
+     * Getter for encryption algorytm used in JWT generation and decoding
+     * Override this method to set up other algorytm.
+     * @return string needed algorytm
+     */
+    public static function getAlgo()
+    {
+        return 'HS256';
+    }
+
     /**
      * Finds User model using static method findOne
      * Override this method in model if you need to complicate id-management
@@ -372,8 +387,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 'username',
                 'match',
                 'pattern' => '/^[A-Za-z0-9_-]{3,15}$/',
-                'message' => Yii::t('app',
-                    'Your username can only contain alphanumeric characters, underscores and dashes.')
+                'message' => Yii::t(
+                    'app',
+                    'Your username can only contain alphanumeric characters, underscores and dashes.'
+                )
             ],
             ['username', 'validateUsername'],
             ['email', 'trim'],
@@ -438,14 +455,24 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     array_key_exists('description', $permission) === false ||
                     array_key_exists('checked', $permission) === false) {
                     $this->addError($attribute, Yii::t('app', 'The permission is not valid format.'));
-                } // Validate name
-                elseif (isset($existingPermissions[$permission['name']]) == false) {
-                    $this->addError($attribute,
-                        Yii::t('app', 'The permission name \''.$permission['name'].'\' is not valid.'));
-                } // Validate checked
-                elseif (is_bool($permission['checked']) === false) {
-                    $this->addError($attribute,
-                        Yii::t('app', 'The permission checked \''.$permission['checked'].'\' is not valid.'));
+                } elseif (isset($existingPermissions[$permission['name']]) == false) {
+                    // Validate name
+                    $this->addError(
+                        $attribute,
+                        Yii::t(
+                            'app',
+                            'The permission name \'' . $permission['name'] . '\' is not valid.'
+                        )
+                    );
+                } elseif (is_bool($permission['checked']) === false) {
+                    // Validate checked
+                    $this->addError(
+                        $attribute,
+                        Yii::t(
+                            'app',
+                            'The permission checked \'' . $permission['checked'] . '\' is not valid.'
+                        )
+                    );
                 }
             }
         }
@@ -586,7 +613,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function generatePasswordResetToken()
     {
-        $this->password_reset_token = Yii::$app->security->generateRandomString().'_'.time();
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
@@ -650,6 +677,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         $this->access_token_expired_at = $tokens[1]['exp']; // Expire
     }
 
+    /*
+     * JWT Related Functions
+     */
+
     /**
      * Encodes model data to create custom JWT with model.id set in it
      * @return array encoded JWT
@@ -690,19 +721,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [JWT::encode($token, $secret, static::getAlgo()), $token];
     }
 
-    protected static function getSecretKey()
-    {
-        return Yii::$app->params['jwtSecretCode'];
-    }
-
-    /*
-     * JWT Related Functions
-     */
-
     protected static function getHeaderToken()
     {
         return [];
     }
+
+    // And this one if you wish
 
     /**
      * Returns some 'id' to encode to token. By default is current model id.
@@ -712,18 +736,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getJTI()
     {
         return $this->getId();
-    }
-
-    // And this one if you wish
-
-    /**
-     * Getter for encryption algorytm used in JWT generation and decoding
-     * Override this method to set up other algorytm.
-     * @return string needed algorytm
-     */
-    public static function getAlgo()
-    {
-        return 'HS256';
     }
 
     public function beforeSave($insert)
@@ -768,8 +780,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
             $authItem = $authManager->getRole($roleName);
             $authManager->assign($authItem, $this->getId());
-        } // When update existing user, revoke old role and assign new role
-        else {
+        } else {
+            // When update existing user, revoke old role and assign new role
             if (isset($changedAttributes['role']) === true) {
                 // Get role name
                 $roleName = $this->getRoleName();

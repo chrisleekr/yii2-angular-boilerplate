@@ -1,6 +1,6 @@
 <?php
 
-$params = include __DIR__.'/params.php';
+$params = include __DIR__ . '/params.php';
 
 $config = [
     'id' => 'boilerplate-api',
@@ -14,7 +14,6 @@ $config = [
             ],
         ],
         'cache' => [
-//            'class' => 'yii\caching\FileCache',
             'class' => 'yii\caching\MemCache',
             'useMemcached' => getenv('CACHE_USE_MEMCACHED'),
             'username' => getenv('CACHE_USERNAME'),
@@ -56,7 +55,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => include __DIR__.'/db.php',
+        'db' => include __DIR__ . '/db.php',
 
         'urlManager' => [
             'baseUrl' => '/api',    // Added for

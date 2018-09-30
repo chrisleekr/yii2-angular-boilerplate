@@ -67,8 +67,12 @@ class UserSearch extends Model
         ]);
 
         $rows = $provider->getModels();
-        $pagination = array_intersect_key((array)$provider->pagination,
-            array_flip(\Yii::$app->params['paginationParams']));
+        $pagination = array_intersect_key(
+            (array)$provider->pagination,
+            array_flip(
+                \Yii::$app->params['paginationParams']
+            )
+        );
 
         $pagination['firstRowNo'] = $pagination['totalCount'] - ($page * $pageSize);
 

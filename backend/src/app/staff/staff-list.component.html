@@ -2,7 +2,7 @@
     <h1 class="h2">
         Staffs
         <ng-container *ngIf="loading">
-            <spinner></spinner>
+            <app-spinner></app-spinner>
         </ng-container>
     </h1>
 </div>
@@ -27,7 +27,7 @@
                 <th>Username</th>
                 <th>Email Address<br>(Confirmed At)</th>
                 <th width="15%" class="text-center">Last Login</th>
-                <th width="15%" class="text-center">Status<br />(Last Updated At)</th>
+                <th width="15%" class="text-center">Status<br/>(Last Updated At)</th>
                 <th width="20%" class="text-center">Functions</th>
             </tr>
             </thead>
@@ -42,16 +42,19 @@
                 <td>
                     <p *ngIf="staff.confirmed_at == null">
                         {{staff.unconfirmed_email}}
-                        <br /><span class="help-text text-danger">(Not Confirmed)</span>
+                        <br/><span class="help-text text-danger">(Not Confirmed)</span>
                     </p>
                     <p *ngIf="staff.confirmed_at != null">
                         {{staff.email}}
-                        <br /><span class="help-text" title="{{(staff.confirmed_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(staff.confirmed_at | amFromUnix) | amTimeAgo}})</span>
+                        <br/><span class="help-text"
+                                   title="{{(staff.confirmed_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(staff.confirmed_at | amFromUnix) | amTimeAgo}})</span>
                     </p>
                 </td>
                 <td class="text-center">
                     <span *ngIf="staff.last_login_ip == null" class="help-text">Never Logged In</span>
-                    <p *ngIf="staff.last_login_ip != null" class="help-text" title="{{(staff.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">{{staff.last_login_ip}}<br />({{(staff.last_login_at | amFromUnix) | amTimeAgo}})</p>
+                    <p *ngIf="staff.last_login_ip != null" class="help-text"
+                       title="{{(staff.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">
+                        {{staff.last_login_ip}}<br/>({{(staff.last_login_at | amFromUnix) | amTimeAgo}})</p>
                 </td>
                 <td class="text-center">
                     <div *ngIf="staff.blocked_at == null">
@@ -61,10 +64,12 @@
                                             'text-danger': staff.status == 0 || staff.status == -1
                                         }">{{staff.status_label}}</span>
 
-                        <br /><span class="help-text" title="{{(staff.updated_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(staff.updated_at | amFromUnix) | amTimeAgo}})</span>
+                        <br/><span class="help-text"
+                                   title="{{(staff.updated_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(staff.updated_at | amFromUnix) | amTimeAgo}})</span>
                     </div>
                     <div *ngIf="staff.blocked_at != null">
-                        <span *ngIf="staff.blocked_at != null" class="text-danger" title="{{(staff.blocked_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">Blocked since {{(staff.blocked_at | amFromUnix) | amTimeAgo}}</span>
+                        <span *ngIf="staff.blocked_at != null" class="text-danger"
+                              title="{{(staff.blocked_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">Blocked since {{(staff.blocked_at | amFromUnix) | amTimeAgo}}</span>
                     </div>
 
                 </td>
@@ -87,10 +92,13 @@
 
     <div class="row">
         <div class="col-12 col-sm-8">
-            <pagination [totalItems]="totalCount" [(ngModel)]="currentPage" [boundaryLinks]="true" [directionLinks]="true" [maxSize]="5" [itemsPerPage]="pageSize" (pageChanged)="pageChanged($event)"></pagination>
+            <pagination [totalItems]="totalCount" [(ngModel)]="currentPage" [boundaryLinks]="true"
+                        [directionLinks]="true" [maxSize]="5" [itemsPerPage]="pageSize"
+                        (pageChanged)="pageChanged($event)"></pagination>
         </div>
         <div class="col-12 col-sm-4 text-right">
-            <a class="btn btn-primary ml-1" [routerLink]="['/staff', 'create']" routerLinkActive="active"><i class="fa fa-plus-square"></i> Create New Staff</a>
+            <a class="btn btn-primary ml-1" [routerLink]="['/staff', 'create']" routerLinkActive="active"><i
+                    class="fa fa-plus-square"></i> Create New Staff</a>
         </div>
     </div>
     <div class="row">
@@ -99,8 +107,10 @@
         </div>
         <div class="col-12 col-sm-6 text-right">
             <form class="form-inline float-right" (ngSubmit)="onSearchFormSubmit()" novalidate>
-                <input type="text" class="form-control" id="search-q" placeholder="" [(ngModel)]="searchParams['q']" name="q">
-                <button class="btn btn-info ml-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                <input type="text" class="form-control" id="search-q" placeholder="" [(ngModel)]="searchParams['q']"
+                       name="q">
+                <button class="btn btn-info ml-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search
+                </button>
 
             </form>
 

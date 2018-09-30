@@ -1,13 +1,18 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
+$params = require __DIR__ . '/params.php';
+$db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm' => '@vendor/npm-asset',
+        '@tests' => '@app/tests',
+    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -22,7 +27,7 @@ $config = [
         ],
         'db' => $db,
         'authManager' => [
-	        'class' => 'yii\rbac\DbManager',
+            'class' => 'yii\rbac\DbManager',
         ],
     ],
     'params' => $params,

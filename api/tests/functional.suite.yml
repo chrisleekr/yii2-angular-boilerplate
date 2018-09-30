@@ -16,7 +16,7 @@ modules:
     config:
       REST:
         depends: PhpBrowser
-        url: 'http://api.boilerplate.local:8080/index-test.php'
+        url: 'http://localhost/api/index-test.php'
 #     Db:
 #       dsn: 'mysql:host=localhost;dbname=test_db'
 #       user: 'test_user'

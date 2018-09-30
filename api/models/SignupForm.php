@@ -35,8 +35,10 @@ class SignupForm extends Model
                 'username',
                 'match',
                 'pattern' => '/^[A-Za-z0-9_-]{3,25}$/',
-                'message' => Yii::t('app',
-                    'Your username can only contain alphanumeric characters, underscores and dashes.')
+                'message' => Yii::t(
+                    'app',
+                    'Your username can only contain alphanumeric characters, underscores and dashes.'
+                )
             ],
             ['email', 'trim'],
             ['email', 'required'],
@@ -93,9 +95,14 @@ class SignupForm extends Model
         return $this->_user;
     }
 
+    /**
+     * Send confirmation email
+     *
+     * @return bool
+     */
     public function sendConfirmationEmail()
     {
-        $confirmURL = \Yii::$app->params['frontendURL'].'#/confirm?id='.$this->_user->id.'&auth_key='.$this->_user->auth_key;
+        $confirmURL = \Yii::$app->params['frontendURL'] . '#/confirm?id=' . $this->_user->id . '&auth_key=' . $this->_user->auth_key;
 
         $email = \Yii::$app->mailer
             ->compose(

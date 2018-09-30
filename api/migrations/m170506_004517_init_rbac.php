@@ -4,9 +4,9 @@ use yii\db\Migration;
 
 class m170506_004517_init_rbac extends Migration
 {
-    private $adminId = 1;
-    private $staffId = 2;
-    private $userId = 3;
+    public $adminId = 1;
+    public $staffId = 2;
+    public $userId = 3;
 
     public function up()
     {

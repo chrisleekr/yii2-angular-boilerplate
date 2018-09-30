@@ -88,11 +88,15 @@ class SettingController extends ActiveController
 
     public function actionIndex()
     {
-        return new ActiveDataProvider([
-            'query' => Setting::find()->where([
-                'status' => 1,
-            ])
-        ]);
+        return new ActiveDataProvider(
+            [
+                'query' => Setting::find()->where(
+                    [
+                        'status' => 1,
+                    ]
+                )
+            ]
+        );
     }
 
     /**
@@ -163,10 +167,12 @@ class SettingController extends ActiveController
      */
     public function actionView($id)
     {
-        $setting = Setting::find()->where([
-            'id' => $id,
-            'status' => 1,
-        ])->one();
+        $setting = Setting::find()->where(
+            [
+                'id' => $id,
+                'status' => 1,
+            ]
+        )->one();
         if ($setting) {
             return $setting;
         } else {
@@ -194,7 +200,7 @@ class SettingController extends ActiveController
 
         $response = \Yii::$app->getResponse();
         $response->setStatusCode(204);
-        return "ok";
+        return 'ok';
     }
 
     /**
@@ -206,10 +212,12 @@ class SettingController extends ActiveController
     {
         $publicSettings = [];
 
-        $settings = Setting::find()->where([
-            'is_public' => 1,
-            'status' => 1,
-        ])->all();
+        $settings = Setting::find()->where(
+            [
+                'is_public' => 1,
+                'status' => 1,
+            ]
+        )->all();
 
         if ($settings) {
             foreach ($settings as $settingKey => $setting) {
@@ -232,6 +240,6 @@ class SettingController extends ActiveController
      */
     public function actionOptions($id = null)
     {
-        return "ok";
+        return 'ok';
     }
 }

@@ -8,7 +8,6 @@ use app\models\User;
 use app\models\UserSearch;
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\helpers\Url;
@@ -106,11 +105,12 @@ class StaffController extends ActiveController
         $search->in_roles = [User::ROLE_STAFF, User::ROLE_ADMIN];
         $search->not_in_status = [User::STATUS_DELETED];
         if (!$search->validate()) {
-            throw new BadRequestHttpException('Invalid parameters: '.json_encode($search->getErrors()));
+            throw new BadRequestHttpException(
+                'Invalid parameters: ' . json_encode($search->getErrors())
+            );
         }
 
         return $search->getDataProvider();
-
     }
 
     /**
@@ -237,17 +237,23 @@ class StaffController extends ActiveController
      */
     public function actionView($id)
     {
-        $staff = User::find()->where([
-            'id' => $id
-        ])->andWhere([
-            '!=',
-            'status',
-            -1
-        ])->andWhere([
-            'in',
-            'role',
-            [User::ROLE_STAFF, User::ROLE_ADMIN]
-        ])->one();
+        $staff = User::find()->where(
+            [
+                'id' => $id
+            ]
+        )->andWhere(
+            [
+                '!=',
+                'status',
+                -1
+            ]
+        )->andWhere(
+            [
+                'in',
+                'role',
+                [User::ROLE_STAFF, User::ROLE_ADMIN]
+            ]
+        )->one();
         if ($staff) {
             return $staff;
         } else {
@@ -278,7 +284,7 @@ class StaffController extends ActiveController
 
         $response = \Yii::$app->getResponse();
         $response->setStatusCode(204);
-        return "ok";
+        return 'ok';
     }
 
     /**
@@ -374,6 +380,6 @@ class StaffController extends ActiveController
      */
     public function actionOptions($id = null)
     {
-        return "ok";
+        return 'ok';
     }
 }
