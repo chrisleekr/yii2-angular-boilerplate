@@ -1,5 +1,7 @@
 # Yii2 REST API + Angular 6 Boilerplate
 
+[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate)
+
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 6 with Bootstrap 4. Frontend project is compatible to provide server-side rendering(Angular Universal) using [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit).
 
 The project involves:

@@ -1,0 +1,40 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+branches:
+  only:
+    - master
+
+before_script:
+  - cp .env-dist .env
+  - source .env
+  - docker-compose up -d --build
+  - docker ps -a
+  - cd api && composer install && cd ..
+  - cd backend && npm install && cd ..
+  - cd frontend && npm install && cd ..
+
+script:
+  - cd api
+  - composer run sniff
+  - composer run test:unit
+  - composer run test:functional
+  - cd ..
+  - cd frontend
+  - npm run lint
+  - npm run test
+  - cd ..
+  - cd backend
+  - npm run lint
+  - npm run test
+  - cd ..
+
+after_script:
+  - docker-compose down
+
+notifications:
+  email: false
