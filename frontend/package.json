@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4200",
     "build": "ng build --base-href /frontend/",
-    "test": "ng test --code-coverage --watch=false",
+    "test": "ng test --code-coverage --watch=false --browsers ChromeHeadlessNoSandbox",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:server:prod": "ng run boilerplate-frontend:server && webpack --config webpack.server.config.js --progress --colors",
