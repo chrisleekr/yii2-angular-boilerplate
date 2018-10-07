@@ -38,6 +38,7 @@ before_script:
 script:
   - cd api
   - composer run sniff
+  - MYSQL_PORT=3308
   - composer run test:unit
   - composer run test:functional
   - cd ..
