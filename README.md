@@ -12,7 +12,7 @@ The project involves:
     Karma+Jasmine*, Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
     - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web 
-    Token), *Basic Unit & E2E test using Protractor+Jasmine*, Moment.js, Sweet Alert
+    Token), *Basic Unit using Karma+Jasmine, Basic E2E test using Protractor+Jasmine*, Moment.js, Sweet Alert
 
 **Demo**
 
