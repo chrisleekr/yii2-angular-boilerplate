@@ -6,11 +6,13 @@ This is a boilerplate project for future use. The project consists of REST API d
 
 The project involves:
 * API
-    - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached
+    - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached, *Basic Unit & Functional Test using Codeception*
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
-    - Angular 6, Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js, Basic Unit test
+    - Angular 6, Bootstrap 4, JWT (JSON Web Token), *Basic Unit test using 
+    Karma+Jasmine*, Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
-    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Basic Unit & E2E test
+    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web 
+    Token), *Basic Unit & E2E test using Protractor+Jasmine*, Moment.js, Sweet Alert
 
 **Demo**
 
@@ -187,7 +189,7 @@ Once all containers are finished compiling, then open the browser.
     - Note that production Dockerfile will use [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit) to provide server side rendering, which means you will be able to provide compiled HTML for search engine.
 
 
-## Troubleshootings
+## Troubleshooting
 
 **I changed backend/frontend code, but I cannot see changes in the browser.**
 
@@ -201,6 +203,7 @@ As mentioned earlier, you have to open `Developer Tool` to prevent cache if you 
 - [X] Upgrade Angular 4 to Angular 6
 - [X] Dockerize application
 - [X] Apply [server side rendering](https://github.com/maciejtreder/ng-toolkit) for Frontend project
+- [△] Develop more test code
 - [ ] Develop file uploader
-- [ ] Develop more test code 
+ 
 
