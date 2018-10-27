@@ -8,7 +8,7 @@
         <div class="card-group mb-0">
             <div class="card p-2">
                 <div class="card-body">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+                    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
                         <h1>Login</h1>
                         <p class="text-muted">Sign In to your account</p>
 
@@ -18,11 +18,12 @@
                   <span class="input-group-addon">
                     <i class="icon-user"></i>
                   </span>
-                                    <input class="form-control" type="text" placeholder="Username"
+                                    <input class="username-field form-control" type="text" placeholder="Username"
                                            [formControl]="loginForm.controls['username']"
                                            [ngClass]="{'form-control-danger': !isValid('username')}">
                                 </div>
-                                <span class="help-block help-block-error" *ngIf="!formErrors.username.valid">{{formErrors.username.message}}</span>
+                                <span class="username-help-block help-block help-block-error"
+                                      *ngIf="!formErrors.username.valid">{{formErrors.username.message}}</span>
                             </div>
                         </div>
                         <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
@@ -31,16 +32,18 @@
                   <span class="input-group-addon">
                     <i class="icon-lock"></i>
                   </span>
-                                    <input class="form-control" type="password" placeholder="Password"
+                                    <input class="password-field form-control" type="password"
+                                           placeholder="Password"
                                            [formControl]="loginForm.controls['password']"
                                            [ngClass]="{'form-control-danger': !isValid('password')}">
                                 </div>
-                                <span class="help-block help-block-error" *ngIf="!formErrors.password.valid">{{formErrors.password.message}}</span>
+                                <span class="password-help-block help-block help-block-error"
+                                      *ngIf="!formErrors.password.valid">{{formErrors.password.message}}</span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-primary px-2"
+                                <button type="submit" class="login-btn btn btn-primary px-2"
                                         [disabled]="!loginForm.valid || submitted == true">Login
                                     <app-spinner *ngIf="submitted"></app-spinner>
                                 </button>
@@ -63,7 +66,8 @@
                     <div>
                         <h2>Sign up</h2>
                         <br/>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                            incididunt ut
                             labore et dolore
                             magna aliqua.</p>
                         <a [routerLink]="['/signup']" class="btn btn-primary active mt-1">Register Now!</a>

@@ -57,7 +57,7 @@ services:
       - api
     networks:
       - internal
-#    volumes:
+    volumes:
 #      - ./frontend/image-files/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
 #      - ./frontend/src:/app/src
 
@@ -83,9 +83,6 @@ services:
 networks:
   internal:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.19.0.0/24
 
 volumes:
   mysql_data:

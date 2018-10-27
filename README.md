@@ -8,9 +8,9 @@ The project involves:
 * API
     - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
-    - Angular 6, Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js
+    - Angular 6, Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Underscore.js, Basic Unit test
 * Frontend: User website to support user registration, login and account management 
-    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert
+    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token), Moment.js, Sweet Alert, Basic Unit & E2E test
 
 **Demo**
 
@@ -114,6 +114,14 @@ Once all containers are finished compiling, then open the browser.
         ```
         $ docker exec -it api /bin/sh
         ```
+    - To run code sniffer, use following command:
+        ```
+        $ docker exec api composer run sniff
+        ```
+    - To run unit test, use following command:
+        ```
+        $ docker exec api composer run test:unit
+        ```
         
 * **Backend - Angular**: [http://localhost/backend](http://localhost/backend)
     - Administrator username: `admin`, password: `123456`
@@ -127,7 +135,12 @@ Once all containers are finished compiling, then open the browser.
         $ docker exec -it backend /bin/sh
         ```
     - Note that the **live reloading feature has been disabled** due to restriction. 
-    - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/backend/image-files/usr/local/bin/docker-entrypoint-dev.sh`. 
+    - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/backend/image-files/usr/local/bin/docker-entrypoint-dev.sh`.
+    - To run unit test, use following command:
+        ```
+        $ cd frontend
+        $ npm run test
+        ``` 
     
 * **Frontend - Angular**: [http://localhost/frontend](http://localhost/frontend)
     - Username: `user`, password `123456`
@@ -141,6 +154,16 @@ Once all containers are finished compiling, then open the browser.
         ```
     - Note that the **live reloading feature has been disabled** due to restriction. 
     - Please open **Developer Tool** to prevent caching. The changes will be checked every 1s. Please refer `/frontend/image-files/usr/local/bin/docker-entrypoint-dev.sh`.
+    - To run unit test, use following command:
+        ```
+        $ cd frontend
+        $ npm run test
+        ```
+    - To run E2E test, use following command:
+        ```
+        $ cd frontend
+        $ npm run e2e
+        ```
 
 ## Files & Folders structures
 
