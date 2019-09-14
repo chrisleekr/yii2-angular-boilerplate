@@ -70,7 +70,6 @@ RUN chown -R www-data:www-data /srv/ \
 
 
 EXPOSE 80
-EXPOSE 443
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
