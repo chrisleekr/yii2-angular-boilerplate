@@ -15,9 +15,4 @@ printf "Upgrading database...\n\n"
 ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
 ./yii migrate/up --interactive=0
 
-printf "Starting php-fpm daemon...\n\n"
-php-fpm --daemonize
-
-set -e
-printf "Starting nginx...\n\n"
-nginx -g "daemon off;"
+exec "$@"
