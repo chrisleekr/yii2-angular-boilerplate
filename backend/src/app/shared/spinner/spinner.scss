@@ -79,7 +79,7 @@ Pass any number of seconds referring to the duration of one full rotation for an
 @include spinner-keyframes();
 
 @mixin spinner($args...) {
-  $prefixes: -webkit- -moz- -o- -ms- "";
+  $prefixes: -webkit- -moz- -o- -ms- '';
   $dimensional-units: ('px', 'em', 'rem', '%', 'ex');
   $border-props: 'border-width' 'border-style' 'border-color';
   $border-styles: solid dotted dashed double;
@@ -88,7 +88,7 @@ Pass any number of seconds referring to the duration of one full rotation for an
   $border-style: solid;
   $border-color: #1277c2;
   $border: $border-width $border-style $border-color;
-  $duration: .65s;
+  $duration: 0.65s;
   $background: transparent; //
 
   // Parse arguments:
@@ -96,7 +96,7 @@ Pass any number of seconds referring to the duration of one full rotation for an
     @each $arg in $args {
       @if length($arg) == 1 {
         @if type-of($arg) == number {
-          @if unit($arg) != "" {
+          @if unit($arg) != '' {
             @if unit($arg) == 's' {
               $duration: $arg;
             } @else if isIn($dimensional-units, unit($arg)) {
@@ -177,7 +177,7 @@ Pass any number of seconds referring to the duration of one full rotation for an
   @if length($border) == length($validBorderTypes) {
     @each $val in $border {
       @if type-of($val) == number {
-        @if unit($val) == "" {
+        @if unit($val) == '' {
           @return false;
         }
       } @else if type-of($val) == string {

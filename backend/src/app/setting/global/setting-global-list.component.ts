@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import swal from 'sweetalert2';
 
-import { SettingDataService } from '../../model/setting-data.service';
+import Swal from 'sweetalert2';
 import { Setting } from '../../model/setting';
+import { SettingDataService } from '../../model/setting-data.service';
 import { StaffService } from '../../model/staff.service';
 
 @Component({
@@ -47,10 +47,11 @@ export class SettingGlobalListComponent implements OnInit {
   public confirmDeleteSetting(setting: Setting): void {
     // Due to sweet alert scope issue, define as function variable and pass to swal
 
+    // tslint:disable-next-line: no-this-assignment
     const parent = this;
     this.errorMessage = '';
 
-    swal({
+    Swal.fire({
       title: 'Are you sure?',
       text: "Once delete, you won't be able to revert this!",
       type: 'question',
@@ -59,10 +60,10 @@ export class SettingGlobalListComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
-      preConfirm: function() {
-        return new Promise(function(resolve, reject) {
+      preConfirm() {
+        return new Promise(resolve => {
           parent.settingDataService.deleteSettingById(setting.id).subscribe(
-            result => {
+            _result => {
               parent.getSettings();
               resolve();
             },
@@ -78,13 +79,6 @@ export class SettingGlobalListComponent implements OnInit {
           );
         });
       }
-    }).then(
-      function(result) {
-        // handle confirm, result is needed for modals with input
-      },
-      function(dismiss) {
-        // dismiss can be "cancel" | "close" | "outside"
-      }
-    );
+    });
   }
 }

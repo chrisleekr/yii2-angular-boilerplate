@@ -1,76 +1,74 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand mr-auto mr-lg-3" [routerLink]="['/dashboard']">Company name</a>
-    <button class="navbar-toggler p-0 border-0" type="button" (click)="toggleMenu()" data-toggle="offcanvas">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand mr-auto mr-lg-3" [routerLink]="['/dashboard']">Company name</a>
+  <button class="navbar-toggler p-0 border-0" type="button" (click)="toggleMenu()" data-toggle="offcanvas">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="navbar-collapse offcanvas-collapse" [ngClass]="{'open': menuOpen}">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/user']">
-                    <i class="fa fa-address-book" aria-hidden="true"></i>
-                    Users
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/staff']">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    Staffs
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']">
-                    <i class="fa fa-desktop" aria-hidden="true"></i>
-                    Settings
-                </a>
-            </li>
-            <li class="nav-item dropdown" dropdown>
-                <a class="nav-link dropdown-toggle" dropdownToggle href (click)="false" id="dropdown01"
-                   aria-expanded="false">
-                    <i class="fa fa-line-chart" aria-hidden="true"></i> Sample Menu
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01" *dropdownMenu>
-                    <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/dashboard']">
-                        Sample Menu 1
-                    </a>
-                    <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/dashboard']">
-                        Sample Menu 2
-                    </a>
-                </div>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+  <div class="navbar-collapse offcanvas-collapse" [ngClass]="{ open: menuOpen }">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">
+          <i class="fa fa-tachometer" aria-hidden="true"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/user']">
+          <i class="fa fa-address-book" aria-hidden="true"></i>
+          Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/staff']">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          Staffs
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/setting']">
+          <i class="fa fa-desktop" aria-hidden="true"></i>
+          Settings
+        </a>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a class="nav-link dropdown-toggle" dropdownToggle href (click)="(false)" id="dropdown01" aria-expanded="false">
+          <i class="fa fa-line-chart" aria-hidden="true"></i> Sample Menu
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01" *dropdownMenu>
+          <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/dashboard']">
+            Sample Menu 1
+          </a>
+          <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/dashboard']">
+            Sample Menu 2
+          </a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 
-        <ul class="navbar-nav my-2 my-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']">
-                    Logout
-                </a>
-            </li>
-        </ul>
-
-    </div>
+    <ul class="navbar-nav my-2 my-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" [routerLink]="['/logout']">
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <div class="nav-scroller bg-white box-shadow">
-    <nav class="nav nav-underline">
-        <a class="nav-link" href="#">Link 1</a>
-        <a class="nav-link" href="#">Link 2</a>
-        <a class="nav-link" href="#">Link 3</a>
-        <a class="nav-link" href="#">Link 4</a>
-        <a class="nav-link" href="#">Link 5</a>
-    </nav>
+  <nav class="nav nav-underline">
+    <a class="nav-link" href="#">Link 1</a>
+    <a class="nav-link" href="#">Link 2</a>
+    <a class="nav-link" href="#">Link 3</a>
+    <a class="nav-link" href="#">Link 4</a>
+    <a class="nav-link" href="#">Link 5</a>
+  </nav>
 </div>
 
 <main role="main" class="container">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>

@@ -1,12 +1,9 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {SettingRoutingModule} from './setting-routing.module';
+import { SettingRoutingModule } from './setting-routing.module';
 
 @NgModule({
-    imports: [
-        SettingRoutingModule,
-    ],
-    declarations: []
+  imports: [SettingRoutingModule],
+  declarations: []
 })
-export class SettingModule {
-}
+export class SettingModule {}

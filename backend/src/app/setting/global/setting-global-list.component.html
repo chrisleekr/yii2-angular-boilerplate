@@ -1,53 +1,53 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Settings</h1>
+  <h1 class="h2">Settings</h1>
 </div>
 
 <div class="row" *ngIf="errorMessage">
-    <div class="col-sm-12">
-        <p class="alert alert-danger">{{errorMessage}}</p>
-    </div>
+  <div class="col-sm-12">
+    <p class="alert alert-danger">{{ errorMessage }}</p>
+  </div>
 </div>
 
 <div *ngIf="!settings && !errorMessage">
-    <app-spinner></app-spinner>
+  <app-spinner></app-spinner>
 </div>
 
 <div *ngIf="settings">
-    <div class="table-responsive">
-        <table class="table table-sm table-striped table-bordered table-valign-middle">
-            <thead>
-            <tr>
-                <th>Setting Name</th>
-                <th width="20%" class="text-center">Value</th>
-                <th width="20%" class="text-center">Functions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let setting of settings">
-                <td>
-                    {{setting.meta_name}}
-                    <small class="small-help-text">({{setting.meta_key}})</small>
-                    <br/>
-                    <small class="small-help-text nl2line">{{setting.meta_desc}}</small>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered table-valign-middle">
+      <thead>
+        <tr>
+          <th>Setting Name</th>
+          <th width="20%" class="text-center">Value</th>
+          <th width="20%" class="text-center">Functions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let setting of settings">
+          <td>
+            {{ setting.meta_name }}
+            <small class="small-help-text">({{ setting.meta_key }})</small>
+            <br />
+            <small class="small-help-text nl2line">{{ setting.meta_desc }}</small>
+          </td>
+          <td class="text-center">
+            {{ setting.meta_value }}
+          </td>
+          <td class="text-center">
+            <button class="btn btn-primary btn-sm" type="button" (click)="viewSetting(setting)">
+              <i class="fa fa-edit"></i> Edit
+            </button>
+            &nbsp;
+            <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteSetting(setting)">
+              <i class="fa fa-remove"></i> Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-                </td>
-                <td class="text-center">
-                    {{setting.meta_value}}
-                </td>
-                <td class="text-center">
-                    <button class="btn btn-primary btn-sm" type="button" (click)="viewSetting(setting)"><i
-                            class="fa fa-edit"></i> Edit
-                    </button>
-                    &nbsp;
-                    <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteSetting(setting)">
-                        <i class="fa fa-remove"></i> Remove
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <a class="btn btn-primary" [routerLink]="['/setting', 'global', 'create']" routerLinkActive="active"><i
-            class="fa fa-plus-square"></i> Create New Setting</a>
+  <a class="btn btn-primary" [routerLink]="['/setting', 'global', 'create']" routerLinkActive="active"
+    ><i class="fa fa-plus-square"></i> Create New Setting</a
+  >
 </div>
