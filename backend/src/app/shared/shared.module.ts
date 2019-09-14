@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeModule } from 'ng-pick-datetime';
-import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { MomentModule } from 'ngx-moment';
 import { environment } from '../../environments/environment';
@@ -16,8 +15,9 @@ export const CUSTOM_DATETIME_FORMATS = environment.customDateTimeFormat;
     FormsModule,
     ReactiveFormsModule,
     MomentModule,
+
     OwlDateTimeModule,
-    OwlMomentDateTimeModule,
+    OwlNativeDateTimeModule,
     PaginationModule.forRoot()
   ],
   declarations: [SpinnerComponent],
@@ -27,9 +27,9 @@ export const CUSTOM_DATETIME_FORMATS = environment.customDateTimeFormat;
     MomentModule,
     SpinnerComponent,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule,
+    OwlNativeDateTimeModule,
     PaginationModule
   ],
-  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: CUSTOM_DATETIME_FORMATS }]
+  providers: []
 })
 export class SharedModule {}

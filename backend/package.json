@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.6",
+    "@angular/cdk": "^8.2.0",
     "@angular/common": "^8.2.6",
     "@angular/compiler": "^8.2.6",
     "@angular/core": "^8.2.6",
@@ -30,7 +31,6 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ng-pick-datetime": "^7.0.0",
-    "ng-pick-datetime-moment": "^1.0.8",
     "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^5.1.2",
     "ngx-moment": "^3.4.0",

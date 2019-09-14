@@ -268,17 +268,15 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           const formArray = this.formBuilder.array(formControls);
           this.form.setControl(key, formArray);
         } else if (key === 'confirmed_at' || key === 'blocked_at') {
-          if (moment.isMoment(value)) {
+          if (value === null) {
+            this.form.controls[key].setValue('');
+          } else if (moment.isMoment(value)) {
             this.form.controls[key].setValue(value.format(environment.customDateTimeFormat.apiFormat));
-          } else if (moment(value).isValid()) {
-            this.form.controls[key].setValue(moment(value).format(environment.customDateTimeFormat.apiFormat));
+          } else if (moment.unix(value).isValid()) {
+            this.form.controls[key].setValue(new Date(moment.unix(value).format('YYYY-MM-DD HH:mm:ss')));
           } else {
             this.form.controls[key].setValue('');
           }
-
-          this.form.controls[key].setValue(
-            value !== null && value !== '' ? moment.unix(value).format(environment.customDateTimeFormat.apiFormat) : ''
-          );
         } else {
           this.form.controls[key].setValue(value);
         }

@@ -28,7 +28,7 @@
                     class="form-control"
                     id="username"
                     placeholder="Enter username"
-                    [formControl]="form.controls['username']"
+                    formControlName="username"
                     [ngClass]="{ 'form-control-danger': !isValid('username') }"
                   />
                 </div>
@@ -53,7 +53,7 @@
                     class="form-control"
                     id="email"
                     placeholder="Enter email address"
-                    [formControl]="form.controls['email']"
+                    formControlName="email"
                     [ngClass]="{ 'form-control-danger': !isValid('email') }"
                   />
                 </div>
@@ -77,7 +77,7 @@
                     class="form-control"
                     id="password"
                     placeholder="Enter the password"
-                    [formControl]="form.controls['password']"
+                    formControlName="password"
                     [ngClass]="{ 'form-control-danger': !isValid('password') }"
                   />
                 </div>
@@ -117,7 +117,7 @@
                       class="form-control bg-white"
                       id="confirmed_at"
                       placeholder="Enter confirmed date/time"
-                      [formControl]="form.controls['confirmed_at']"
+                      formControlName="confirmed_at"
                       [owlDateTime]="dt1"
                       [owlDateTimeTrigger]="dt1"
                     />
@@ -160,7 +160,7 @@
                       class="form-control bg-white"
                       id="blocked_at"
                       placeholder="Enter blocked date/time"
-                      [formControl]="form.controls['blocked_at']"
+                      formControlName="blocked_at"
                       [owlDateTime]="dt2"
                       [owlDateTimeTrigger]="dt2"
                     />
@@ -197,7 +197,7 @@
                   <select
                     class="form-control"
                     id="role"
-                    [formControl]="form.controls['role']"
+                    formControlName="role"
                     [ngClass]="{ 'form-control-danger': !isValid('role') }"
                   >
                     <option *ngFor="let roleType of roleTypes" [value]="roleType.value" [selected]=""
@@ -247,7 +247,7 @@
                   <select
                     class="form-control"
                     id="status"
-                    [formControl]="form.controls['status']"
+                    formControlName="status"
                     [ngClass]="{ 'form-control-danger': !isValid('status') }"
                   >
                     <option *ngFor="let statusType of statusTypes" [value]="statusType.value" [selected]=""

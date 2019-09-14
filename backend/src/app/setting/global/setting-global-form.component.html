@@ -28,7 +28,7 @@
                     class="form-control"
                     id="meta_key"
                     placeholder="Enter setting meta key (string)"
-                    [formControl]="form.controls['meta_key']"
+                    formControlName="meta_key"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_key') }"
                   />
                   <small class="form-text text-muted"
@@ -50,7 +50,7 @@
                     class="form-control"
                     id="meta_name"
                     placeholder="Enter setting meta name (string)"
-                    [formControl]="form.controls['meta_name']"
+                    formControlName="meta_name"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_name') }"
                   />
                   <small class="form-text text-muted"
@@ -69,7 +69,7 @@
                   <select
                     class="form-control"
                     id="meta_type"
-                    [formControl]="form.controls['meta_type']"
+                    formControlName="meta_type"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_type') }"
                   >
                     <option *ngFor="let metaType of metaTypes" [value]="metaType.value" [selected]=""
@@ -96,7 +96,7 @@
                     class="form-control"
                     id="meta_desc"
                     placeholder="Enter setting description (text)"
-                    [formControl]="form.controls['meta_desc']"
+                    formControlName="meta_desc"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_desc') }"
                   ></textarea>
                   <small class="form-text text-muted"
@@ -120,7 +120,7 @@
                     class="form-control"
                     id="meta_attribute"
                     placeholder="Enter setting attribute (JSON)"
-                    [formControl]="form.controls['meta_attribute']"
+                    formControlName="meta_attribute"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_attribute') }"
                   ></textarea>
                   <small class="form-text text-muted"
@@ -148,7 +148,7 @@
                   <select
                     id="meta_value_select"
                     class="form-control"
-                    [formControl]="form.controls['meta_value']"
+                    formControlName="meta_value"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_value') }"
                   >
                     <option *ngFor="let listValue of enteredMetaAttributes.list" [value]="listValue.value" [selected]=""
@@ -173,7 +173,7 @@
                     class="form-control"
                     id="meta_value_number"
                     placeholder="Enter setting value (number)"
-                    [formControl]="form.controls['meta_value']"
+                    formControlName="meta_value"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_value') }"
                     [max]="setting.meta_attribute.max"
                     [min]="setting.meta_attribute.min"
@@ -196,7 +196,7 @@
                     class="form-control"
                     id="meta_value_string"
                     placeholder="Enter setting value (text)"
-                    [formControl]="form.controls['meta_value']"
+                    formControlName="meta_value"
                     [ngClass]="{ 'form-control-danger': !isValid('meta_value') }"
                   />
                 </div>
@@ -212,7 +212,7 @@
                   <select
                     class="form-control"
                     id="is_public"
-                    [formControl]="form.controls['is_public']"
+                    formControlName="is_public"
                     [ngClass]="{ 'form-control-danger': !isValid('is_public') }"
                   >
                     <option *ngFor="let isPublicType of isPublicTypes" [value]="isPublicType.value" [selected]=""
@@ -233,6 +233,10 @@
 
           <div class="card-footer">
             <div class="row">
+              <!-- <div class="col-sm-12">
+                <p>Form value: {{ form.value | json }}</p>
+                <p>Form status: {{ form.status | json }}</p>
+              </div> -->
               <div class="col-sm-6">
                 <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
                   <i class="fa fa-dot-circle-o"></i>

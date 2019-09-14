@@ -65,9 +65,10 @@ RUN /usr/local/bin/composer install --prefer-dist
 ENV PATH /srv/vendor/bin:${PATH}
 
 COPY . /srv/
-RUN chown -R www-data:www-data /srv/ \
-    && chmod 777 -R /srv/runtime
 
+RUN chown -R www-data:www-data /srv/ \
+    && mkdir /srv/runtime \
+    && chmod 777 -R /srv/runtime
 
 EXPOSE 80
 

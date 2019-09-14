@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 
-import { GlobalService } from '../../model/global.service';
 import { Setting } from '../../model/setting';
 import { SettingDataService } from '../../model/setting-data.service';
 import { StaffService } from '../../model/staff.service';
@@ -35,7 +34,6 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private settingDataService: SettingDataService,
-    private globalService: GlobalService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -287,7 +285,6 @@ function validateMetaValue(metaTypeKey: string, metaAttributeKey: string, metaVa
         };
 
         try {
-          // this.enteredMetaAttributes = JSON.parse(data.meta_attribute);
           if (JSON.parse(metaAttribute.value)) {
             enteredMetaAttribute = JSON.parse(metaAttribute.value);
           }
@@ -297,8 +294,8 @@ function validateMetaValue(metaTypeKey: string, metaAttributeKey: string, metaVa
 
         hasError = true;
         if (typeof enteredMetaAttribute.list !== 'undefined' && enteredMetaAttribute.list.length > 0) {
-          for (const attribute in enteredMetaAttribute.list) {
-            if (attribute['value'] === metaValue.value) {
+          for (const attribute of enteredMetaAttribute.list) {
+            if (attribute['value'] + '' === metaValue.value + '') {
               hasError = false;
               break;
             }
