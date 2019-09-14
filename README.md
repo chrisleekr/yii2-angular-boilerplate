@@ -1,17 +1,17 @@
-# Yii2 REST API + Angular 6 Boilerplate
+# Yii2 REST API + Angular 8 Boilerplate
 
 [![Build Status](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate)
 
-This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 6 with Bootstrap 4. Frontend project is compatible to provide server-side rendering(Angular Universal) using [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit).
+This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend developed by Angular 8 with Bootstrap 4. Frontend project is compatible to provide server-side rendering(Angular Universal) using [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit).
 
 The project involves:
 * API
     - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached, *Basic Unit & Functional Test using Codeception*
 * Backend: Staff/Administrator dashboard to manage staffs, users and settings
-    - Angular 6, Bootstrap 4, JWT (JSON Web Token), *Basic Unit test using 
+    - Angular 8, Bootstrap 4, JWT (JSON Web Token), *Basic Unit test using 
     Karma+Jasmine*, Moment.js, Sweet Alert, Underscore.js
 * Frontend: User website to support user registration, login and account management 
-    - Angular 6, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web 
+    - Angular 8, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web 
     Token), *Basic Unit using Karma+Jasmine, Basic E2E test using Protractor+Jasmine*, Moment.js, Sweet Alert
 
 **Demo**
@@ -200,7 +200,7 @@ As mentioned earlier, you have to open `Developer Tool` to prevent cache if you 
 - [X] Enhance user authorization with Yii2 RBAC (Role Based Access Control)
 - [X] Develop new customer management section
 - [X] Apply JWT(JSON Web Token) for user authentication
-- [X] Upgrade Angular 4 to Angular 6
+- [X] Upgrade Angular 4 to Angular 8
 - [X] Dockerize application
 - [X] Apply [server side rendering](https://github.com/maciejtreder/ng-toolkit) for Frontend project
 - [△] Develop more test code
