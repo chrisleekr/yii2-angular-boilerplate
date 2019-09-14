@@ -2,79 +2,74 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import {GlobalService} from './global.service';
-import {User} from './user';
-import {UserService} from './user.service';
-import {ResponseBody} from './response-body';
-import {throwError} from 'rxjs';
+import { GlobalService } from './global.service';
+import { User } from './user';
+import { UserService } from './user.service';
+import { ResponseBody } from './response-body';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class UserDataService {
-    constructor(
-        private globalService: GlobalService,
-        private userService: UserService,
-        private http: HttpClient
-    ) {
-    }
+  constructor(private globalService: GlobalService, private userService: UserService, private http: HttpClient) {}
 
-    // GET /v1/user/me
-    getMe(): Observable<User> {
-        const headers = this.getHeaders();
+  // GET /v1/user/me
+  getMe(): Observable<User> {
+    const headers = this.getHeaders();
 
-        return this.http
-            .get<ResponseBody>(this.globalService.apiHost + '/user/me', {
-                headers: headers
-            })
-            .map(response => {
-                return <User>response.data;
-            })
-            .catch(this.handleError);
-    }
+    return this.http
+      .get<ResponseBody>(this.globalService.apiHost + '/user/me', {
+        headers: headers
+      })
+      .map(response => {
+        return <User>response.data;
+      })
+      .catch(this.handleError);
+  }
 
-    updateUser(userData): Observable<any> {
-        const headers = this.getHeaders();
+  updateUser(userData): Observable<any> {
+    const headers = this.getHeaders();
 
-        return this.http
-            .post<ResponseBody>(
-                this.globalService.apiHost + '/user/me',
-                JSON.stringify({
-                    UserEditForm: userData
-                }),
-                {headers: headers}
-            )
-            .map(response => {
-                if (response.success) {
-                } else {
-                }
-                return response;
-            })
-            .catch(this.handleError);
-    }
-
-    private getHeaders(): HttpHeaders {
-        return new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.userService.getToken()
-        });
-    }
-
-    private handleError(response: any) {
-        let errorMessage: any = {};
-        // Connection error
-        if (response.error.status === 0) {
-            errorMessage = {
-                success: false,
-                status: 0,
-                data: 'Sorry, there was a connection error occurred. Please try again.'
-            };
+    return this.http
+      .post<ResponseBody>(
+        this.globalService.apiHost + '/user/me',
+        JSON.stringify({
+          UserEditForm: userData
+        }),
+        { headers: headers }
+      )
+      .map(response => {
+        if (response.success) {
         } else {
-            errorMessage = response.error;
         }
+        return response;
+      })
+      .catch(this.handleError);
+  }
 
-        return throwError(errorMessage);
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.userService.getToken()
+    });
+  }
+
+  private handleError(response: any) {
+    let errorMessage: any = {};
+    // Connection error
+    if (response.error.status === 0) {
+      errorMessage = {
+        success: false,
+        status: 0,
+        data: 'Sorry, there was a connection error occurred. Please try again.'
+      };
+    } else {
+      errorMessage = response.error;
     }
+
+    return throwError(errorMessage);
+  }
 }

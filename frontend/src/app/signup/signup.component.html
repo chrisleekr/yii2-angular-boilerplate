@@ -1,128 +1,148 @@
 <div class="row justify-content-center mb-3">
-    <div class="col-sm-12 text-sm-center">
-        <img src="assets/img/ngx-bootstrap-logo.svg" width="50"/>
-    </div>
+  <div class="col-sm-12 text-sm-center">
+    <img src="assets/img/ngx-bootstrap-logo.svg" width="50" />
+  </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card mx-4">
-            <div class="card-body p-4" *ngIf="showConfirmation == false">
-                <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
-                    <h1>Register</h1>
-                    <p class="text-muted">Please fill out the following fields to register</p>
+  <div class="col-md-8">
+    <div class="card mx-4">
+      <div class="card-body p-4" *ngIf="showConfirmation == false">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
+          <h1>Register</h1>
+          <p class="text-muted">Please fill out the following fields to register</p>
 
-                    <div class="form-group row" [ngClass]="{'has-danger': !isValid('username')}">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="icon-user"></i>
-                                </span>
-                                <input class="form-control" type="text" placeholder="Username"
-                                       [formControl]="signupForm.controls['username']"
-                                       [ngClass]="{'form-control-danger': !isValid('username')}" maxlength="20">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-12" *ngIf="!formErrors.username.valid">
-                            <span class="help-block help-block-error">{{formErrors.username.message}}</span>
-                        </div>
-                        <div class="col-sm-12">
-                            <small class="form-text text-muted">Username only allows alphanumeric, underscore and
-                                dashboard between 3 and 25 characters. i.e. sampleusername
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group row" [ngClass]="{'has-danger': !isValid('email')}">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="icon-envelope-letter"></i>
-                                </span>
-                                <input class="form-control" type="email" placeholder="Email Address"
-                                       [formControl]="signupForm.controls['email']"
-                                       [ngClass]="{'form-control-danger': !isValid('email')}">
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-12" *ngIf="!formErrors.email.valid">
-                            <span class="help-block help-block-error">{{formErrors.email.message}}</span>
-                        </div>
-                        <div class="col-sm-12">
-                            <small class="form-text text-muted">Email must be valid email address. i.e.
-                                sample@username.com.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group row" [ngClass]="{'has-danger': !isValid('password')}">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="icon-lock"></i>
-                                </span>
-                                <input class="form-control" type="password" placeholder="Password"
-                                       [formControl]="signupForm.controls['password']"
-                                       [ngClass]="{'form-control-danger': !isValid('password')}">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="col-sm-12" *ngIf="!formErrors.password.valid">
-                            <span class="help-block help-block-error">{{formErrors.password.message}}</span>
-                        </div>
-                        <div class="col-sm-12">
-                            <small class="form-text text-muted">Password must be more than 6 characters.</small>
-                        </div>
-                    </div>
-                    <div class="form-group row" [ngClass]="{'has-danger': !isValid('password_confirm')}">
-                        <div class="col-md-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                  <i class="icon-lock"></i>
-                                </span>
-                                <input class="form-control" type="password" placeholder="Repeat Password"
-                                       [formControl]="signupForm.controls['password_confirm']"
-                                       [ngClass]="{'form-control-danger': !isValid('password_confirm')}">
-                            </div>
-                            <span class="help-block help-block-error" *ngIf="!formErrors.password_confirm.valid">{{formErrors.password_confirm.message}}</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-success btn-block px-2"
-                                    [disabled]="!signupForm.valid || submitted == true">Register
-                                <app-spinner *ngIf="submitted"></app-spinner>
-                            </button>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
-                        </div>
-                        <div *ngIf="errorMessage" class="col-12 error-block mt-2">
-                            <div class="alert alert-danger">{{errorMessage}}</div>
-                        </div>
-
-                    </div>
-                </form>
+          <div class="form-group row" [ngClass]="{ 'has-danger': !isValid('username') }">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="icon-user"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Username"
+                  [formControl]="signupForm.controls['username']"
+                  [ngClass]="{ 'form-control-danger': !isValid('username') }"
+                  maxlength="20"
+                />
+              </div>
             </div>
-
-            <div class="card-body p-4" *ngIf="showConfirmation == true">
-                <h1>Thank you for signing up</h1>
-                <br/>
-                <p class="text-muted">
-                    To complete the registration process you must confirm your account. An email has sent to
-                    {{signupForm.controls['email'].value}}.
-                    <br/>
-                    <br/> To confirm and activate your account please check your inbox and click on the link found
-                    in
-                    the email we just
-                    sent.
-                </p>
-                <div class="row">
-                    <div class="col-6">
-                        <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
-                    </div>
-                </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12" *ngIf="!formErrors.username.valid">
+              <span class="help-block help-block-error">{{ formErrors.username.message }}</span>
             </div>
+            <div class="col-sm-12">
+              <small class="form-text text-muted"
+                >Username only allows alphanumeric, underscore and dashboard between 3 and 25 characters. i.e.
+                sampleusername
+              </small>
+            </div>
+          </div>
+          <div class="form-group row" [ngClass]="{ 'has-danger': !isValid('email') }">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="icon-envelope-letter"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="email"
+                  placeholder="Email Address"
+                  [formControl]="signupForm.controls['email']"
+                  [ngClass]="{ 'form-control-danger': !isValid('email') }"
+                />
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12" *ngIf="!formErrors.email.valid">
+              <span class="help-block help-block-error">{{ formErrors.email.message }}</span>
+            </div>
+            <div class="col-sm-12">
+              <small class="form-text text-muted">Email must be valid email address. i.e. sample@username.com. </small>
+            </div>
+          </div>
+          <div class="form-group row" [ngClass]="{ 'has-danger': !isValid('password') }">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="icon-lock"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="password"
+                  placeholder="Password"
+                  [formControl]="signupForm.controls['password']"
+                  [ngClass]="{ 'form-control-danger': !isValid('password') }"
+                />
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-sm-12" *ngIf="!formErrors.password.valid">
+              <span class="help-block help-block-error">{{ formErrors.password.message }}</span>
+            </div>
+            <div class="col-sm-12">
+              <small class="form-text text-muted">Password must be more than 6 characters.</small>
+            </div>
+          </div>
+          <div class="form-group row" [ngClass]="{ 'has-danger': !isValid('password_confirm') }">
+            <div class="col-md-12">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="icon-lock"></i>
+                </span>
+                <input
+                  class="form-control"
+                  type="password"
+                  placeholder="Repeat Password"
+                  [formControl]="signupForm.controls['password_confirm']"
+                  [ngClass]="{ 'form-control-danger': !isValid('password_confirm') }"
+                />
+              </div>
+              <span class="help-block help-block-error" *ngIf="!formErrors.password_confirm.valid">{{
+                formErrors.password_confirm.message
+              }}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <button
+                type="submit"
+                class="btn btn-success btn-block px-2"
+                [disabled]="!signupForm.valid || submitted == true"
+              >
+                Register
+                <app-spinner *ngIf="submitted"></app-spinner>
+              </button>
+            </div>
+            <div class="col-6 text-right">
+              <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
+            </div>
+            <div *ngIf="errorMessage" class="col-12 error-block mt-2">
+              <div class="alert alert-danger">{{ errorMessage }}</div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card-body p-4" *ngIf="showConfirmation == true">
+        <h1>Thank you for signing up</h1>
+        <br />
+        <p class="text-muted">
+          To complete the registration process you must confirm your account. An email has sent to
+          {{ signupForm.controls['email'].value }}.
+          <br />
+          <br />
+          To confirm and activate your account please check your inbox and click on the link found in the email we just
+          sent.
+        </p>
+        <div class="row">
+          <div class="col-6">
+            <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

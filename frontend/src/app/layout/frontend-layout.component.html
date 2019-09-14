@@ -1,92 +1,111 @@
-<div class="header-wrapper d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="company-name-wrapper my-0 mr-md-auto font-weight-normal">
-        <a [routerLink]="['/']" class="text-dark">
-            <img src="assets/img/ngx-bootstrap-logo.svg" width="30" class="company-logo"/> <span class="company-name">Company name</span>
-        </a>
-    </h5>
-    <nav class="menu-wrapper my-2 my-md-0 mr-md-3">
-        <div class="d-inline-block">
-            <a class="p-2 text-dark align-middle menu-link" data-menu="home" routerLinkActive="active"
-               [routerLink]="['/']"
-               [routerLinkActiveOptions]="{exact:true}">Home</a>
-        </div>
-        <div class="d-inline-block">
-            <a class="p-2 text-dark align-middle menu-link" data-menu="another-page" routerLinkActive="active"
-               [routerLink]="['/sample-page/3']"
-               [routerLinkActiveOptions]="{exact:true}">Another Page</a>
-        </div>
-        <div class="dropdown d-inline-block" dropdown>
-            <button id="button-basic" dropdownToggle
-                    class="btn btn-link text-dark dropdown-toggle p-2 border-0 align-middle menu-link"
-                    aria-controls="dropdown-basic" data-menu="sample-menu">Sample Page
-                <span class="caret"></span>
-            </button>
-            <ul id="dropdown-sample-page" *dropdownMenu class="dropdown-menu" role="menu"
-                aria-labelledby="button-dropdown">
-                <li>
-                    <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/sample-page/1']">Page 1</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/sample-page/2']">Page 2</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <nav class="before-login-link-wrapper my-0" *ngIf="userService.isLoggedIn() === false">
-        <a class="btn btn-outline-success mr-2 link-login" routerLinkActive="active" [routerLink]="['/login']">Login</a>
-        <a class="btn btn-outline-primary link-signup" routerLinkActive="active" [routerLink]="['/signup']">Sign up</a>
-    </nav>
-    <nav class="after-login-link-wrapper my-0" *ngIf="userService.isLoggedIn() === true">
-        <span class="text-dark mr-2 font-weight-bold text-username">{{userData.username}} ({{userData.roleLabel}})</span>
-        <a class="btn btn-link mr-2 link-account" routerLinkActive="active" [routerLink]="['/account']">Account</a>
-        <a class="btn btn-link link-logout" routerLinkActive="active" [routerLink]="['/logout']">Logout</a>
-    </nav>
+<div
+  class="header-wrapper d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow"
+>
+  <h5 class="company-name-wrapper my-0 mr-md-auto font-weight-normal">
+    <a [routerLink]="['/']" class="text-dark">
+      <img src="assets/img/ngx-bootstrap-logo.svg" width="30" class="company-logo" />
+      <span class="company-name">Company name</span>
+    </a>
+  </h5>
+  <nav class="menu-wrapper my-2 my-md-0 mr-md-3">
+    <div class="d-inline-block">
+      <a
+        class="p-2 text-dark align-middle menu-link"
+        data-menu="home"
+        routerLinkActive="active"
+        [routerLink]="['/']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
+    </div>
+    <div class="d-inline-block">
+      <a
+        class="p-2 text-dark align-middle menu-link"
+        data-menu="another-page"
+        routerLinkActive="active"
+        [routerLink]="['/sample-page/3']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Another Page</a
+      >
+    </div>
+    <div class="dropdown d-inline-block" dropdown>
+      <button
+        id="button-basic"
+        dropdownToggle
+        class="btn btn-link text-dark dropdown-toggle p-2 border-0 align-middle menu-link"
+        aria-controls="dropdown-basic"
+        data-menu="sample-menu"
+      >
+        Sample Page
+        <span class="caret"></span>
+      </button>
+      <ul id="dropdown-sample-page" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-dropdown">
+        <li>
+          <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/sample-page/1']">Page 1</a>
+        </li>
+        <li>
+          <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/sample-page/2']">Page 2</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <nav class="before-login-link-wrapper my-0" *ngIf="userService.isLoggedIn() === false">
+    <a class="btn btn-outline-success mr-2 link-login" routerLinkActive="active" [routerLink]="['/login']">Login</a>
+    <a class="btn btn-outline-primary link-signup" routerLinkActive="active" [routerLink]="['/signup']">Sign up</a>
+  </nav>
+  <nav class="after-login-link-wrapper my-0" *ngIf="userService.isLoggedIn() === true">
+    <span class="text-dark mr-2 font-weight-bold text-username"
+      >{{ userData.username }} ({{ userData.roleLabel }})</span
+    >
+    <a class="btn btn-link mr-2 link-account" routerLinkActive="active" [routerLink]="['/account']">Account</a>
+    <a class="btn btn-link link-logout" routerLinkActive="active" [routerLink]="['/logout']">Logout</a>
+  </nav>
 </div>
 
 <div class="container">
-    <div class="main-container">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="main-container">
+    <router-outlet></router-outlet>
+  </div>
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="assets/img/ngx-bootstrap-logo.svg" alt="" width="24"/>
-                <small class="d-block mb-3 text-muted">&copy; {{today | amDateFormat:'Y'}}</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Footer Menu 1</h5>
-                <ul class="list-unstyled text-small">
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 1</a>
-                    </li>
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 2</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Footer Menu 2</h5>
-                <ul class="list-unstyled text-small">
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 1</a>
-                    </li>
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 2</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Footer Menu 3</h5>
-                <ul class="list-unstyled text-small">
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 1</a>
-                    </li>
-                    <li>
-                        <a class="text-muted" href="#">Sub Menu 2</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+      <div class="col-12 col-md">
+        <img class="mb-2" src="assets/img/ngx-bootstrap-logo.svg" alt="" width="24" />
+        <small class="d-block mb-3 text-muted">&copy; {{ today | amDateFormat: 'Y' }}</small>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Footer Menu 1</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="text-muted" href="#">Sub Menu 1</a>
+          </li>
+          <li>
+            <a class="text-muted" href="#">Sub Menu 2</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Footer Menu 2</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="text-muted" href="#">Sub Menu 1</a>
+          </li>
+          <li>
+            <a class="text-muted" href="#">Sub Menu 2</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Footer Menu 3</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="text-muted" href="#">Sub Menu 1</a>
+          </li>
+          <li>
+            <a class="text-muted" href="#">Sub Menu 2</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 </div>

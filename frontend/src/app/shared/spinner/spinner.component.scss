@@ -1,5 +1,5 @@
-@import "spinner";
+@import 'spinner';
 
 .spinner {
-  @include spinner(15px, 3px solid #efefef, .7s, background rgba(255, 255, 255, 1));
+  @include spinner(15px, 3px solid #efefef, 0.7s, background rgba(255, 255, 255, 1));
 }
