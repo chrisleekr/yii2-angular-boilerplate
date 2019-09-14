@@ -2,7 +2,7 @@ sudo: required
 
 language: php
 php:
-  - 7.1.9
+  - 7.3.9
 
 services:
   - docker
