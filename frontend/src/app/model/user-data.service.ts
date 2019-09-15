@@ -1,16 +1,14 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 import { GlobalService } from './global.service';
 import { User } from './user';
 import { UserService } from './user.service';
 import { ResponseBody } from './response-body';
-import { throwError } from 'rxjs';
 
 @Injectable()
 export class UserDataService {
@@ -24,10 +22,12 @@ export class UserDataService {
       .get<ResponseBody>(this.globalService.apiHost + '/user/me', {
         headers: headers
       })
-      .map(response => {
-        return <User>response.data;
-      })
-      .catch(this.handleError);
+      .pipe(
+        map(response => {
+          return <User>response.data;
+        }),
+        catchError(err => this.handleError(err))
+      );
   }
 
   updateUser(userData): Observable<any> {
@@ -41,13 +41,15 @@ export class UserDataService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(this.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+          } else {
+          }
+          return response;
+        }),
+        catchError(err => this.handleError(err))
+      );
   }
 
   private getHeaders(): HttpHeaders {
