@@ -55,7 +55,7 @@ script:
   - cd ..
 
 after_script:
-  - docker-compose down -t1 -v
+  - docker-compose down -v
 
 notifications:
   email: false
