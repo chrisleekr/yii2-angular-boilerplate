@@ -1,10 +1,8 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
+import { catchError, map } from 'rxjs/operators';
 
 import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
@@ -52,10 +50,12 @@ export class SettingDataService {
       .post<ResponseBody>(this.globalService.apiHost + '/setting', JSON.stringify(setting), {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // DELETE /v1/setting/1
@@ -66,10 +66,12 @@ export class SettingDataService {
       .delete<ResponseBody>(this.globalService.apiHost + '/setting/' + id, {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // PUT /v1/setting/1
@@ -80,10 +82,12 @@ export class SettingDataService {
       .put<ResponseBody>(this.globalService.apiHost + '/setting/' + setting.id, JSON.stringify(setting), {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // GET /v1/setting
@@ -94,10 +98,12 @@ export class SettingDataService {
       .get<ResponseBody>(this.globalService.apiHost + '/setting?sort=meta_key', {
         headers
       })
-      .map(response => {
-        return response.data as Setting[];
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response.data as Setting[];
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   refreshGlobalSettings(): void {
@@ -126,10 +132,12 @@ export class SettingDataService {
       .get<ResponseBody>(this.globalService.apiHost + '/setting/public', {
         // headers
       })
-      .map(response => {
-        return response.data as any[];
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response.data as any[];
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   getSettingById(id: number): Observable<Setting> {
@@ -139,9 +147,11 @@ export class SettingDataService {
       .get<ResponseBody>(this.globalService.apiHost + '/setting/' + id, {
         headers
       })
-      .map(response => {
-        return response.data as Setting;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response.data as Setting;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 }

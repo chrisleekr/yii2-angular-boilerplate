@@ -2,7 +2,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
 import { SharedService } from '../shared/shared.service';
 import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
@@ -48,24 +50,24 @@ export class StaffDataService {
   addStaff(staff: Staff): Observable<any> {
     const headers = GlobalService.getHeaders();
 
-    return this.http
-      .post<ResponseBody>(this.globalService.apiHost + '/staff', JSON.stringify(staff), { headers })
-      .map(response => {
+    return this.http.post<ResponseBody>(this.globalService.apiHost + '/staff', JSON.stringify(staff), { headers }).pipe(
+      map(response => {
         return response;
-      })
-      .catch(GlobalService.handleError);
+      }),
+      catchError(err => GlobalService.handleError(err))
+    );
   }
 
   // DELETE /v1/staff/1
   deleteStaffById(id: number): Observable<any> {
     const headers = GlobalService.getHeaders();
 
-    return this.http
-      .delete<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers })
-      .map(response => {
+    return this.http.delete<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers }).pipe(
+      map(response => {
         return response;
-      })
-      .catch(GlobalService.handleError);
+      }),
+      catchError(err => GlobalService.handleError(err))
+    );
   }
 
   // PUT /v1/staff/1
@@ -74,10 +76,12 @@ export class StaffDataService {
 
     return this.http
       .put<ResponseBody>(this.globalService.apiHost + '/staff/' + staff.id, JSON.stringify(staff), { headers })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // GET /v1/staff
@@ -86,39 +90,41 @@ export class StaffDataService {
 
     let queries = {};
     if (extendedQueries) {
-      queries = {...queries, ...extendedQueries};
+      queries = { ...queries, ...extendedQueries };
     }
 
     return this.http
       .get<ResponseBody>(this.globalService.apiHost + '/staff?' + SharedService.serializeQueryString(queries), {
         headers
       })
-      .map(response => {
-        return new StaffList(response.data);
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return new StaffList(response.data);
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // GET /v1/staff/1
   getStaffById(id: number): Observable<Staff> {
     const headers = GlobalService.getHeaders();
 
-    return this.http
-      .get<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers })
-      .map(response => {
+    return this.http.get<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers }).pipe(
+      map(response => {
         return response.data as Staff;
-      })
-      .catch(GlobalService.handleError);
+      }),
+      catchError(err => GlobalService.handleError(err))
+    );
   }
 
   public getPermissionTypes(): Observable<any[]> {
     const headers = GlobalService.getHeaders();
 
-    return this.http
-      .get<ResponseBody>(this.globalService.apiHost + '/staff/get-permissions', { headers })
-      .map(response => {
+    return this.http.get<ResponseBody>(this.globalService.apiHost + '/staff/get-permissions', { headers }).pipe(
+      map(response => {
         return response.data;
-      })
-      .catch(GlobalService.handleError);
+      }),
+      catchError(err => GlobalService.handleError(err))
+    );
   }
 }

@@ -1,18 +1,15 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { map, catchError } from 'rxjs/operators';
+
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 
 import { environment } from './../../environments/environment';
 import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
-
-import { LOCAL_STORAGE, WINDOW } from '@ng-toolkit/universal';
 
 @Injectable()
 export class UserService {
@@ -30,7 +27,7 @@ export class UserService {
     this.loggedIn = this.isLoggedIn();
   }
 
-  public login(username, password) {
+  public login(username: string, password: string) {
     const headers = GlobalService.getHeaders();
 
     return this.http
@@ -46,20 +43,22 @@ export class UserService {
           headers: headers
         }
       )
-      .map(response => {
-        if (response.success) {
-          this.localStorage.setItem(environment.tokenName, response.data['access_token']);
-          this.loggedIn = true;
-        } else {
-          this.localStorage.removeItem(environment.tokenName);
-          this.loggedIn = false;
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+            this.localStorage.setItem(environment.tokenName, response.data['access_token']);
+            this.loggedIn = true;
+          } else {
+            this.localStorage.removeItem(environment.tokenName);
+            this.loggedIn = false;
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
-  public signup(username, email, password) {
+  public signup(username: string, email: string, password: string) {
     const headers = GlobalService.getHeaders();
 
     return this.http
@@ -74,13 +73,15 @@ export class UserService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+          } else {
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public signupConfirm(id, auth_key) {
@@ -97,13 +98,17 @@ export class UserService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+            // do something here
+          } else {
+            // do something else here
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public passwordResetRequest(email) {
@@ -119,13 +124,15 @@ export class UserService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+          } else {
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public passwordResetTokenVerification(token) {
@@ -141,13 +148,15 @@ export class UserService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+          } else {
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public passwordReset(token, password) {
@@ -164,13 +173,15 @@ export class UserService {
         }),
         { headers: headers }
       )
-      .map(response => {
-        if (response.success) {
-        } else {
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+          } else {
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public logout(): void {

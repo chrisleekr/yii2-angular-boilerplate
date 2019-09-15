@@ -1,10 +1,8 @@
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
+import { catchError, map } from 'rxjs/operators';
 
 import { SharedService } from '../shared/shared.service';
 import { GlobalService } from './global.service';
@@ -38,10 +36,12 @@ export class UserDataService {
       .post<ResponseBody>(this.globalService.apiHost + '/user', JSON.stringify(user), {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // DELETE /v1/user/1
@@ -52,10 +52,12 @@ export class UserDataService {
       .delete<ResponseBody>(this.globalService.apiHost + '/user/' + id, {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // PUT /v1/user/1
@@ -66,10 +68,12 @@ export class UserDataService {
       .put<ResponseBody>(this.globalService.apiHost + '/user/' + user.id, JSON.stringify(user), {
         headers
       })
-      .map(response => {
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // GET /v1/user
@@ -78,17 +82,19 @@ export class UserDataService {
 
     let queries = {};
     if (extendedQueries) {
-      queries = {...queries, ...extendedQueries};
+      queries = { ...queries, ...extendedQueries };
     }
 
     return this.http
       .get<ResponseBody>(this.globalService.apiHost + '/user?' + SharedService.serializeQueryString(queries), {
         headers
       })
-      .map(response => {
-        return new UserList(response.data);
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return new UserList(response.data);
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // GET /v1/user/1
@@ -99,9 +105,11 @@ export class UserDataService {
       .get<ResponseBody>(this.globalService.apiHost + '/user/' + id, {
         headers
       })
-      .map(response => {
-        return response.data as User;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          return response.data as User;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 }
