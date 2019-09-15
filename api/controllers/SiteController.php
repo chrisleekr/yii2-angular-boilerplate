@@ -10,6 +10,13 @@ class SiteController extends Controller
 {
     public function actionPing()
     {
+        if (\file_exists($_SERVER['DOCUMENT_ROOT'].'/../.migrated') === false) {
+            $response = new Response();
+            $response->statusCode = 503;
+            $response->data = Yii::t('app', 'migration not completed');
+
+            return $response;
+        }
         $response = new Response();
         $response->statusCode = 200;
         $response->data = Yii::t('app', 'pong');

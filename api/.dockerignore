@@ -26,8 +26,10 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-tests/_output/*
-tests/_support/_generated
+/tests/_output/*
+/tests/_support/_generated
 
-runtime
-web/assets
+/runtime
+/web/assets
+
+/.migrated

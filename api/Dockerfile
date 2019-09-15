@@ -37,7 +37,6 @@ RUN a2enmod headers && \
     a2ensite default-ssl && \
     a2enmod ssl
 
-
 # Add configuration files
 COPY image-files/ /
 

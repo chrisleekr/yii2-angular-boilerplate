@@ -15,4 +15,6 @@ printf "Upgrading database...\n\n"
 ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
 ./yii migrate/up --interactive=0
 
+touch /srv/.migrated
+
 exec "$@"
