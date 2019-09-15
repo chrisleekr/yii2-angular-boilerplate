@@ -15,8 +15,7 @@ branches:
     - master
 
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-  - apt-get install -y nodejs
+  - nvm install 12.10.0
   - node -v
   - npm -v
 
