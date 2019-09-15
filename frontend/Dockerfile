@@ -1,4 +1,4 @@
-FROM node:10.1-alpine as build
+FROM node:12.10.0-alpine as build
 
 # Create app folder
 RUN mkdir /app

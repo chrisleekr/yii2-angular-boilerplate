@@ -15,7 +15,6 @@ export const environment = {
     timePickerInput: 'HH:mm:ss',
     monthYearLabel: 'YYYY-MM',
     dateA11yLabel: 'YYYY-MM-DD',
-    monthYearA11yLabel: 'YYYY-MM',
+    monthYearA11yLabel: 'YYYY-MM'
   }
 };
-

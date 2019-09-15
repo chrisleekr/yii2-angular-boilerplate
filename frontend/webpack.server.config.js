@@ -6,20 +6,18 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    server: './server.ts',
+    server: './server.ts'
   },
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
-  externals: [/(node_modules|main\..*\.js)/,],
+  externals: [/(node_modules|main\..*\.js)/],
   output: {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
   module: {
-    rules: [
-      { test: /\.ts$/, loader: 'ts-loader' }
-    ]
+    rules: [{ test: /\.ts$/, loader: 'ts-loader' }]
   },
   optimization: {
     minimize: false
@@ -38,4 +36,4 @@ module.exports = {
       {}
     )
   ]
-}
+};

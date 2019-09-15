@@ -1,119 +1,130 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">
-        Users
-        <ng-container *ngIf="loading">
-            <app-spinner></app-spinner>
-        </ng-container>
-    </h1>
+  <h1 class="h2">
+    Users
+    <ng-container *ngIf="loading">
+      <app-spinner></app-spinner>
+    </ng-container>
+  </h1>
 </div>
 
 <div class="row" *ngIf="errorMessage">
-    <div class="col-sm-12">
-        <p class="alert alert-danger">{{errorMessage}}</p>
-    </div>
+  <div class="col-sm-12">
+    <p class="alert alert-danger">{{ errorMessage }}</p>
+  </div>
 </div>
 
 <div *ngIf="userList">
-    <div class="row mb-2">
-        <div class="col-12">
-            <strong>Total Count:</strong> {{totalCount}}
-        </div>
+  <div class="row mb-2">
+    <div class="col-12"><strong>Total Count:</strong> {{ totalCount }}</div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm table-striped table-bordered table-valign-middle">
+      <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th>Username</th>
+          <th>Email Address<br />(Confirmed At)</th>
+          <th width="15%" class="text-center">Last Login</th>
+          <th width="15%" class="text-center">Status<br />(Last Updated At)</th>
+          <th width="20%" class="text-center">Functions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userList.rows">
+          <td class="text-center">
+            {{ user.row_num }}
+          </td>
+          <td>
+            {{ user.username }}
+          </td>
+          <td>
+            <p *ngIf="user.confirmed_at == null">
+              {{ user.unconfirmed_email }}
+              <br /><span class="help-text text-danger">(Not Confirmed)</span>
+            </p>
+            <p *ngIf="user.confirmed_at != null">
+              {{ user.email }}
+              <br /><span
+                class="help-text"
+                title="{{ user.confirmed_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
+                >({{ user.confirmed_at | amFromUnix | amTimeAgo }})</span
+              >
+            </p>
+          </td>
+          <td class="text-center">
+            <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
+            <p
+              *ngIf="user.last_login_ip != null"
+              class="help-text"
+              title="{{ user.last_login_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
+            >
+              {{ user.last_login_ip }}<br />({{ user.last_login_at | amFromUnix | amTimeAgo }})
+            </p>
+          </td>
+          <td class="text-center">
+            <div *ngIf="user.blocked_at == null">
+              <span
+                [ngClass]="{
+                  'text-success': user.status == 10,
+                  'text-info': user.status == 1,
+                  'text-danger': user.status == 0 || user.status == -1
+                }"
+                >{{ user.status_label }}</span
+              >
+
+              <br /><span
+                class="help-text"
+                title="{{ user.updated_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
+                >({{ user.updated_at | amFromUnix | amTimeAgo }})</span
+              >
+            </div>
+            <div *ngIf="user.blocked_at != null">
+              <span *ngIf="user.blocked_at != null" class="text-danger" title="{{ user.blocked_at }}"
+                >Blocked since {{ user.blocked_at | amFromUnix | amTimeAgo }}</span
+              >
+            </div>
+          </td>
+          <td class="text-center">
+            <div *ngIf="user.status != -1">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="viewUser(user)">
+                <i class="fa fa-edit"></i> Edit
+              </button>
+              &nbsp;
+              <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteUser(user)">
+                <i class="fa fa-remove"></i> Remove
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-12 col-sm-8">
+      <pagination
+        [totalItems]="totalCount"
+        [(ngModel)]="currentPage"
+        [boundaryLinks]="true"
+        [directionLinks]="true"
+        [maxSize]="5"
+        [itemsPerPage]="pageSize"
+        (pageChanged)="pageChanged($event)"
+      ></pagination>
     </div>
-    <div class="table-responsive">
-        <table class="table table-sm table-striped table-bordered table-valign-middle">
-            <thead>
-            <tr>
-                <th class="text-center">#</th>
-                <th>Username</th>
-                <th>Email Address<br>(Confirmed At)</th>
-                <th width="15%" class="text-center">Last Login</th>
-                <th width="15%" class="text-center">Status<br/>(Last Updated At)</th>
-                <th width="20%" class="text-center">Functions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let user of userList.rows">
-                <td class="text-center">
-                    {{user.row_num}}
-                </td>
-                <td>
-                    {{user.username}}
-                </td>
-                <td>
-                    <p *ngIf="user.confirmed_at == null">
-                        {{user.unconfirmed_email}}
-                        <br/><span class="help-text text-danger">(Not Confirmed)</span>
-                    </p>
-                    <p *ngIf="user.confirmed_at != null">
-                        {{user.email}}
-                        <br/><span class="help-text"
-                                   title="{{(user.confirmed_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(user.confirmed_at | amFromUnix) | amTimeAgo}})</span>
-                    </p>
-                </td>
-                <td class="text-center">
-                    <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
-                    <p *ngIf="user.last_login_ip != null" class="help-text"
-                       title="{{(user.last_login_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">
-                        {{user.last_login_ip}}<br/>({{(user.last_login_at | amFromUnix) | amTimeAgo}})</p>
-                </td>
-                <td class="text-center">
-                    <div *ngIf="user.blocked_at == null">
-                        <span [ngClass]="{
-                            'text-success': user.status == 10,
-                            'text-info': user.status == 1,
-                            'text-danger': user.status == 0 || user.status == -1
-                        }">{{user.status_label}}</span>
-
-                        <br/><span class="help-text"
-                                   title="{{(user.updated_at | amFromUnix) | amDateFormat: 'YYYY-MM-DD HH:mm'}}">({{(user.updated_at | amFromUnix) | amTimeAgo}})</span>
-                    </div>
-                    <div *ngIf="user.blocked_at != null">
-                        <span *ngIf="user.blocked_at != null" class="text-danger" title="{{user.blocked_at}}">Blocked since {{(user.blocked_at | amFromUnix) | amTimeAgo}}</span>
-                    </div>
-
-                </td>
-                <td class="text-center">
-                    <div *ngIf="user.status != -1">
-                        <button class="btn btn-secondary btn-sm" type="button" (click)="viewUser(user)">
-                            <i class="fa fa-edit"></i> Edit
-                        </button>
-                        &nbsp;
-                        <button class="btn btn-danger btn-sm" type="button" (click)="confirmDeleteUser(user)">
-                            <i class="fa fa-remove"></i> Remove
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="col-12 col-sm-4 text-right">
+      <a class="btn btn-primary ml-1" [routerLink]="['/user', 'create']" routerLinkActive="active"
+        ><i class="fa fa-plus-square"></i> Create New User</a
+      >
     </div>
-
-    <div class="row">
-        <div class="col-12 col-sm-8">
-            <pagination [totalItems]="totalCount" [(ngModel)]="currentPage" [boundaryLinks]="true"
-                        [directionLinks]="true" [maxSize]="5" [itemsPerPage]="pageSize"
-                        (pageChanged)="pageChanged($event)"></pagination>
-        </div>
-        <div class="col-12 col-sm-4 text-right">
-            <a class="btn btn-primary ml-1" [routerLink]="['/user', 'create']" routerLinkActive="active"><i
-                    class="fa fa-plus-square"></i> Create New User</a>
-        </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-6"></div>
+    <div class="col-12 col-sm-6 text-right">
+      <form class="form-inline float-right" (ngSubmit)="onSearchFormSubmit()" novalidate>
+        <input type="text" class="form-control" id="search-q" placeholder="" [(ngModel)]="searchParams['q']" name="q" />
+        <button class="btn btn-info ml-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+      </form>
     </div>
-    <div class="row">
-        <div class="col-12 col-sm-6">
-
-        </div>
-        <div class="col-12 col-sm-6 text-right">
-            <form class="form-inline float-right" (ngSubmit)="onSearchFormSubmit()" novalidate>
-                <input type="text" class="form-control" id="search-q" placeholder="" [(ngModel)]="searchParams['q']"
-                       name="q">
-                <button class="btn btn-info ml-1" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search
-                </button>
-
-            </form>
-
-        </div>
-    </div>
-
-
+  </div>
 </div>

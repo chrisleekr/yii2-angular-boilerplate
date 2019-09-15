@@ -1,88 +1,27 @@
-# PHP Docker image for Yii 2.0 Framework runtime
-# ==============================================
+FROM php:7.3.9-apache-stretch
 
-FROM php:7.1.9-fpm-alpine
 
-# Install system packages & PHP extensions required for Yii 2.0 Framework
-# virtual pkg names and ENV $PHPIZE_DEPS are definied in base image
-# C* and LDFlAGS are also definied in base image, so we use these for our custom pecl builds
-# we install (newer) imagick from edge repo due to SEGFAULT bugs
-# hopefully this won't break other things...
-RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS && \
-    apk add --no-cache --virtual .imagemagick-edge \
-            --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
-            --allow-untrusted \
-        imagemagick \
-        imagemagick-dev && \
-    apk add --update --virtual .pecl-build-deps \
-        icu-dev \
-        curl-dev \
-        freetype-dev \
-        pcre-dev \
-        postgresql-dev \
-        libtool \
-        libmcrypt-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        libxml2-dev && \
-    apk add --no-cache --virtual .build-dependencies $PHPIZE_DEPS \
-        zlib-dev \
-        cyrus-sasl-dev \
-        g++ \
-        libtool \
-        make \
-        pcre-dev && \
-    apk add \
-        git \
-        curl \
-        bash \
-        bash-completion \
-        icu \
-        pcre \
-        freetype \
-        libmcrypt \
-        libintl \
-        libjpeg-turbo \
-        imagemagick \
-        libpng \
-        libltdl \
-        libxml2 \
-        mysql-client \
-        nodejs \
-        postgresql-client \
-        libmemcached-dev && \
-    export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" && \
-    pecl install \
-        apcu \
-        imagick-3.4.3 \
-        xdebug \
-        memcached && \
-    docker-php-ext-enable imagick && \
-    docker-php-ext-enable apcu && \
-    docker-php-ext-enable memcached && \
-    docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ && \
-    docker-php-ext-configure bcmath && \
-    docker-php-ext-install \
-        soap \
-        mcrypt \
-        zip \
-        curl \
-        bcmath \
-        exif \
-        gd \
-        iconv \
-        intl \
-        mbstring \
-        opcache \
-        pdo_mysql \
-        pdo_pgsql && \
-    apk del \
-        .pecl-build-deps .phpize-deps
-
+RUN requirements="nano cron mariadb-client libwebp-dev libxpm-dev libmcrypt-dev libmcrypt4 libcurl3-dev libxml2-dev \
+libmemcached-dev zlib1g-dev libc6 libstdc++6 libkrb5-3 openssl debconf libfreetype6-dev libjpeg-dev libtiff-dev \
+libpng-dev git imagemagick libmagickwand-dev ghostscript gsfonts libbz2-dev libzip-dev zip unzip" \
+    && apt-get update && apt-get install -y --no-install-recommends $requirements && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install mysqli \
+                              pdo_mysql \
+                              iconv  \
+                              gd  \
+                              mbstring \
+                              soap  \
+                              exif \
+                              opcache \
+    && pecl install apcu \
+                    xdebug \
+                    imagick \
+                    memcached \
+    && docker-php-ext-enable memcached \
+                            xdebug \
+                            imagick \
+                            apcu \
+                            opcache 
 
 # Configure version constraints
 ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.2 \
@@ -90,6 +29,13 @@ ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.2 \
     PATH=/app:/app/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux \
     COMPOSER_ALLOW_SUPERUSER=1
+
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.pem -subj "/C=AT/ST=Vienna/L=Vienna/O=Security/OU=Development/CN=example.com"
+
+RUN a2enmod headers && \
+    a2enmod rewrite && \
+    a2ensite default-ssl && \
+    a2enmod ssl
 
 # Add configuration files
 COPY image-files/ /
@@ -110,8 +56,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     composer global dumpautoload --optimize && \
     composer clear-cache
 
-# Install nginx
-RUN apk --update add nginx
 
 WORKDIR /srv
 
@@ -120,8 +64,13 @@ RUN /usr/local/bin/composer install --prefer-dist
 ENV PATH /srv/vendor/bin:${PATH}
 
 COPY . /srv/
+
 RUN chown -R www-data:www-data /srv/ \
+    && mkdir /srv/runtime \
     && chmod 777 -R /srv/runtime
 
 EXPOSE 80
-CMD ["docker-entrypoint.sh"]
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
+CMD ["apache2-foreground"]

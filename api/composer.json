@@ -14,12 +14,13 @@
   },
   "minimum-stability": "stable",
   "require": {
-    "php": ">=5.4.0",
+    "php": ">=7.3.0",
     "yiisoft/yii2": "~2.0.14",
     "yiisoft/yii2-bootstrap": "~2.0.0",
     "yiisoft/yii2-swiftmailer": "~2.0.0",
     "firebase/php-jwt": "^4.0",
-    "guzzlehttp/guzzle": "^6.3"
+    "guzzlehttp/guzzle": "^6.3",
+    "ext-json": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

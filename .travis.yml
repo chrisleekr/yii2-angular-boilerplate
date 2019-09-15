@@ -2,7 +2,7 @@ sudo: required
 
 language: php
 php:
-  - 7.1.9
+  - 7.3.9
 
 services:
   - docker
@@ -15,8 +15,9 @@ branches:
     - master
 
 before_install:
-  - curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
+  - nvm install 12.10.0
+  - node -v
+  - npm -v
 
 before_script:
   - cp .env-dist .env
@@ -24,7 +25,8 @@ before_script:
   - env
   - docker-compose up -d --build
   - docker ps -a
-  - while [ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne "200" ]; do sleep 3; echo "Waiting API to be available..."; done
+  - while [[ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne 200 ]]; do sleep 3; echo "Waiting API to be available..."; done
+  - docker logs api
   - cd api
   - composer install
   - cd ..
@@ -45,7 +47,7 @@ script:
   - cd frontend
   - npm run lint
   - npm run test
-  - npm run e2e
+  # - npm run e2e # Temporary disable as travis not supporting latest chrome
   - cd ..
   - cd backend
   - npm run lint
@@ -53,7 +55,7 @@ script:
   - cd ..
 
 after_script:
-  - docker-compose down
+  - docker-compose down -t1 -v
 
 notifications:
   email: false
