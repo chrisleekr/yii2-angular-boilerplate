@@ -22,19 +22,20 @@ before_script:
   - cp .env-dist .env
   - export $(cat .env | sed -e /^$/d -e /^#/d | xargs)
   - env
+  - docker-compose down -t1 -v
   - docker-compose up -d --build
   - docker ps -a
   - while [ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne "200" ]; do sleep 3; echo "Waiting API to be available..."; done
   - docker logs api
-  # - cd api
-  # - composer install
-  # - cd ..
-  # - cd backend
-  # - npm install
-  # - cd ..
-  # - cd frontend
-  # - npm install
-  # - cd ..
+  - cd api
+  - composer install
+  - cd ..
+  - cd backend
+  - npm install
+  - cd ..
+  - cd frontend
+  - npm install
+  - cd ..
 
 script:
   - cd api
@@ -54,7 +55,7 @@ script:
   - cd ..
 
 after_script:
-  - docker-compose down
+  - docker-compose down -t1 -v
 
 notifications:
   email: false
