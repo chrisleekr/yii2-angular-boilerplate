@@ -1,11 +1,9 @@
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { catchError, map } from 'rxjs/operators';
+
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { environment } from './../../environments/environment';
@@ -42,17 +40,19 @@ export class StaffService {
           headers
         }
       )
-      .map(response => {
-        if (response.success) {
-          localStorage.setItem(environment.tokenName, response.data['access_token']);
-          this.loggedIn = true;
-        } else {
-          localStorage.removeItem(environment.tokenName);
-          this.loggedIn = false;
-        }
-        return response;
-      })
-      .catch(GlobalService.handleError);
+      .pipe(
+        map(response => {
+          if (response.success) {
+            localStorage.setItem(environment.tokenName, response.data['access_token']);
+            this.loggedIn = true;
+          } else {
+            localStorage.removeItem(environment.tokenName);
+            this.loggedIn = false;
+          }
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   unauthorizedAccess(error: any): void {
