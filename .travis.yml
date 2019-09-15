@@ -25,15 +25,16 @@ before_script:
   - docker-compose up -d --build
   - docker ps -a
   - while [ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne "200" ]; do sleep 3; echo "Waiting API to be available..."; done
-  - cd api
-  - composer install
-  - cd ..
-  - cd backend
-  - npm install
-  - cd ..
-  - cd frontend
-  - npm install
-  - cd ..
+  - docker logs api
+  # - cd api
+  # - composer install
+  # - cd ..
+  # - cd backend
+  # - npm install
+  # - cd ..
+  # - cd frontend
+  # - npm install
+  # - cd ..
 
 script:
   - cd api

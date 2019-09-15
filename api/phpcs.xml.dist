@@ -29,6 +29,8 @@
 
         <!-- CASE keyword must be indented 4 spaces from SWITCH keyword. -->
         <exclude name="PSR2.ControlStructures.SwitchDeclaration"/>
+
+        <exclude name="Squiz.Strings.ConcatenationSpacing" />
     </rule>
 
     <!-- Property declaration rules. -->
@@ -45,6 +47,7 @@
 
     <!-- If string doesn't contain variables or single quotes, use single quotes. -->
     <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
+
 
     <!-- Replaces Yii2_Sniffs_Files_SpacesAroundConcatSniff -->
     <rule ref="Squiz.Strings.ConcatenationSpacing">
