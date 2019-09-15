@@ -17,6 +17,8 @@ branches:
 before_install:
   - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
   - sudo apt-get install -y nodejs
+  - node -v
+  - npm -v
 
 before_script:
   - cp .env-dist .env
@@ -24,7 +26,7 @@ before_script:
   - env
   - docker-compose up -d --build
   - docker ps -a
-  - while [ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne 200 ]; do sleep 3; echo "Waiting API to be available..."; done
+  - while [[ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne 200 ]]; do sleep 3; echo "Waiting API to be available..."; done
   - docker logs api
   - cd api
   - composer install
