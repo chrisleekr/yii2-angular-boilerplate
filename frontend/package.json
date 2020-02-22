@@ -8,11 +8,7 @@
     "build": "ng build --base-href /frontend/",
     "test": "ng test --code-coverage --watch=false --browsers ChromeHeadlessNoSandbox",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build:server:prod": "ng run boilerplate-frontend:server && webpack --config webpack.server.config.js --progress --colors",
-    "build:browser:prod": "ng build --prod --base-href /frontend/",
-    "build:prod": "npm run build:server:prod && npm run build:browser:prod",
-    "server": "node local.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

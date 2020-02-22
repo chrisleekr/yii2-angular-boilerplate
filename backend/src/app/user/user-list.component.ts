@@ -114,7 +114,7 @@ export class UserListComponent implements OnInit {
     Swal.fire({
       title: 'Are you sure?',
       text: "Once delete, you won't be able to revert this!",
-      type: 'question',
+      icon: 'question',
       showLoaderOnConfirm: true,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
