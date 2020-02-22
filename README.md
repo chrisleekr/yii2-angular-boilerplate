@@ -59,7 +59,6 @@ The project involves:
   - Setting Management
     - Admin or staff who has a permission 'manageSettings' can create/update/delete setting information.
 - Frontend
-  - Support Angular Universal/server-side rendering
   - User Login/Logout
     - User can login with username and password.
     - API generates JWT(JSON Web Token) upon successful login.
@@ -220,8 +219,6 @@ Once all containers are finished compiling, then open the browser.
 2. Frontend
    - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to
      `dockerfile: ./Dockerfile`.
-   - Note that production Dockerfile will use [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit) to
-     provide server side rendering, which means you will be able to provide compiled HTML for search engine.
 
 ## Troubleshooting
 
