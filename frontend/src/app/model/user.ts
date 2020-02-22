@@ -1,3 +1,5 @@
+// tslint:disable: variable-name
+
 export class User {
   id: number;
   username: string;

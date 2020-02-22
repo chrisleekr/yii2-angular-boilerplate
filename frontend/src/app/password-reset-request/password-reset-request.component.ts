@@ -13,18 +13,18 @@ export class PasswordResetRequestComponent implements OnInit {
   passwordResetRequestForm: FormGroup;
   formErrors: any;
   boolean = false;
-  errorMessage: string = '';
-  showConfirmation: boolean = false;
-  submitted: boolean = false;
+  errorMessage = '';
+  showConfirmation = false;
+  submitted = false;
 
-  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) {
-    this.passwordResetRequestForm = formBuilder.group({
+  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+    this.passwordResetRequestForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, CustomValidators.email])]
     });
     this.passwordResetRequestForm.valueChanges.subscribe(data => this.onValueChanged(data));
   }
 
-  public onValueChanged(data?: any) {
+  public onValueChanged(_data?: any) {
     if (!this.passwordResetRequestForm) {
       return;
     }
@@ -91,7 +91,7 @@ export class PasswordResetRequestComponent implements OnInit {
   }
 
   private isValid(field): boolean {
-    let isValid: boolean = false;
+    let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
     if (this.passwordResetRequestForm.controls[field].touched === false) {

@@ -95,7 +95,7 @@ export class AccountEditComponent implements OnInit {
         title: 'Are you sure?',
         html:
           'If you change your email address, you must confirm new email address again. ' +
-          "You won't be able to access your account until you confirming new email address." +
+          'You will not be able to access your account until you confirming new email address.' +
           '<br /><br  /><strong>New Email Address: ' +
           tempUser.email +
           '</strong><br /><br />You will be logged out. Please login again after confirming new email address.',

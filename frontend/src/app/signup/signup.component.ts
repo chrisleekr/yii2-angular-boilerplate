@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CustomValidators } from 'ng2-validation';
 
 import { UserService } from '../model/user.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -12,18 +11,18 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   formErrors: any;
-  submitted: boolean = false;
-  errorMessage: string = '';
-  showConfirmation: boolean = false;
+  submitted = false;
+  errorMessage = '';
+  showConfirmation = false;
 
-  constructor(private userService: UserService, private router: Router, private formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private formBuilder: FormBuilder) {
     const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]));
     const passwordConfirm = new FormControl(
       '',
       Validators.compose([Validators.required, CustomValidators.equalTo(password)])
     );
 
-    this.signupForm = formBuilder.group({
+    this.signupForm = this.formBuilder.group({
       username: [
         '',
         Validators.compose([
@@ -33,7 +32,7 @@ export class SignupComponent implements OnInit {
         ])
       ],
       email: ['', Validators.compose([Validators.required, CustomValidators.email])],
-      password: password,
+      password,
       password_confirm: passwordConfirm // use standalone variable to use equalTo
     });
 
@@ -110,7 +109,7 @@ export class SignupComponent implements OnInit {
   }
 
   private isValid(field): boolean {
-    let isValid: boolean = false;
+    let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
     if (this.signupForm.controls[field].touched === false) {
