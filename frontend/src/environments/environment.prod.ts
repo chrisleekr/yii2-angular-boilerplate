@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiHost: '//localhost/api/v1',
+  apiHost: '//boilerplate-api.chrislee.kr/v1',
   tokenName: 'frontend-token'
 };

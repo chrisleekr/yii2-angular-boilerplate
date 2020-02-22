@@ -108,7 +108,7 @@ export class SignupComponent implements OnInit {
     };
   }
 
-  private isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true

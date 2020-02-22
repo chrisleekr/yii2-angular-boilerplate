@@ -81,7 +81,7 @@ export class AccountEditComponent implements OnInit {
     );
   }
 
-  public onSubmit(_elementValues: any) {
+  public onSubmit() {
     this.resetFormErrors();
     this.submitted = true;
     this.errorMessage = '';
@@ -181,7 +181,7 @@ export class AccountEditComponent implements OnInit {
     };
   }
 
-  private isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
