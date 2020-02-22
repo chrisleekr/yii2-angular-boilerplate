@@ -4,6 +4,10 @@ $params = include __DIR__ . '/params.php';
 
 $config = [
     'id' => 'boilerplate-api',
+    'aliases' => [
+        '@bower' => '@vendor/bower-asset',
+        '@npm'   => '@vendor/npm-asset',
+    ],
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -169,7 +173,7 @@ $config = [
     'params' => $params,
 ];
 
-if (YII_ENV_DEV) {
+// if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
@@ -181,6 +185,6 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
-}
+// }
 
 return $config;

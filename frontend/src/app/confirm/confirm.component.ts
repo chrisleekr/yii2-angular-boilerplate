@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../model/user.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html'
 })
 export class ConfirmComponent implements OnInit {
-  submitted: boolean = false;
-  errorMessage: string = '';
-  isConfirmed: boolean = false;
+  submitted = false;
+  errorMessage = '';
+  isConfirmed = false;
 
-  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.userService.logout();
 
     // subscribe to router event
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      if (typeof params['id'] !== 'undefined' && typeof params['auth_key'] !== 'undefined') {
-        const id = params['id'];
-        const auth_key = params['auth_key'];
+      if (typeof params.id !== 'undefined' && typeof params.auth_key !== 'undefined') {
+        const id = params.id;
+        const auth_key = params.auth_key;
         this.onConfirm(id, auth_key);
       } else {
         this.errorMessage = 'The parameters are missing. Please check your access';
@@ -28,12 +28,12 @@ export class ConfirmComponent implements OnInit {
     });
   }
 
-  private onConfirm(id, auth_key) {
+  private onConfirm(id: number, authKey: string) {
     this.errorMessage = '';
     this.submitted = true;
     this.isConfirmed = false;
 
-    this.userService.signupConfirm(id, auth_key).subscribe(
+    this.userService.signupConfirm(id, authKey).subscribe(
       result => {
         if (result.success) {
           // show confirmation

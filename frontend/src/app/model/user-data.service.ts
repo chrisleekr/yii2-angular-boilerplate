@@ -20,11 +20,11 @@ export class UserDataService {
 
     return this.http
       .get<ResponseBody>(this.globalService.apiHost + '/user/me', {
-        headers: headers
+        headers
       })
       .pipe(
         map(response => {
-          return <User>response.data;
+          return response.data as User;
         }),
         catchError(err => this.handleError(err))
       );
@@ -39,7 +39,7 @@ export class UserDataService {
         JSON.stringify({
           UserEditForm: userData
         }),
-        { headers: headers }
+        { headers }
       )
       .pipe(
         map(response => {

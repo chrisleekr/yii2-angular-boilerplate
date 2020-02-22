@@ -12,12 +12,12 @@ import { UserService } from '../model/user.service';
 export class PasswordResetComponent implements OnInit {
   passwordResetForm: FormGroup;
   formErrors: any;
-  submitted: boolean = false;
-  isTokenVerified: boolean = false;
-  errorMessage: string = '';
-  showConfirmation: boolean = false;
+  submitted = false;
+  isTokenVerified = false;
+  errorMessage = '';
+  showConfirmation = false;
 
-  token: string = '';
+  token = '';
 
   constructor(
     private userService: UserService,
@@ -32,8 +32,8 @@ export class PasswordResetComponent implements OnInit {
 
     // subscribe to router event
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      if (typeof params['token'] !== 'undefined') {
-        const token = params['token'];
+      if (typeof params.token !== 'undefined') {
+        const token = params.token;
         this.onPasswordResetTokenVerification(token);
       } else {
         this.errorMessage = 'The parameters are missing. Please check your access';
@@ -41,7 +41,7 @@ export class PasswordResetComponent implements OnInit {
     });
   }
 
-  public onValueChanged(data?: any) {
+  public onValueChanged(_data?: any) {
     if (!this.passwordResetForm) {
       return;
     }
@@ -91,13 +91,13 @@ export class PasswordResetComponent implements OnInit {
     );
 
     this.passwordResetForm = this.formBuilder.group({
-      password: password,
+      password,
       password_confirm: passwordConfirm
     });
     this.passwordResetForm.valueChanges.subscribe(data => this.onValueChanged(data));
   }
 
-  private onPasswordResetTokenVerification(token) {
+  private onPasswordResetTokenVerification(token: string) {
     this.errorMessage = '';
     this.submitted = true;
     this.isTokenVerified = false;
@@ -167,7 +167,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   private isValid(field): boolean {
-    let isValid: boolean = false;
+    let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
     if (this.passwordResetForm.controls[field].touched === false) {

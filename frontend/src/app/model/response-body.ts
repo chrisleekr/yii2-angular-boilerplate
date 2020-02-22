@@ -3,7 +3,7 @@ export class ResponseBody {
   success: boolean;
   data: any;
 
-  constructor(values: Object = {}) {
+  constructor(values: object = {}) {
     Object.assign(this, values);
   }
 }

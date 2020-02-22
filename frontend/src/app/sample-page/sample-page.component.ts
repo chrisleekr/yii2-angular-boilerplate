@@ -13,8 +13,8 @@ export class SamplePageComponent implements OnInit {
 
   ngOnInit() {
     this.parameters = this.activatedRoute.params.subscribe(params => {
-      if (typeof params['id'] !== 'undefined') {
-        this.id = Number.parseInt(params['id'], 10);
+      if (typeof params.id !== 'undefined') {
+        this.id = Number.parseInt(params.id, 10);
       } else {
         // do something here
       }
