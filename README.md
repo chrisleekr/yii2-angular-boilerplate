@@ -10,11 +10,9 @@ The project involves:
 - API
   - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached, _Basic Unit & Functional Test using Codeception_
 - Backend: Staff/Administrator dashboard to manage staffs, users and settings
-  - Angular 9, Bootstrap 4, JWT (JSON Web Token), _Basic Unit test using Karma+Jasmine_, Moment.js, Sweet Alert,
-    Underscore.js
+  - Angular 9, Bootstrap 4, JWT (JSON Web Token), _Basic Unit test using Karma+Jasmine_, Moment.js, Sweet Alert, Underscore.js
 - Frontend: User website to support user registration, login and account management
-  - Angular 9, [@ng-toolkit/universal](https://github.com/maciejtreder/ng-toolkit), Bootstrap 4, JWT (JSON Web Token),
-    _Basic Unit using Karma+Jasmine, Basic E2E test using Protractor+Jasmine_, Moment.js, Sweet Alert
+  - Angular 9, Bootstrap 4, JWT (JSON Web Token), _Basic Unit using Karma+Jasmine, Basic E2E test using Protractor+Jasmine_, Moment.js, Sweet Alert
 
 ## Demo
 
