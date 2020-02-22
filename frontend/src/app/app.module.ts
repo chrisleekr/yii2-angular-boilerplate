@@ -1,10 +1,12 @@
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 // Routing Module
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 // Layouts
 import { FrontendLayoutComponent } from './layout/frontend-layout.component';
 import { P404Component } from './page/404.component';
@@ -33,6 +35,8 @@ export function jwtOptionsFactory(localStorage) {
   imports: [
     CommonModule,
     AppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     BsDropdownModule.forRoot(),
@@ -54,6 +58,7 @@ export function jwtOptionsFactory(localStorage) {
     UserService,
     GlobalService,
     UserDataService
-  ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

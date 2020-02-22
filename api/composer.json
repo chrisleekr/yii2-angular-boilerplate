@@ -1,6 +1,6 @@
 {
-  "name": "chrisleek/yii2-anguar-boilerplate",
-  "description": "Yii 2 Rest API",
+  "name": "chrisleekr/yii2-angular-boilerplate",
+  "description": "Yii 2 REST API",
   "keywords": [
     "yii2",
     "boilerplate"
@@ -36,14 +36,7 @@
   "config": {
     "process-timeout": 1800,
     "fxp-asset": {
-      "installer-paths": {
-        "npm-asset-library": "vendor/npm",
-        "bower-asset-library": "vendor/bower"
-      },
-      "vcs-driver-options": {
-        "github-no-api": true
-      },
-      "pattern-skip-version": "(-build|-patch)"
+      "enabled": false
     }
   },
   "scripts": {

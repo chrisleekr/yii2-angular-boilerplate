@@ -16,13 +16,13 @@ import Swal from 'sweetalert2';
 export class AccountEditComponent implements OnInit {
   errorMessage: string;
 
-  mode: string = '';
+  mode = '';
   user: User;
-  originalEmail: string = '';
+  originalEmail = '';
   form: FormGroup;
   formErrors: any;
 
-  submitted: boolean = false;
+  submitted = false;
 
   userData: any = {};
 
@@ -33,7 +33,7 @@ export class AccountEditComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     // Construct form group
-    this.form = formBuilder.group({
+    this.form = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, CustomValidators.email])],
       password: ['', Validators.compose([Validators.minLength(6)])]
     });
@@ -41,7 +41,7 @@ export class AccountEditComponent implements OnInit {
     this.form.valueChanges.subscribe(data => this.onValueChanged(data));
   }
 
-  public onValueChanged(data?: any) {
+  public onValueChanged(_data?: any) {
     if (!this.form) {
       return;
     }
@@ -65,8 +65,8 @@ export class AccountEditComponent implements OnInit {
       user => {
         this.user = user;
 
-        this.form.controls['email'].setValue(user.email);
-        this.form.controls['password'].setValue('');
+        this.form.controls.email.setValue(user.email);
+        this.form.controls.password.setValue('');
         this.originalEmail = user.email;
         this.mode = 'update';
       },
@@ -81,7 +81,7 @@ export class AccountEditComponent implements OnInit {
     );
   }
 
-  public onSubmit(elementValues: any) {
+  public onSubmit(_elementValues: any) {
     this.resetFormErrors();
     this.submitted = true;
     this.errorMessage = '';
@@ -99,14 +99,14 @@ export class AccountEditComponent implements OnInit {
           '<br /><br  /><strong>New Email Address: ' +
           tempUser.email +
           '</strong><br /><br />You will be logged out. Please login again after confirming new email address.',
-        type: 'question',
+        icon: 'question',
         showLoaderOnConfirm: true,
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, change it!',
-        preConfirm: function() {
-          return new Promise(function(resolve, reject) {
+        preConfirm() {
+          return new Promise(resolve => {
             parent.userDataService.updateUser(tempUser).subscribe(
               result => {
                 if (result.success) {
@@ -131,15 +131,10 @@ export class AccountEditComponent implements OnInit {
             );
           });
         }
-      }).then(
-        function(result) {
-          // handle confirm, result is needed for modals with input
-        },
-        function(dismiss) {
-          // dismiss can be "cancel" | "close" | "outside"
-          parent.submitted = false;
-        }
-      );
+      }).then(() => {
+        // dismiss can be "cancel" | "close" | "outside"
+        parent.submitted = false;
+      });
     } else if (typeof tempUser.password !== 'undefined' && tempUser.password !== '') {
       this.userDataService.updateUser(tempUser).subscribe(
         result => {
@@ -187,7 +182,7 @@ export class AccountEditComponent implements OnInit {
   }
 
   private isValid(field): boolean {
-    let isValid: boolean = false;
+    let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
     if (this.form.controls[field].touched === false) {

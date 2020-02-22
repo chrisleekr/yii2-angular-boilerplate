@@ -12,7 +12,7 @@ export class User {
   created_at: string;
   updated_at: string;
 
-  constructor(values: Object = {}) {
+  constructor(values: object = {}) {
     Object.assign(this, values);
   }
 }

@@ -28,8 +28,8 @@ services:
       - internal
     env_file:
       - .env
-    # volumes:
-    #   - ./api:/srv
+    volumes:
+      - ./api:/srv
 
   backend:
     container_name: backend

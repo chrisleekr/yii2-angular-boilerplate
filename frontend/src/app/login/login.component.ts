@@ -11,9 +11,9 @@ import { UserService } from '../model/user.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   formErrors: any;
-  submitted: boolean = false;
-  errorMessage: string = '';
-  returnURL: string = '/';
+  submitted = false;
+  errorMessage = '';
+  returnURL = '/';
 
   constructor(
     private userService: UserService,
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
-    this.loginForm = formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
     });
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   isValid(field): boolean {
-    let isValid: boolean = false;
+    let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
     if (this.loginForm.controls[field].touched === false) {
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     return isValid;
   }
 
-  public onValueChanged(data?: any) {
+  public onValueChanged(_data?: any) {
     if (!this.loginForm) {
       return;
     }
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
     this.userService.logout();
 
     // get return url from route parameters or default to '/'
-    this.returnURL = this.activatedRoute.snapshot.queryParams['r'] || '/';
+    this.returnURL = this.activatedRoute.snapshot.queryParams.r || '/';
   }
 
   public onSubmit(elementValues: any) {

@@ -10,7 +10,7 @@ import { UserDataService } from '../model/user-data.service';
 export class AccountComponent implements OnInit {
   errorMessage: string;
 
-  mode: string = '';
+  mode = '';
   user: User;
 
   constructor(private userService: UserService, private userDataService: UserDataService) {}

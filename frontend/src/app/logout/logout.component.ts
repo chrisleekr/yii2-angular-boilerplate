@@ -8,8 +8,8 @@ import { UserService } from '../model/user.service';
   template: '<strong>Logging out...</strong>'
 })
 export class LogoutComponent implements OnInit {
-  public submitted: boolean = false;
-  public error: string = '';
+  public submitted = false;
+  public error = '';
 
   constructor(private userService: UserService, private router: Router) {}
 
