@@ -235,6 +235,4 @@ and reload again.
 - [x] Apply JWT(JSON Web Token) for user authentication
 - [x] Upgrade Angular to latest
 - [x] Dockerize application
-- [-] Apply [server side rendering](https://github.com/maciejtreder/ng-toolkit) for Frontend project
-- [△] Develop more test code
 - [ ] Develop file uploader
