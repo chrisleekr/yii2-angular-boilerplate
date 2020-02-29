@@ -10,10 +10,6 @@ services:
 addons:
   chrome: stable
 
-branches:
-  only:
-    - master
-
 before_install:
   - nvm install 12.10.0
   - node -v
@@ -25,7 +21,9 @@ before_script:
   - env
   - docker-compose up -d --build
   - docker ps -a
+  - MYSQL_PORT=3308 && MYSQL_HOST=127.0.0.1
   - while [[ "$(curl -o /dev/null -Isw '%{http_code}\n' http://localhost/api/ping)" -ne 200 ]]; do sleep 3; echo "Waiting API to be available..."; done
+  - while ! docker exec mysql mysql -u"$MYSQL_USERNAME" -p"$MYSQL_PASSWORD" -e "select 1" > /dev/null 2>&1; do sleep 3; echo "Waiting MYSQL to be available..."; done
   - docker logs api
   - cd api
   - composer install
@@ -39,8 +37,7 @@ before_script:
 
 script:
   - cd api
-  - composer run sniff
-  - MYSQL_PORT=3308 && MYSQL_HOST=127.0.0.1
+  - composer run sniff  
   - composer run test:unit
   - composer run test:functional
   - cd ..
