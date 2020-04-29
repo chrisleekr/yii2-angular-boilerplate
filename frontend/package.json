@@ -30,7 +30,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.6.4",
     "cors": "~2.8.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^5.3.2",
