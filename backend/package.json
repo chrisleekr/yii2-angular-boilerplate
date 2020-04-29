@@ -27,7 +27,7 @@
     "classlist.js": "^1.1.20150312",
     "core-js": "^3.6.4",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ng-pick-datetime": "^7.0.0",
