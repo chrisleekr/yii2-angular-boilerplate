@@ -43,13 +43,13 @@ AppAsset::register($this);
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
-                .Html::beginForm(['/site/logout'], 'post')
-                .Html::submitButton(
-                    'Logout ('.Yii::$app->user->identity->username.')',
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
-                .Html::endForm()
-                .'</li>'
+                . Html::endForm()
+                . '</li>'
             )
         ],
     ]);
@@ -57,7 +57,8 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
+        <?php
+        echo Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= $content ?>

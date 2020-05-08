@@ -11,24 +11,24 @@ class SiteController extends Controller
     public function actionPing()
     {
         if (\file_exists($_SERVER['DOCUMENT_ROOT'] . '/../.migrated') === false) {
-            $response = new Response();
+            $response             = new Response();
             $response->statusCode = 503;
-            $response->data = Yii::t('app', 'migration not completed');
+            $response->data       = Yii::t('app', 'migration not completed');
 
             return $response;
         }
-        $response = new Response();
+        $response             = new Response();
         $response->statusCode = 200;
-        $response->data = Yii::t('app', 'pong');
+        $response->data       = Yii::t('app', 'pong');
 
         return $response;
     }
 
     public function actionError()
     {
-        $response = new Response();
+        $response             = new Response();
         $response->statusCode = 400;
-        $response->data = json_encode(
+        $response->data       = json_encode(
             [
                 'name' => 'Bad Request',
                 'message' => Yii::t('app', 'The system could not process your request. Please check and try again.'),

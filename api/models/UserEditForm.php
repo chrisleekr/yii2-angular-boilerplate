@@ -66,8 +66,8 @@ class UserEditForm extends Model
             $updateIndicator = false;
             if ($this->_user->email != $this->email) {
                 $this->_user->unconfirmed_email = $this->email;
-                $this->_user->confirmed_at = null;
-                $this->_user->status = User::STATUS_PENDING;
+                $this->_user->confirmed_at      = null;
+                $this->_user->status            = User::STATUS_PENDING;
                 $this->_user->generateAuthKey();
                 $updateIndicator = true;
             }
@@ -111,17 +111,17 @@ class UserEditForm extends Model
         $confirmURL = \Yii::$app->params['frontendURL'] . '#/confirm?id=' . $this->_user->id . '&auth_key=' . $this->_user->auth_key;
 
         $email = \Yii::$app->mailer
-        ->compose(
-            ['html' => 'email-confirmation-html'],
-            [
-                'appName' => \Yii::$app->name,
-                'confirmURL' => $confirmURL,
-            ]
-        )
-        ->setTo($this->email)
-        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
-        ->setSubject('Email confirmation')
-        ->send();
+            ->compose(
+                ['html' => 'email-confirmation-html'],
+                [
+                    'appName' => \Yii::$app->name,
+                    'confirmURL' => $confirmURL,
+                ]
+            )
+            ->setTo($this->email)
+            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setSubject('Email confirmation')
+            ->send();
 
         return $email;
     }

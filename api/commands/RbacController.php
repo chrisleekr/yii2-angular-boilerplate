@@ -24,7 +24,7 @@ class RbacController extends Controller
             throw new InvalidParamException("There is no user \"$username\".");
         }
 
-        $auth = \Yii::$app->authManager;
+        $auth       = \Yii::$app->authManager;
         $roleObject = $auth->getRole($role);
         if (!$roleObject) {
             throw new InvalidParamException("There is no role \"$role\".");

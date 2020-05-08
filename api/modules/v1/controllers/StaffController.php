@@ -102,7 +102,7 @@ class StaffController extends ActiveController
     {
         $search = new UserSearch();
         $search->load(\Yii::$app->request->get());
-        $search->in_roles = [User::ROLE_STAFF, User::ROLE_ADMIN];
+        $search->in_roles      = [User::ROLE_STAFF, User::ROLE_ADMIN];
         $search->not_in_status = [User::STATUS_DELETED];
         if (!$search->validate()) {
             throw new BadRequestHttpException(

@@ -64,12 +64,12 @@ class SignupForm extends Model
     public function signup()
     {
         if ($this->validate()) {
-            $user = new User();
-            $user->username = strtolower($this->username);
-            $user->email = $this->email;
+            $user                    = new User();
+            $user->username          = strtolower($this->username);
+            $user->email             = $this->email;
             $user->unconfirmed_email = $this->email;
-            $user->role = User::ROLE_USER;
-            $user->status = User::STATUS_PENDING;
+            $user->role              = User::ROLE_USER;
+            $user->status            = User::STATUS_PENDING;
             $user->setPassword($this->password);
             $user->generateAuthKey();
 
@@ -105,17 +105,17 @@ class SignupForm extends Model
         $confirmURL = \Yii::$app->params['frontendURL'] . '#/confirm?id=' . $this->_user->id . '&auth_key=' . $this->_user->auth_key;
 
         $email = \Yii::$app->mailer
-        ->compose(
-            ['html' => 'signup-confirmation-html'],
-            [
-                'appName' => \Yii::$app->name,
-                'confirmURL' => $confirmURL,
-            ]
-        )
-        ->setTo($this->email)
-        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
-        ->setSubject('Signup confirmation')
-        ->send();
+            ->compose(
+                ['html' => 'signup-confirmation-html'],
+                [
+                    'appName' => \Yii::$app->name,
+                    'confirmURL' => $confirmURL,
+                ]
+            )
+            ->setTo($this->email)
+            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setSubject('Signup confirmation')
+            ->send();
 
         return $email;
     }

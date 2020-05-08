@@ -34,7 +34,7 @@ class UserTest extends Unit
 
                 // Set temporary values for username and email
                 $user->username = 'test';
-                $user->email = 'test@example.com';
+                $user->email    = 'test@example.com';
 
                 // Verify validation succeed
                 $this->assertTrue($user->validate());

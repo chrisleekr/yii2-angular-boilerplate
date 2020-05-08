@@ -42,8 +42,8 @@ class SignupConfirmForm extends Model
                 'message' => 'The auth key is not valid.',
                 'filter' => function ($query) {
                     $query->andWhere(['status' => User::STATUS_PENDING])
-                    ->andWhere(['id' => $this->id])
-                    ->andWhere('confirmed_at IS NULL');
+                        ->andWhere(['id' => $this->id])
+                        ->andWhere('confirmed_at IS NULL');
                 }
             ]
         ];
@@ -92,17 +92,17 @@ class SignupConfirmForm extends Model
         $loginURL = \Yii::$app->params['frontendURL'] . '#/login';
 
         $email = \Yii::$app->mailer
-        ->compose(
-            ['html' => 'signup-success-html'],
-            [
-                'appName' => \Yii::$app->name,
-                'loginURL' => $loginURL,
-            ]
-        )
-        ->setTo($this->_user->email)
-        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
-        ->setSubject('Signup completed')
-        ->send();
+            ->compose(
+                ['html' => 'signup-success-html'],
+                [
+                    'appName' => \Yii::$app->name,
+                    'loginURL' => $loginURL,
+                ]
+            )
+            ->setTo($this->_user->email)
+            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setSubject('Signup completed')
+            ->send();
 
         return $email;
     }

@@ -38,7 +38,7 @@ class PasswordResetRequestForm extends Model
      */
     public function sendPasswordResetEmail()
     {
-      /* @var $user User */
+        /* @var $user User */
         $user = User::findOne([
             'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
@@ -58,18 +58,18 @@ class PasswordResetRequestForm extends Model
         $resetURL = \Yii::$app->params['frontendURL'] . '#/password-reset?token=' . $user->password_reset_token;
 
         return Yii::$app
-        ->mailer
-        ->compose(
-            ['html' => 'password-reset-token-html'],
-            [
-                'user' => $user,
-                'appName' => \Yii::$app->name,
-                'resetURL' => $resetURL,
-            ]
-        )
-        ->setFrom([Yii::$app->params['supportEmail'] => \Yii::$app->name])
-        ->setTo($this->email)
-        ->setSubject('Password reset for ' . Yii::$app->name)
-        ->send();
+            ->mailer
+            ->compose(
+                ['html' => 'password-reset-token-html'],
+                [
+                    'user' => $user,
+                    'appName' => \Yii::$app->name,
+                    'resetURL' => $resetURL,
+                ]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => \Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject('Password reset for ' . Yii::$app->name)
+            ->send();
     }
 }

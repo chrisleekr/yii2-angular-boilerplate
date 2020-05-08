@@ -34,13 +34,13 @@ use yii\web\Request as WebRequest;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const ROLE_USER = 10;
-    const ROLE_STAFF = 50;
-    const ROLE_ADMIN = 99;
-    const STATUS_DELETED = -1;
+    const ROLE_USER       = 10;
+    const ROLE_STAFF      = 50;
+    const ROLE_ADMIN      = 99;
+    const STATUS_DELETED  = -1;
     const STATUS_DISABLED = 0;
-    const STATUS_PENDING = 1;
-    const STATUS_ACTIVE = 10;
+    const STATUS_PENDING  = 1;
+    const STATUS_ACTIVE   = 10;
     /**
      * Store JWT token header items.
      * @var array
@@ -66,7 +66,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $user = static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
         if ($user !== null &&
-        ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
+            ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
             return null;
         }
         return $user;
@@ -117,7 +117,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByUsernameWithRoles($username, $roles)
     {
-      /** @var User $user */
+        /** @var User $user */
         $user = static::find()->where([
             'username' => $username,
             'status' => self::STATUS_ACTIVE,
@@ -161,7 +161,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             return false;
         }
         $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        $expire    = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
@@ -175,20 +175,20 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $secret = static::getSecretKey();
-      // Decode token and transform it into array.
-      // Firebase\JWT\JWT throws exception if token can not be decoded
+        // Decode token and transform it into array.
+        // Firebase\JWT\JWT throws exception if token can not be decoded
         try {
             $decoded = JWT::decode($token, $secret, [static::getAlgo()]);
         } catch (\Exception $e) {
             return false;
         }
         static::$decodedToken = (array)$decoded;
-      // If there's no jti param - exception
+        // If there's no jti param - exception
         if (!isset(static::$decodedToken['jti'])) {
             return false;
         }
-      // JTI is unique identifier of user.
-      // For more details: https://tools.ietf.org/html/rfc7519#section-4.1.7
+        // JTI is unique identifier of user.
+        // For more details: https://tools.ietf.org/html/rfc7519#section-4.1.7
         $id = static::$decodedToken['jti'];
         return static::findByJTI($id);
     }
@@ -216,22 +216,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByJTI($id)
     {
-      /** @var User $user */
+        /** @var User $user */
         $user = static::find()->where([
             '=',
             'id',
             $id
         ])
-        ->andWhere([
-            '=',
-            'status',
-            self::STATUS_ACTIVE
-        ])
-        ->andWhere([
-            '>',
-            'access_token_expired_at',
-            new Expression('UNIX_TIMESTAMP()')
-        ])->one();
+            ->andWhere([
+                '=',
+                'status',
+                self::STATUS_ACTIVE
+            ])
+            ->andWhere([
+                '>',
+                'access_token_expired_at',
+                new Expression('UNIX_TIMESTAMP()')
+            ])->one();
         if ($user !== null &&
         ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
             return null;
@@ -256,7 +256,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /** @inheritdoc */
     public function behaviors()
     {
-      // TimestampBehavior also provides a method named touch() that allows you to assign the current timestamp to the specified attribute(s) and save them to the database. For example,
+        // TimestampBehavior also provides a method named touch() that allows you to assign the current timestamp to the specified attribute(s) and save them to the database. For example,
         return [
             [
                 'class' => TimestampBehavior::className(),
@@ -486,16 +486,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateUsername($attribute, $params)
     {
-      // get post type - POST or PUT
+        // get post type - POST or PUT
         $request = Yii::$app->request;
 
-      // if POST, mode is create
+        // if POST, mode is create
         if ($request->isPost) {
             // check username is already taken
 
             $existingUser = User::find()
-            ->where(['username' => $this->$attribute])
-            ->count();
+                ->where(['username' => $this->$attribute])
+                ->count();
             if ($existingUser > 0) {
                 $this->addError($attribute, Yii::t('app', 'The username has already been taken.'));
             }
@@ -507,9 +507,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             } else {
               // check username is already taken except own username
                 $existingUser = User::find()
-                ->where(['=', 'username', $this->$attribute])
-                ->andWhere(['!=', 'id', $this->id])
-                ->count();
+                    ->where(['=', 'username', $this->$attribute])
+                    ->andWhere(['!=', 'id', $this->id])
+                    ->count();
                 if ($existingUser > 0) {
                     $this->addError($attribute, Yii::t('app', 'The username has already been taken.'));
                 }
@@ -535,16 +535,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateEmail($attribute, $params)
     {
-      // get post type - POST or PUT
+        // get post type - POST or PUT
         $request = Yii::$app->request;
 
-      // if POST, mode is create
+        // if POST, mode is create
         if ($request->isPost) {
             // check username is already taken
 
             $existingUser = User::find()
-            ->where(['email' => $this->$attribute])
-            ->count();
+                ->where(['email' => $this->$attribute])
+                ->count();
 
             if ($existingUser > 0) {
                 $this->addError($attribute, Yii::t('app', 'The email has already been taken.'));
@@ -558,9 +558,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             } else {
               // check username is already taken except own username
                 $existingUser = User::find()
-                ->where(['=', 'email', $this->$attribute])
-                ->andWhere(['!=', 'id', $this->id])
-                ->count();
+                    ->where(['=', 'email', $this->$attribute])
+                    ->andWhere(['!=', 'id', $this->id])
+                    ->count();
                 if ($existingUser > 0) {
                     $this->addError($attribute, Yii::t('app', 'The email has already been taken.'));
                 }
@@ -636,7 +636,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $this->email = $this->unconfirmed_email;
         }
         $this->registration_ip = Yii::$app->request->userIP;
-        $this->status = self::STATUS_ACTIVE;
+        $this->status          = self::STATUS_ACTIVE;
         $this->save(false);
         $this->touch('confirmed_at');
 
@@ -653,11 +653,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function generateAccessTokenAfterUpdatingClientInfo($forceRegenerate = false)
     {
-      // update client login, ip
+        // update client login, ip
         $this->last_login_ip = Yii::$app->request->getUserIP();
         $this->last_login_at = new Expression('UNIX_TIMESTAMP()');
 
-      // check time is expired or not
+        // check time is expired or not
         if ($forceRegenerate == true
         || $this->access_token_expired_at == null
         || (time() > $this->access_token_expired_at)) {
@@ -670,10 +670,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function generateAccessToken()
     {
-      // generate access token
-      //        $this->access_token = Yii::$app->security->generateRandomString();
-        $tokens = $this->getJWT();
-        $this->access_token = $tokens[0];   // Token
+        // generate access token
+        //        $this->access_token = Yii::$app->security->generateRandomString();
+        $tokens                        = $this->getJWT();
+        $this->access_token            = $tokens[0];   // Token
         $this->access_token_expired_at = $tokens[1]['exp']; // Expire
     }
 
@@ -687,36 +687,36 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getJWT()
     {
-      // Collect all the data
-        $secret = static::getSecretKey();
+        // Collect all the data
+        $secret      = static::getSecretKey();
         $currentTime = time();
-        $expire = $currentTime + 86400; // 1 day
-        $request = Yii::$app->request;
-        $hostInfo = '';
-      // There is also a \yii\console\Request that doesn't have this property
+        $expire      = $currentTime + 86400; // 1 day
+        $request     = Yii::$app->request;
+        $hostInfo    = '';
+        // There is also a \yii\console\Request that doesn't have this property
         if ($request instanceof WebRequest) {
             $hostInfo = $request->hostInfo;
         }
 
-      // Merge token with presets not to miss any params in custom
-      // configuration
+        // Merge token with presets not to miss any params in custom
+        // configuration
         $token = array_merge([
             'iat' => $currentTime,
-      // Issued at: timestamp of token issuing.
+            // Issued at: timestamp of token issuing.
             'iss' => $hostInfo,
-      // Issuer: A string containing the name or identifier of the issuer application. Can be a domain name and can be used to discard tokens from other applications.
+            // Issuer: A string containing the name or identifier of the issuer application. Can be a domain name and can be used to discard tokens from other applications.
             'aud' => $hostInfo,
             'nbf' => $currentTime,
-      // Not Before: Timestamp of when the token should start being considered valid. Should be equal to or greater than iat. In this case, the token will begin to be valid 10 seconds
+            // Not Before: Timestamp of when the token should start being considered valid. Should be equal to or greater than iat. In this case, the token will begin to be valid 10 seconds
             'exp' => $expire,
-      // Expire: Timestamp of when the token should cease to be valid. Should be greater than iat and nbf. In this case, the token will expire 60 seconds after being issued.
+            // Expire: Timestamp of when the token should cease to be valid. Should be greater than iat and nbf. In this case, the token will expire 60 seconds after being issued.
             'data' => [
                 'username' => $this->username,
                 'roleLabel' => $this->getRoleLabel(),
                 'lastLoginAt' => $this->last_login_at,
             ]
         ], static::getHeaderToken());
-      // Set up id
+        // Set up id
         $token['jti'] = $this->getJTI();    // JSON Token ID: A unique string, could be used to validate a token, but goes against not having a centralized issuer authority.
         return [JWT::encode($token, $secret, static::getAlgo()), $token];
     }
@@ -740,20 +740,20 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function beforeSave($insert)
     {
-      // Convert username to lower case
+        // Convert username to lower case
         $this->username = strtolower($this->username);
 
-      // Fill unconfirmed email field with email if empty
+        // Fill unconfirmed email field with email if empty
         if ($this->unconfirmed_email == '') {
             $this->unconfirmed_email = $this->email;
         }
 
-      // Fill registration ip with current ip address if empty
+        // Fill registration ip with current ip address if empty
         if ($this->registration_ip == '') {
             $this->registration_ip = Yii::$app->request->userIP;
         }
 
-      // Fill auth key if empty
+        // Fill auth key if empty
         if ($this->auth_key == '') {
             $this->generateAuthKey();
         }
@@ -773,8 +773,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $authManager = Yii::$app->authManager;
 
-      // ---- Start to process role
-      // When insert new user, assign new role
+        // ---- Start to process role
+        // When insert new user, assign new role
         if ($insert == true) {
             $roleName = $this->getRoleName();
 
@@ -790,9 +790,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 $authManager->assign($authItem, $this->getId());
             }
         }
-      // ---- Finish to process role
+        // ---- Finish to process role
 
-      // ---- Start to process permissions
+        // ---- Start to process permissions
         if (!empty($this->permissions)) {
             // permissions only allow to be entered if the role is staff
             if ($this->role == self::ROLE_STAFF) {
@@ -824,7 +824,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             }
         }
 
-      // ---- Start to process permissions
+        // ---- Start to process permissions
         return parent::afterSave($insert, $changedAttributes);
     }
 

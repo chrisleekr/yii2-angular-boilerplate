@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 class UserSearch extends Model
 {
     public $q;
-    public $page = 1;
-    public $per_page = 20;
-    public $in_roles = [];
+    public $page          = 1;
+    public $per_page      = 20;
+    public $in_roles      = [];
     public $not_in_status = [];
 
     public function rules()
@@ -29,9 +29,9 @@ class UserSearch extends Model
     public function getDataProvider()
     {
         $queryParams = [];
-        $query = User::find()
-        ->where(['not in', 'user.status', $this->not_in_status])
-        ->andWhere(['in', 'role', $this->in_roles]);
+        $query       = User::find()
+            ->where(['not in', 'user.status', $this->not_in_status])
+            ->andWhere(['in', 'role', $this->in_roles]);
 
         if ($this->q) {
             $query->andWhere([
@@ -44,7 +44,7 @@ class UserSearch extends Model
             $queryParams['q'] = $this->q;
         }
 
-        $page = $this->page > 0 ? ($this->page - 1) : 0;
+        $page     = $this->page > 0 ? ($this->page - 1) : 0;
         $pageSize = (int)$this->per_page;
 
         $provider = new ActiveDataProvider([
@@ -66,7 +66,7 @@ class UserSearch extends Model
             ]
         ]);
 
-        $rows = $provider->getModels();
+        $rows       = $provider->getModels();
         $pagination = array_intersect_key(
             (array)$provider->pagination,
             array_flip(

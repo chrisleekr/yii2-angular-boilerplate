@@ -119,7 +119,7 @@ class UserController extends ActiveController
     {
         $search = new UserSearch();
         $search->load(\Yii::$app->request->get());
-        $search->in_roles = [User::ROLE_USER];
+        $search->in_roles      = [User::ROLE_USER];
         $search->not_in_status = [User::STATUS_DELETED];
         if (!$search->validate()) {
             throw new BadRequestHttpException(
@@ -244,7 +244,7 @@ class UserController extends ActiveController
      */
     public function actionLogin()
     {
-        $model = new LoginForm();
+        $model        = new LoginForm();
         $model->roles = [
             User::ROLE_USER,
         ];
@@ -311,7 +311,7 @@ class UserController extends ActiveController
             $response = \Yii::$app->getResponse();
             $response->setStatusCode(200);
 
-            $user = $model->getUser();
+            $user         = $model->getUser();
             $responseData = [
                 'id' => (int)$user->id,
                 'access_token' => $user->access_token,
