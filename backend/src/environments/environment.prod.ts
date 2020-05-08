@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiHost: '//bailerplate-api.chrislee.kr/v1',
+  apiHost: '//boilerplate-api.chrislee.kr/v1',
   tokenName: 'backend-token',
   customDateTimeFormat: {
     apiFormat: 'YYYY-MM-DD HH:mm:ss',
