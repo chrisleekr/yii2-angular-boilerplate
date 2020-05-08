@@ -34,13 +34,13 @@ use yii\web\Request as WebRequest;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const ROLE_USER       = 10;
-    const ROLE_STAFF      = 50;
-    const ROLE_ADMIN      = 99;
-    const STATUS_DELETED  = -1;
+    const ROLE_USER = 10;
+    const ROLE_STAFF = 50;
+    const ROLE_ADMIN = 99;
+    const STATUS_DELETED = -1;
     const STATUS_DISABLED = 0;
-    const STATUS_PENDING  = 1;
-    const STATUS_ACTIVE   = 10;
+    const STATUS_PENDING = 1;
+    const STATUS_ACTIVE = 10;
     /**
      * Store JWT token header items.
      * @var array
@@ -161,7 +161,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             return false;
         }
         $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-        $expire    = Yii::$app->params['user.passwordResetTokenExpire'];
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
@@ -636,7 +636,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $this->email = $this->unconfirmed_email;
         }
         $this->registration_ip = Yii::$app->request->userIP;
-        $this->status          = self::STATUS_ACTIVE;
+        $this->status = self::STATUS_ACTIVE;
         $this->save(false);
         $this->touch('confirmed_at');
 
@@ -672,8 +672,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         // generate access token
         //        $this->access_token = Yii::$app->security->generateRandomString();
-        $tokens                        = $this->getJWT();
-        $this->access_token            = $tokens[0];   // Token
+        $tokens = $this->getJWT();
+        $this->access_token = $tokens[0];   // Token
         $this->access_token_expired_at = $tokens[1]['exp']; // Expire
     }
 
@@ -688,11 +688,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getJWT()
     {
         // Collect all the data
-        $secret      = static::getSecretKey();
+        $secret = static::getSecretKey();
         $currentTime = time();
-        $expire      = $currentTime + 86400; // 1 day
-        $request     = Yii::$app->request;
-        $hostInfo    = '';
+        $expire = $currentTime + 86400; // 1 day
+        $request = Yii::$app->request;
+        $hostInfo = '';
         // There is also a \yii\console\Request that doesn't have this property
         if ($request instanceof WebRequest) {
             $hostInfo = $request->hostInfo;

@@ -66,8 +66,8 @@ class UserEditForm extends Model
             $updateIndicator = false;
             if ($this->_user->email != $this->email) {
                 $this->_user->unconfirmed_email = $this->email;
-                $this->_user->confirmed_at      = null;
-                $this->_user->status            = User::STATUS_PENDING;
+                $this->_user->confirmed_at = null;
+                $this->_user->status = User::STATUS_PENDING;
                 $this->_user->generateAuthKey();
                 $updateIndicator = true;
             }

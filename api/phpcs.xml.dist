@@ -55,6 +55,11 @@
             <property name="multilevel" value="true" />
         </properties>
     </rule>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <properties>
+            <property name="maxPadding" value="1" />
+        </properties>
+    </rule>
     <!-- Ignore for migrations. -->
     <!-- Ignore missing namespace for migrations -->
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
