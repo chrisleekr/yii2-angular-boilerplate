@@ -5,14 +5,13 @@ paths:
     data: tests/_data
     helpers: tests/_support
 settings:
-    bootstrap: _bootstrap.php
     memory_limit: 1024M
     colors: true
+bootstrap: _bootstrap.php
 modules:
     config:
         Yii2:
-            configFile: 'config/test.php'
-
+            configFile: "config/test.php"
 # To enable code coverage:
 #coverage:
 #    #c3_url: http://localhost:8080/index-test.php/

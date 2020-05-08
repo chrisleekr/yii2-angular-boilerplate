@@ -18,7 +18,8 @@ if (array_key_exists('X-Forwarded-For', $headers) && filter_var($headers['X-Forw
 
 if (!stristr($remote_address, '127.0.0.1')
     && !stristr($remote_address, '::1')
-    && !stristr($remote_address, '172.')) {
+    && !stristr($remote_address, '172.')
+    && !stristr($remote_address, '192.')) {
     die('You are not allowed to access this file.');
 }
 

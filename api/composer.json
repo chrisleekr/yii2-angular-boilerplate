@@ -1,76 +1,83 @@
 {
-  "name": "chrisleekr/yii2-angular-boilerplate",
-  "description": "Yii 2 REST API",
-  "keywords": [
-    "yii2",
-    "boilerplate"
-  ],
-  "homepage": "https://github.com/chrisleekr/yii2-angular-boilerplate",
-  "type": "project",
-  "license": "BSD-3-Clause",
-  "support": {
-    "issues": "https://github.com/chrisleekr/yii2-angular-boilerplate/issues?state=open",
-    "source": "https://github.com/chrisleekr/yii2-angular-boilerplate"
-  },
-  "minimum-stability": "stable",
-  "require": {
-    "php": ">=7.3.0",
-    "yiisoft/yii2": "~2.0.14",
-    "yiisoft/yii2-bootstrap": "~2.0.0",
-    "yiisoft/yii2-swiftmailer": "~2.0.0",
-    "firebase/php-jwt": "^4.0",
-    "guzzlehttp/guzzle": "^6.3",
-    "ext-json": "*"
-  },
-  "require-dev": {
-    "yiisoft/yii2-debug": "~2.0.0",
-    "yiisoft/yii2-gii": "~2.0.0",
-    "yiisoft/yii2-faker": "~2.0.0",
-    "codeception/verify": "~0.3.1",
-    "codeception/specify": "~0.4.3",
-    "flow/jsonpath": "^0.3",
-    "squizlabs/php_codesniffer": "3.*",
-    "yiisoft/yii2-coding-standards": "^2.0"
-  },
-  "config": {
-    "process-timeout": 1800,
-    "fxp-asset": {
-      "enabled": false
-    }
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "yii\\composer\\Installer::postInstall"
+    "name": "chrisleekr/yii2-angular-boilerplate",
+    "description": "Yii 2 REST API",
+    "keywords": [
+        "yii2",
+        "boilerplate"
     ],
-    "post-create-project-cmd": [
-      "yii\\composer\\Installer::postCreateProject",
-      "yii\\composer\\Installer::postInstall"
-    ],
-    "sniff": "vendor/bin/phpcs --extensions=php",
-    "sniff:fix": "vendor/bin/phpcbf --extensions=php",
-    "test:unit": "vendor/bin/codecept run unit",
-    "test:functional": "vendor/bin/codecept run functional"
-  },
-  "extra": {
-    "yii\\composer\\Installer::postCreateProject": {
-      "setPermission": [
-        {
-          "runtime": "0777",
-          "web/assets": "0777",
-          "yii": "0755"
-        }
-      ]
+    "homepage": "https://github.com/chrisleekr/yii2-angular-boilerplate",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/chrisleekr/yii2-angular-boilerplate/issues?state=open",
+        "source": "https://github.com/chrisleekr/yii2-angular-boilerplate"
     },
-    "yii\\composer\\Installer::postInstall": {
-      "generateCookieValidationKey": [
-        "config/web.php"
-      ]
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://asset-packagist.org"
-    }
-  ]
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.3.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "firebase/php-jwt": "^4.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "flow/jsonpath": "^0.5",
+        "squizlabs/php_codesniffer": "3.*",
+        "yiisoft/yii2-coding-standards": "^2.0",
+        "codeception/codeception": "^4.1",
+        "codeception/verify": "~0.3.1",
+        "codeception/specify": "~0.4.3",
+        "symfony/browser-kit": ">=2.7 <=4.2.4",
+        "codeception/module-filesystem": "^1.0.0",
+        "codeception/module-asserts": "^1.2",
+        "codeception/module-yii2": "^1.1",
+        "codeception/module-rest": "^1.2",
+        "codeception/module-phpbrowser": "^1.0"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "yii\\composer\\Installer::postInstall"
+        ],
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject",
+            "yii\\composer\\Installer::postInstall"
+        ],
+        "sniff": "vendor/bin/phpcs --extensions=php",
+        "sniff:fix": "vendor/bin/phpcbf --extensions=php",
+        "test:unit": "vendor/bin/codecept run unit",
+        "test:functional": "vendor/bin/codecept run functional"
+    },
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ]
+        },
+        "yii\\composer\\Installer::postInstall": {
+            "generateCookieValidationKey": [
+                "config/web.php"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
 }
