@@ -28,7 +28,7 @@ class m170125_081951_create_setting_table extends Migration
             'updated_at' => Schema::TYPE_TIMESTAMP . ' DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ]);
 
-      // creates index for table `setting`
+        // creates index for table `setting`
         $this->createIndex(
             'idx-setting',
             'setting',

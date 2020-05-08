@@ -31,7 +31,7 @@ class m170125_082006_create_user_table extends Migration
                 'status' => $this->integer(2)->defaultValue(10),
                 'role' => $this->integer(11)->null(),
                 'created_at' => $this->integer(11) . ' NULL DEFAULT NULL',
-                'updated_at' => $this->integer(11) . ' NULL DEFAULT NULL',
+                'updated_at' => $this->integer(11) . ' NULL DEFAULT NULL'
             ]
         );
 
@@ -60,7 +60,7 @@ class m170125_082006_create_user_table extends Migration
                 10,
                 99,
                 time(),
-                time(),
+                time()
             ],
             [
                 2,
@@ -121,7 +121,7 @@ class m170125_082006_create_user_table extends Migration
                 10,
                 10,
                 time(),
-                time(),
+                time()
             ];
         }
         $this->batchInsert(
@@ -143,7 +143,7 @@ class m170125_082006_create_user_table extends Migration
                 'status',
                 'role',
                 'created_at',
-                'updated_at',
+                'updated_at'
             ],
             $users
         );

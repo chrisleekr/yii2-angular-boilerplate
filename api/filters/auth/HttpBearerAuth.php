@@ -42,11 +42,11 @@ class HttpBearerAuth extends \yii\filters\auth\AuthMethod
     {
         $authHeader = $request->getHeaders()->get('Authorization');
 
-      // Added following lines to support fastcgi issue.
-      // To support this, must update .htaccess as below:
-      //  # Authorization Headers
-      //  RewriteCond %{HTTP:Authorization} .
-      //  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+        // Added following lines to support fastcgi issue.
+        // To support this, must update .htaccess as below:
+        //  # Authorization Headers
+        //  RewriteCond %{HTTP:Authorization} .
+        //  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
         if ($authHeader == null && isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) && $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] != '') {
             $authHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
