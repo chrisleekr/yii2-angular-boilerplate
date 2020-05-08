@@ -150,15 +150,15 @@ $config = [
 
                 if ($response->statusCode >= 200 && $response->statusCode <= 299) {
                     $response->data = [
-                        'success' => true,
-                        'status' => $response->statusCode,
-                        'data' => $responseData,
+                    'success' => true,
+                    'status' => $response->statusCode,
+                    'data' => $responseData,
                     ];
                 } else {
                     $response->data = [
-                        'success' => false,
-                        'status' => $response->statusCode,
-                        'data' => $responseData,
+                    'success' => false,
+                    'status' => $response->statusCode,
+                    'data' => $responseData,
                     ];
                 }
                 return $response;

@@ -32,23 +32,23 @@ class SettingController extends ActiveController
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                HttpBearerAuth::className(),
-            ],
+        'class' => CompositeAuth::className(),
+        'authMethods' => [
+          HttpBearerAuth::className(),
+        ],
 
         ];
 
         $behaviors['verbs'] = [
-            'class' => \yii\filters\VerbFilter::className(),
-            'actions' => [
-                'index' => ['get'],
-                'view' => ['get'],
-                'create' => ['post'],
-                'update' => ['put'],
-                'delete' => ['delete'],
-                'public' => ['get'],
-            ],
+        'class' => \yii\filters\VerbFilter::className(),
+        'actions' => [
+          'index' => ['get'],
+          'view' => ['get'],
+          'create' => ['post'],
+          'update' => ['put'],
+          'delete' => ['delete'],
+          'public' => ['get'],
+        ],
         ];
 
         // remove authentication filter
@@ -57,12 +57,12 @@ class SettingController extends ActiveController
 
         // add CORS filter
         $behaviors['corsFilter'] = [
-            'class' => \yii\filters\Cors::className(),
-            'cors' => [
-                'Origin' => ['*'],
-                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-                'Access-Control-Request-Headers' => ['*'],
-            ],
+        'class' => \yii\filters\Cors::className(),
+        'cors' => [
+          'Origin' => ['*'],
+          'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+          'Access-Control-Request-Headers' => ['*'],
+        ],
         ];
 
         // re-add authentication filter
@@ -72,15 +72,15 @@ class SettingController extends ActiveController
 
         // setup access
         $behaviors['access'] = [
-            'class' => AccessControl::className(),
-            'only' => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
-            'rules' => [
-                [
-                    'allow' => true,
-                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                    'roles' => ['admin', 'manageSettings'],
-                ],
-            ],
+        'class' => AccessControl::className(),
+        'only' => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+        'rules' => [
+          [
+              'allow' => true,
+              'actions' => ['index', 'view', 'create', 'update', 'delete'],
+              'roles' => ['admin', 'manageSettings'],
+          ],
+        ],
         ];
 
         return $behaviors;
@@ -90,11 +90,11 @@ class SettingController extends ActiveController
     {
         return new ActiveDataProvider(
             [
-                'query' => Setting::find()->where(
-                    [
-                        'status' => 1,
-                    ]
-                )
+            'query' => Setting::find()->where(
+                [
+                  'status' => 1,
+                ]
+            )
             ]
         );
     }
@@ -169,8 +169,8 @@ class SettingController extends ActiveController
     {
         $setting = Setting::find()->where(
             [
-                'id' => $id,
-                'status' => 1,
+            'id' => $id,
+            'status' => 1,
             ]
         )->one();
         if ($setting) {
@@ -214,17 +214,17 @@ class SettingController extends ActiveController
 
         $settings = Setting::find()->where(
             [
-                'is_public' => 1,
-                'status' => 1,
+            'is_public' => 1,
+            'status' => 1,
             ]
         )->all();
 
         if ($settings) {
             foreach ($settings as $settingKey => $setting) {
                 $publicSettings[] = [
-                    'meta_key' => $setting['meta_key'],
-                    'meta_type' => $setting['meta_type'],
-                    'meta_value' => $setting['meta_value']
+                'meta_key' => $setting['meta_key'],
+                'meta_type' => $setting['meta_type'],
+                'meta_value' => $setting['meta_value']
                 ];
             }
         }

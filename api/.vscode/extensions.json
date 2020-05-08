@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "felixfbecker.php-intellisense",
+    "junstyle.php-cs-fixer",
+    "mikeburgh.xml-format"
+  ]
+}

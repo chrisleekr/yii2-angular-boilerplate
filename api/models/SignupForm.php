@@ -22,37 +22,37 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            [
-                'username',
-                'unique',
-                'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'This username has already been taken.')
-            ],
-            ['username', 'string', 'length' => [3, 25]],
-            [
-                'username',
-                'match',
-                'pattern' => '/^[A-Za-z0-9_-]{3,25}$/',
-                'message' => Yii::t(
-                    'app',
-                    'Your username can only contain alphanumeric characters, underscores and dashes.'
-                )
-            ],
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            [
-                'email',
-                'unique',
-                'targetClass' => '\app\models\User',
-                'message' => Yii::t('app', 'This email address has already been taken.')
-            ],
+        ['username', 'trim'],
+        ['username', 'required'],
+        [
+          'username',
+          'unique',
+          'targetClass' => '\app\models\User',
+          'message' => Yii::t('app', 'This username has already been taken.')
+        ],
+        ['username', 'string', 'length' => [3, 25]],
+        [
+          'username',
+          'match',
+          'pattern' => '/^[A-Za-z0-9_-]{3,25}$/',
+          'message' => Yii::t(
+              'app',
+              'Your username can only contain alphanumeric characters, underscores and dashes.'
+          )
+        ],
+        ['email', 'trim'],
+        ['email', 'required'],
+        ['email', 'email'],
+        ['email', 'string', 'max' => 255],
+        [
+          'email',
+          'unique',
+          'targetClass' => '\app\models\User',
+          'message' => Yii::t('app', 'This email address has already been taken.')
+        ],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+        ['password', 'required'],
+        ['password', 'string', 'min' => 6],
         ];
     }
 
@@ -105,17 +105,17 @@ class SignupForm extends Model
         $confirmURL = \Yii::$app->params['frontendURL'] . '#/confirm?id=' . $this->_user->id . '&auth_key=' . $this->_user->auth_key;
 
         $email = \Yii::$app->mailer
-            ->compose(
-                ['html' => 'signup-confirmation-html'],
-                [
-                    'appName' => \Yii::$app->name,
-                    'confirmURL' => $confirmURL,
-                ]
-            )
-            ->setTo($this->email)
-            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
-            ->setSubject('Signup confirmation')
-            ->send();
+        ->compose(
+            ['html' => 'signup-confirmation-html'],
+            [
+              'appName' => \Yii::$app->name,
+              'confirmURL' => $confirmURL,
+            ]
+        )
+        ->setTo($this->email)
+        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+        ->setSubject('Signup confirmation')
+        ->send();
 
         return $email;
     }

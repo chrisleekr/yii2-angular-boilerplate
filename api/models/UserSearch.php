@@ -16,8 +16,8 @@ class UserSearch extends Model
     public function rules()
     {
         return [
-            [['page', 'per_page'], 'integer'],
-            [['q'], 'string', 'max' => 50],
+        [['page', 'per_page'], 'integer'],
+        [['q'], 'string', 'max' => 50],
         ];
     }
 
@@ -30,16 +30,16 @@ class UserSearch extends Model
     {
         $queryParams = [];
         $query = User::find()
-            ->where(['not in', 'user.status', $this->not_in_status])
-            ->andWhere(['in', 'role', $this->in_roles]);
+        ->where(['not in', 'user.status', $this->not_in_status])
+        ->andWhere(['in', 'role', $this->in_roles]);
 
         if ($this->q) {
             $query->andWhere([
-                'or',
-                ['like', 'user.username', $this->q],
-                ['like', 'user.email', $this->q],
-                ['like', 'user.registration_ip', $this->q],
-                ['like', 'user.last_login_ip', $this->q],
+            'or',
+            ['like', 'user.username', $this->q],
+            ['like', 'user.email', $this->q],
+            ['like', 'user.registration_ip', $this->q],
+            ['like', 'user.last_login_ip', $this->q],
             ]);
             $queryParams['q'] = $this->q;
         }
@@ -48,22 +48,22 @@ class UserSearch extends Model
         $pageSize = (int)$this->per_page;
 
         $provider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'forcePageParam' => true,
-                'page' => $page,
-                'pageParam' => 'page',
-                'defaultPageSize' => $pageSize,
-                'pageSizeLimit' => [1, 100],
-                'pageSizeParam' => 'per_page',
-                'validatePage' => true,
-                'params' => $queryParams,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ]
+        'query' => $query,
+        'pagination' => [
+          'forcePageParam' => true,
+          'page' => $page,
+          'pageParam' => 'page',
+          'defaultPageSize' => $pageSize,
+          'pageSizeLimit' => [1, 100],
+          'pageSizeParam' => 'per_page',
+          'validatePage' => true,
+          'params' => $queryParams,
+        ],
+        'sort' => [
+          'defaultOrder' => [
+              'id' => SORT_DESC,
+          ]
+        ]
         ]);
 
         $rows = $provider->getModels();
@@ -77,8 +77,8 @@ class UserSearch extends Model
         $pagination['firstRowNo'] = $pagination['totalCount'] - ($page * $pageSize);
 
         return [
-            'rows' => $rows,
-            'pagination' => $pagination,
+        'rows' => $rows,
+        'pagination' => $pagination,
         ];
     }
 }

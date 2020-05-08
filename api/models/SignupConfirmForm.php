@@ -20,32 +20,32 @@ class SignupConfirmForm extends Model
     public function rules()
     {
         return [
-            [['id', 'auth_key'], 'trim'],
-            [['id', 'auth_key'], 'required'],
-            [
-                'id',
-                'exist',
-                'targetClass' => '\app\models\User',
-                'filter' => [
-                    'and',
-                    ['status' => User::STATUS_PENDING],
-                    'confirmed_at IS NULL',
-                ],
-                'message' => 'The ID is not valid.'
-            ],
-            ['auth_key', 'string', 'length' => 32],
+        [['id', 'auth_key'], 'trim'],
+        [['id', 'auth_key'], 'required'],
+        [
+          'id',
+          'exist',
+          'targetClass' => '\app\models\User',
+          'filter' => [
+              'and',
+              ['status' => User::STATUS_PENDING],
+              'confirmed_at IS NULL',
+          ],
+          'message' => 'The ID is not valid.'
+        ],
+        ['auth_key', 'string', 'length' => 32],
 
-            [
-                'auth_key',
-                'exist',
-                'targetClass' => '\app\models\User',
-                'message' => 'The auth key is not valid.',
-                'filter' => function ($query) {
-                    $query->andWhere(['status' => User::STATUS_PENDING])
-                        ->andWhere(['id' => $this->id])
-                        ->andWhere('confirmed_at IS NULL');
-                }
-            ]
+        [
+          'auth_key',
+          'exist',
+          'targetClass' => '\app\models\User',
+          'message' => 'The auth key is not valid.',
+          'filter' => function ($query) {
+              $query->andWhere(['status' => User::STATUS_PENDING])
+                  ->andWhere(['id' => $this->id])
+                  ->andWhere('confirmed_at IS NULL');
+          }
+        ]
         ];
     }
 
@@ -92,17 +92,17 @@ class SignupConfirmForm extends Model
         $loginURL = \Yii::$app->params['frontendURL'] . '#/login';
 
         $email = \Yii::$app->mailer
-            ->compose(
-                ['html' => 'signup-success-html'],
-                [
-                    'appName' => \Yii::$app->name,
-                    'loginURL' => $loginURL,
-                ]
-            )
-            ->setTo($this->_user->email)
-            ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
-            ->setSubject('Signup completed')
-            ->send();
+        ->compose(
+            ['html' => 'signup-success-html'],
+            [
+              'appName' => \Yii::$app->name,
+              'loginURL' => $loginURL,
+            ]
+        )
+        ->setTo($this->_user->email)
+        ->setFrom([\Yii::$app->params['supportEmail'] => \Yii::$app->name])
+        ->setSubject('Signup completed')
+        ->send();
 
         return $email;
     }

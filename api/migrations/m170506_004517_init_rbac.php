@@ -41,13 +41,13 @@ class m170506_004517_init_rbac extends Migration
         $staffPermissions = $auth->getPermissions();
         $user = $auth->getRole('user');
 
-        // Assign administrator role to admin (1)
+      // Assign administrator role to admin (1)
         $auth->assign($admin, $this->adminId);
 
-        // Assign staff role to staff (2)
+      // Assign staff role to staff (2)
         $auth->assign($staff, $this->staffId);
 
-        // Assign permissions to staff
+      // Assign permissions to staff
 
         if (!empty($staffPermissions)) {
             foreach ($staffPermissions as $key => $permission) {
@@ -55,7 +55,7 @@ class m170506_004517_init_rbac extends Migration
             }
         }
 
-        // Assign user role to user (3)
+      // Assign user role to user (3)
         $auth->assign($user, $this->userId);
     }
 
