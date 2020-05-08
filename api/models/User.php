@@ -101,7 +101,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         $user = static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
         if ($user !== null &&
-            ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
+        ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
             return null;
         }
 
@@ -125,7 +125,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ])->andWhere(['in', 'role', $roles])->one();
 
         if ($user !== null &&
-            ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
+        ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
             return null;
         }
 
@@ -233,7 +233,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 new Expression('UNIX_TIMESTAMP()')
             ])->one();
         if ($user !== null &&
-            ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
+        ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
             return null;
         }
         return $user;
@@ -332,8 +332,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                         if (!empty($userPermissions)) {
                             foreach ($userPermissions as $userPermissionKey => $userPermission) {
                                 if ($userPermission->name == $permission->name) {
-                                    $tmpPermission['checked'] = true;
-                                    break;
+                                        $tmpPermission['checked'] = true;
+                                        break;
                                 }
                             }
                         }
@@ -422,10 +422,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validatePasswordSubmit($attribute, $params)
     {
-        // get post type - POST or PUT
+      // get post type - POST or PUT
         $request = Yii::$app->request;
 
-        // if POST, mode is create
+      // if POST, mode is create
         if ($request->isPost) {
             if ($this->$attribute == '') {
                 $this->addError($attribute, Yii::t('app', 'The password is required.'));
@@ -452,8 +452,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             foreach ($this->$attribute as $permissionKey => $permission) {
                 // Validate attributes in the array
                 if (array_key_exists('name', $permission) === false ||
-                    array_key_exists('description', $permission) === false ||
-                    array_key_exists('checked', $permission) === false) {
+                array_key_exists('description', $permission) === false ||
+                array_key_exists('checked', $permission) === false) {
                     $this->addError($attribute, Yii::t('app', 'The permission is not valid format.'));
                 } elseif (isset($existingPermissions[$permission['name']]) == false) {
                     // Validate name
@@ -556,7 +556,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             if ($user == null) {
                 $this->addError($attribute, Yii::t('app', 'The system cannot find requested user.'));
             } else {
-                // check username is already taken except own username
+              // check username is already taken except own username
                 $existingUser = User::find()
                     ->where(['=', 'email', $this->$attribute])
                     ->andWhere(['!=', 'id', $this->id])
@@ -659,8 +659,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         // check time is expired or not
         if ($forceRegenerate == true
-            || $this->access_token_expired_at == null
-            || (time() > $this->access_token_expired_at)) {
+        || $this->access_token_expired_at == null
+        || (time() > $this->access_token_expired_at)) {
             // generate access token
             $this->generateAccessToken();
         }
@@ -671,7 +671,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function generateAccessToken()
     {
         // generate access token
-//        $this->access_token = Yii::$app->security->generateRandomString();
+        //        $this->access_token = Yii::$app->security->generateRandomString();
         $tokens = $this->getJWT();
         $this->access_token = $tokens[0];   // Token
         $this->access_token_expired_at = $tokens[1]['exp']; // Expire
@@ -783,7 +783,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         } else {
             // When update existing user, revoke old role and assign new role
             if (isset($changedAttributes['role']) === true) {
-                // Get role name
+              // Get role name
                 $roleName = $this->getRoleName();
                 $authManager->revokeAll($this->getId());
                 $authItem = $authManager->getRole($roleName);
@@ -801,11 +801,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     if ($permission['checked'] == true) {
                         // If not assigned, then add to permission
                         if (isset($existingPermissions[$permission['name']]) == false) {
-                            $authItem = $authManager->getPermission($permission['name']);
-                            $authManager->assign($authItem, $this->getId());
+                              $authItem = $authManager->getPermission($permission['name']);
+                              $authManager->assign($authItem, $this->getId());
                         }
                     } else {
-                        // If assigned already, then remove from permission
+                      // If assigned already, then remove from permission
                         if (isset($existingPermissions[$permission['name']]) == true) {
                             $authItem = $authManager->getPermission($permission['name']);
                             $authManager->revoke($authItem, $this->getId());

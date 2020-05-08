@@ -26,7 +26,6 @@
     "yiisoft/yii2-debug": "~2.0.0",
     "yiisoft/yii2-gii": "~2.0.0",
     "yiisoft/yii2-faker": "~2.0.0",
-    "codeception/base": "^2.2.3",
     "codeception/verify": "~0.3.1",
     "codeception/specify": "~0.4.3",
     "flow/jsonpath": "^0.3",
@@ -48,6 +47,7 @@
       "yii\\composer\\Installer::postInstall"
     ],
     "sniff": "vendor/bin/phpcs --extensions=php",
+    "sniff:fix": "vendor/bin/phpcbf --extensions=php",
     "test:unit": "vendor/bin/codecept run unit",
     "test:functional": "vendor/bin/codecept run functional"
   },

@@ -1,6 +1,6 @@
 <?php
 
-$params = include __DIR__.'/params.php';
+$params = include __DIR__ . '/params.php';
 
 $config = [
     'id' => 'boilerplate-api',
@@ -59,7 +59,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => include __DIR__.'/db.php',
+        'db' => include __DIR__ . '/db.php',
 
         'urlManager' => [
             'baseUrl' => '/api',    // Added for

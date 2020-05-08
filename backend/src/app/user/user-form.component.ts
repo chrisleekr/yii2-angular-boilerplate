@@ -268,7 +268,7 @@ function validateDateTime(fieldKeys: any) {
   return (group: FormGroup) => {
     for (const fieldKey of fieldKeys) {
       const field = group.controls[fieldKey];
-      if (typeof field !== 'undefined' && (field.value !== '' && field.value !== null)) {
+      if (typeof field !== 'undefined' && field.value !== '' && field.value !== null) {
         if (moment(field.value, environment.customDateTimeFormat.parseInput, false).isValid() === false) {
           return field.setErrors({ validateDateTime: true });
         }

@@ -1,0 +1,36 @@
+{
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.quickSuggestions": { "comments": true },
+    "files.trimTrailingWhitespace": true,
+    "files.exclude": {},
+    "files.insertFinalNewline": true,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "php.suggest.basic": false,
+    "phpcbf.enable": true,
+    "phpcbf.executablePath": "phpcbf",
+    "phpcbf.documentFormattingProvider": true,
+    "phpcbf.onsave": false,
+    "[php]": {
+        "editor.defaultFormatter": "valeryanm.vscode-phpsab",
+        "editor.formatOnSave": true
+    },
+    "search.exclude": {
+        ".git": true,
+        ".build": true,
+        "**/.DS_Store": true,
+        "**/.vscode": true,
+        "**/coverage": true,
+        "**/vendor": true
+    },
+    "intelephense.files.exclude": [
+        "**/.git/**",
+        "**/.DS_Store/**",
+        "**/vendor/**"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": false
+    }
+}
