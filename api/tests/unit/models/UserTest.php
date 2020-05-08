@@ -13,10 +13,10 @@ class UserTest extends Unit
 
     public function testValidate()
     {
-      // Validation requires method to be set
-      //      The function validateUsername requires Yii::$app->request to determine mode - create or update.
-      //      When request method is POST, then mode is creation.
-      //      When request mode is PUT, the mode is update.
+        // Validation requires method to be set
+        //      The function validateUsername requires Yii::$app->request to determine mode - create or update.
+        //      When request method is POST, then mode is creation.
+        //      When request mode is PUT, the mode is update.
         $_POST['_method'] = 'post';
 
         $this->specify(

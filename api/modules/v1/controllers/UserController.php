@@ -446,7 +446,7 @@ class UserController extends ActiveController
 
                 return $responseData;
             } else {
-              // Validation error
+                // Validation error
                 throw new HttpException(422, json_encode($model->errors));
             }
         } else {

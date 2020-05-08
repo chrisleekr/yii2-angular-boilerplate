@@ -291,13 +291,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                         break;
                     case self::STATUS_PENDING:
                         $statusLabel = Yii::t('app', 'Waiting Confirmation');
-                      break;
+                        break;
                     case self::STATUS_DISABLED:
                         $statusLabel = Yii::t('app', 'Disabled');
-                      break;
+                        break;
                     case self::STATUS_DELETED:
                         $statusLabel = Yii::t('app', 'Deleted');
-                      break;
+                        break;
                 }
                 return $statusLabel;
             },
@@ -358,10 +358,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 break;
             case self::ROLE_STAFF:
                 $roleLabel = Yii::t('app', 'Staff');
-              break;
+                break;
             case self::ROLE_ADMIN:
                 $roleLabel = Yii::t('app', 'Administrator');
-              break;
+                break;
         }
         return $roleLabel;
     }
@@ -505,7 +505,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             if ($user == null) {
                 $this->addError($attribute, Yii::t('app', 'The system cannot find requested user.'));
             } else {
-              // check username is already taken except own username
+                // check username is already taken except own username
                 $existingUser = User::find()
                     ->where(['=', 'username', $this->$attribute])
                     ->andWhere(['!=', 'id', $this->id])
@@ -813,7 +813,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                     }
                 }
             } else {
-              // if role is changed and remove all
+                // if role is changed and remove all
                 $existingPermissions = $authManager->getPermissionsByUser($this->getId());
                 if (!empty($existingPermissions)) {
                     foreach ($existingPermissions as $permissionName => $permission) {
@@ -837,10 +837,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 break;
             case self::ROLE_STAFF:
                 $roleName = 'staff';
-              break;
+                break;
             case self::ROLE_ADMIN:
                 $roleName = 'admin';
-              break;
+                break;
         }
         return $roleName;
     }

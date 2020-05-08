@@ -351,16 +351,16 @@ class StaffController extends ActiveController
     {
         $authManager = Yii::$app->authManager;
 
-      /** @var Permission[] $permissions */
+        /** @var Permission[] $permissions */
         $permissions = $authManager->getPermissions();
 
-      /** @var array $tmpPermissions to store list of available permissions */
+        /** @var array $tmpPermissions to store list of available permissions */
         $tmpPermissions = [];
 
-      /**
-       * @var string $permissionKey
-       * @var Permission $permission
-       */
+        /**
+         * @var string $permissionKey
+         * @var Permission $permission
+         */
         foreach ($permissions as $permissionKey => $permission) {
             $tmpPermissions[] = [
                 'name' => $permission->name,
