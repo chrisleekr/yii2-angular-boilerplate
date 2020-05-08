@@ -16,20 +16,20 @@ class m170125_082006_create_user_table extends Migration
             'id' => $this->primaryKey(),
             'username' => $this->string(200),
             'auth_key' => $this->string(255),
-            'access_token_expired_at' => $this->integer(11) . ' NULL DEFAULT NULL',
+            'access_token_expired_at' => $this->integer(11).' NULL DEFAULT NULL',
             'password_hash' => $this->string(255),
             'password_reset_token' => $this->string(255),
             'email' => $this->string(255),
             'unconfirmed_email' => $this->string(255),
-            'confirmed_at' => $this->integer(11) . ' NULL DEFAULT NULL',
+            'confirmed_at' => $this->integer(11).' NULL DEFAULT NULL',
             'registration_ip' => $this->string(20),
-            'last_login_at' => $this->integer(11) . ' NULL DEFAULT NULL',
+            'last_login_at' => $this->integer(11).' NULL DEFAULT NULL',
             'last_login_ip' => $this->string(20),
-            'blocked_at' => $this->integer(11) . ' NULL DEFAULT NULL',
+            'blocked_at' => $this->integer(11).' NULL DEFAULT NULL',
             'status' => $this->integer(2)->defaultValue(10),
             'role' => $this->integer(11)->null(),
-            'created_at' => $this->integer(11) . ' NULL DEFAULT NULL',
-            'updated_at' => $this->integer(11) . ' NULL DEFAULT NULL'
+            'created_at' => $this->integer(11).' NULL DEFAULT NULL',
+            'updated_at' => $this->integer(11).' NULL DEFAULT NULL'
         ]);
 
         // creates index for table
@@ -39,25 +39,7 @@ class m170125_082006_create_user_table extends Migration
             ['username', 'auth_key', 'password_hash', 'status']
         );
 
-        $this->batchInsert('user', [
-            'id',
-            'username',
-            'auth_key',
-            'access_token_expired_at',
-            'password_hash',
-            'password_reset_token',
-            'email',
-            'unconfirmed_email',
-            'confirmed_at',
-            'registration_ip',
-            'last_login_at',
-            'last_login_ip',
-            'blocked_at',
-            'status',
-            'role',
-            'created_at',
-            'updated_at'
-        ], [
+        $users = [
             [
                 1,
                 'admin',
@@ -95,16 +77,19 @@ class m170125_082006_create_user_table extends Migration
                 50,
                 time(),
                 time()
-            ],
-            [
+            ]
+        ];
+
+        for ($i = 1; $i <= 100; $i++) {
+            $users[] = [
                 3,
-                'user',
+                'user'.$i,
                 'rNXSqIas_43RdpG0e5_7d1W06iK8pXJ8',
                 '2017-06-04 00:13:02',
                 '$2y$13$nd/F3g6jjIa1/Sk6JZxZ5uVq0OpsbOmW1OdnbDG6BpFqgkFbQotjm',
                 null,
-                'user@demo.com',
-                'user@demo.com',
+                'user'.$i.'@demo.com',
+                'user'.$i.'@demo.com',
                 time(),
                 '127.0.0.1',
                 time(),
@@ -114,8 +99,27 @@ class m170125_082006_create_user_table extends Migration
                 10,
                 time(),
                 time()
-            ],
-        ]);
+            ];
+        }
+        $this->batchInsert('user', [
+            'id',
+            'username',
+            'auth_key',
+            'access_token_expired_at',
+            'password_hash',
+            'password_reset_token',
+            'email',
+            'unconfirmed_email',
+            'confirmed_at',
+            'registration_ip',
+            'last_login_at',
+            'last_login_ip',
+            'blocked_at',
+            'status',
+            'role',
+            'created_at',
+            'updated_at'
+        ], $users);
     }
 
     /**

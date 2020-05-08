@@ -50,24 +50,28 @@ export class StaffDataService {
   addStaff(staff: Staff): Observable<any> {
     const headers = GlobalService.getHeaders();
 
-    return this.http.post<ResponseBody>(this.globalService.apiHost + '/staff', JSON.stringify(staff), { headers }).pipe(
-      map(response => {
-        return response;
-      }),
-      catchError(err => GlobalService.handleError(err))
-    );
+    return this.http
+      .post<ResponseBody>(this.globalService.apiHost + '/staff', JSON.stringify(staff), { headers })
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // DELETE /v1/staff/1
   deleteStaffById(id: number): Observable<any> {
     const headers = GlobalService.getHeaders();
 
-    return this.http.delete<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers }).pipe(
-      map(response => {
-        return response;
-      }),
-      catchError(err => GlobalService.handleError(err))
-    );
+    return this.http
+      .delete<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers })
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   // PUT /v1/staff/1
@@ -109,22 +113,26 @@ export class StaffDataService {
   getStaffById(id: number): Observable<Staff> {
     const headers = GlobalService.getHeaders();
 
-    return this.http.get<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers }).pipe(
-      map(response => {
-        return response.data as Staff;
-      }),
-      catchError(err => GlobalService.handleError(err))
-    );
+    return this.http
+      .get<ResponseBody>(this.globalService.apiHost + '/staff/' + id, { headers })
+      .pipe(
+        map(response => {
+          return response.data as Staff;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 
   public getPermissionTypes(): Observable<any[]> {
     const headers = GlobalService.getHeaders();
 
-    return this.http.get<ResponseBody>(this.globalService.apiHost + '/staff/get-permissions', { headers }).pipe(
-      map(response => {
-        return response.data;
-      }),
-      catchError(err => GlobalService.handleError(err))
-    );
+    return this.http
+      .get<ResponseBody>(this.globalService.apiHost + '/staff/get-permissions', { headers })
+      .pipe(
+        map(response => {
+          return response.data;
+        }),
+        catchError(err => GlobalService.handleError(err))
+      );
   }
 }

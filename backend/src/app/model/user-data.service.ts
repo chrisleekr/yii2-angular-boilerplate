@@ -80,7 +80,9 @@ export class UserDataService {
   getAllUsers(extendedQueries?: any): Observable<UserList> {
     const headers = GlobalService.getHeaders();
 
-    let queries = {};
+    let queries = {
+      per_page: 10
+    };
     if (extendedQueries) {
       queries = { ...queries, ...extendedQueries };
     }

@@ -54,7 +54,7 @@ class UserSearch extends Model
                 'page' => $page,
                 'pageParam' => 'page',
                 'defaultPageSize' => $pageSize,
-                'pageSizeLimit' => [10, 50, 100],
+                'pageSizeLimit' => [1, 100],
                 'pageSizeParam' => 'per_page',
                 'validatePage' => true,
                 'params' => $queryParams,
