@@ -79,7 +79,7 @@ class m170125_082006_create_user_table extends Migration
                 10,
                 50,
                 time(),
-                time(),
+                time()
             ],
             [
                 3,
