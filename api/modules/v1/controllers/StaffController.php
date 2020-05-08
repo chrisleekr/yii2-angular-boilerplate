@@ -37,24 +37,24 @@ class StaffController extends ActiveController
         $behaviors = parent::behaviors();
 
         $behaviors['authenticator'] = [
-        'class' => CompositeAuth::className(),
-        'authMethods' => [
-          HttpBearerAuth::className(),
-        ],
+            'class' => CompositeAuth::className(),
+            'authMethods' => [
+                HttpBearerAuth::className(),
+            ],
 
         ];
 
         $behaviors['verbs'] = [
-        'class' => \yii\filters\VerbFilter::className(),
-        'actions' => [
-          'index' => ['get'],
-          'view' => ['get'],
-          'create' => ['post'],
-          'update' => ['put'],
-          'delete' => ['delete'],
-          'login' => ['post'],
-          'getPermissions' => ['get'],
-        ],
+            'class' => \yii\filters\VerbFilter::className(),
+            'actions' => [
+                'index' => ['get'],
+                'view' => ['get'],
+                'create' => ['post'],
+                'update' => ['put'],
+                'delete' => ['delete'],
+                'login' => ['post'],
+                'getPermissions' => ['get'],
+            ],
         ];
 
         // remove authentication filter
@@ -63,12 +63,12 @@ class StaffController extends ActiveController
 
         // add CORS filter
         $behaviors['corsFilter'] = [
-        'class' => \yii\filters\Cors::className(),
-        'cors' => [
-          'Origin' => ['*'],
-          'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-          'Access-Control-Request-Headers' => ['*'],
-        ],
+            'class' => \yii\filters\Cors::className(),
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+            ],
         ];
 
         // re-add authentication filter
@@ -78,15 +78,15 @@ class StaffController extends ActiveController
 
         // setup access
         $behaviors['access'] = [
-        'class' => AccessControl::className(),
-        'only' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'], //only be applied to
-        'rules' => [
-          [
-              'allow' => true,
-              'actions' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'],
-              'roles' => ['admin', 'manageStaffs'],
-          ],
-        ],
+            'class' => AccessControl::className(),
+            'only' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'], //only be applied to
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view', 'create', 'update', 'delete', 'getPermissions'],
+                    'roles' => ['admin', 'manageStaffs'],
+                ],
+            ],
         ];
 
         return $behaviors;
@@ -239,19 +239,19 @@ class StaffController extends ActiveController
     {
         $staff = User::find()->where(
             [
-            'id' => $id
+                'id' => $id
             ]
         )->andWhere(
             [
-            '!=',
-            'status',
-            -1
+                '!=',
+                'status',
+                -1
             ]
         )->andWhere(
             [
-            'in',
-            'role',
-            [User::ROLE_STAFF, User::ROLE_ADMIN]
+                'in',
+                'role',
+                [User::ROLE_STAFF, User::ROLE_ADMIN]
             ]
         )->one();
         if ($staff) {
@@ -301,8 +301,8 @@ class StaffController extends ActiveController
         $model = new LoginForm();
 
         $model->roles = [
-        User::ROLE_ADMIN,
-        User::ROLE_STAFF
+            User::ROLE_ADMIN,
+            User::ROLE_STAFF
         ];
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = $model->getUser();
@@ -313,8 +313,8 @@ class StaffController extends ActiveController
             $id = implode(',', array_values($user->getPrimaryKey(true)));
 
             $responseData = [
-            'id' => $id,
-            'access_token' => $user->access_token,
+                'id' => $id,
+                'access_token' => $user->access_token,
             ];
 
             return $responseData;
@@ -363,9 +363,9 @@ class StaffController extends ActiveController
        */
         foreach ($permissions as $permissionKey => $permission) {
             $tmpPermissions[] = [
-            'name' => $permission->name,
-            'description' => $permission->description,
-            'checked' => false,
+                'name' => $permission->name,
+                'description' => $permission->description,
+                'checked' => false,
             ];
         }
 

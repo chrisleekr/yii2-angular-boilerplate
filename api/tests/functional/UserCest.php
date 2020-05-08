@@ -18,13 +18,13 @@ class UserCest
 
 
         $I->seeResponseContainsJson([
-        'success' => true,
-        'status' => 200,
+            'success' => true,
+            'status' => 200,
         ]);
 
         $I->seeResponseMatchesJsonType([
-        'id' => 'integer',
-        'access_token' => 'string',
+            'id' => 'integer',
+            'access_token' => 'string',
         ], '$.data');
     }
 }

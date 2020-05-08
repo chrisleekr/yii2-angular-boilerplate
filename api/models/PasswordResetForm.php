@@ -22,10 +22,10 @@ class PasswordResetForm extends Model
     public function rules()
     {
         return [
-        ['token', 'required'],
-        ['token', 'validatePasswordResetToken'],
-        ['password', 'required'],
-        ['password', 'string', 'min' => 6],
+            ['token', 'required'],
+            ['token', 'validatePasswordResetToken'],
+            ['password', 'required'],
+            ['password', 'string', 'min' => 6],
 
         ];
     }

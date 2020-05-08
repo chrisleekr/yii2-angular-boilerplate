@@ -1,7 +1,7 @@
 {
-  "recommendations": [
-    "felixfbecker.php-intellisense",
-    "junstyle.php-cs-fixer",
-    "mikeburgh.xml-format"
-  ]
+    "recommendations": [
+        "felixfbecker.php-intellisense",
+        "mikeburgh.xml-format",
+        "valeryanm.vscode-phpsab"
+    ]
 }

@@ -1,6 +1,6 @@
 <?php
 
-$params = include __DIR__.'/params.php';
+$params = include __DIR__ . '/params.php';
 
 $config = [
     'id' => 'boilerplate-api',
@@ -59,7 +59,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => include __DIR__.'/db.php',
+        'db' => include __DIR__ . '/db.php',
 
         'urlManager' => [
             'baseUrl' => '/api',    // Added for
@@ -150,15 +150,15 @@ $config = [
 
                 if ($response->statusCode >= 200 && $response->statusCode <= 299) {
                     $response->data = [
-                    'success' => true,
-                    'status' => $response->statusCode,
-                    'data' => $responseData,
+                        'success' => true,
+                        'status' => $response->statusCode,
+                        'data' => $responseData,
                     ];
                 } else {
                     $response->data = [
-                    'success' => false,
-                    'status' => $response->statusCode,
-                    'data' => $responseData,
+                        'success' => false,
+                        'status' => $response->statusCode,
+                        'data' => $responseData,
                     ];
                 }
                 return $response;

@@ -119,8 +119,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
       /** @var User $user */
         $user = static::find()->where([
-        'username' => $username,
-        'status' => self::STATUS_ACTIVE,
+            'username' => $username,
+            'status' => self::STATUS_ACTIVE,
 
         ])->andWhere(['in', 'role', $roles])->one();
 
@@ -144,8 +144,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             return null;
         }
         return static::findOne([
-        'password_reset_token' => $token,
-        'status' => self::STATUS_ACTIVE,
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
         ]);
     }
 
@@ -218,19 +218,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
       /** @var User $user */
         $user = static::find()->where([
-        '=',
-        'id',
-        $id
+            '=',
+            'id',
+            $id
         ])
         ->andWhere([
-          '=',
-          'status',
-          self::STATUS_ACTIVE
+            '=',
+            'status',
+            self::STATUS_ACTIVE
         ])
         ->andWhere([
-          '>',
-          'access_token_expired_at',
-          new Expression('UNIX_TIMESTAMP()')
+            '>',
+            'access_token_expired_at',
+            new Expression('UNIX_TIMESTAMP()')
         ])->one();
         if ($user !== null &&
         ($user->getIsBlocked() == true || $user->getIsConfirmed() == false)) {
@@ -243,13 +243,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function attributeLabels()
     {
         return [
-        'username' => Yii::t('app', 'Username'),
-        'email' => Yii::t('app', 'Email'),
-        'registration_ip' => Yii::t('app', 'Registration ip'),
-        'unconfirmed_email' => Yii::t('app', 'New email'),
-        'password' => Yii::t('app', 'Password'),
-        'created_at' => Yii::t('app', 'Registration time'),
-        'confirmed_at' => Yii::t('app', 'Confirmation time'),
+            'username' => Yii::t('app', 'Username'),
+            'email' => Yii::t('app', 'Email'),
+            'registration_ip' => Yii::t('app', 'Registration ip'),
+            'unconfirmed_email' => Yii::t('app', 'New email'),
+            'password' => Yii::t('app', 'Password'),
+            'created_at' => Yii::t('app', 'Registration time'),
+            'confirmed_at' => Yii::t('app', 'Confirmation time'),
         ];
     }
 
@@ -258,51 +258,51 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
       // TimestampBehavior also provides a method named touch() that allows you to assign the current timestamp to the specified attribute(s) and save them to the database. For example,
         return [
-        [
-          'class' => TimestampBehavior::className(),
-          'createdAtAttribute' => 'created_at',
-          'updatedAtAttribute' => 'updated_at',
-          'value' => time()
-        ]
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => time()
+            ]
         ];
     }
 
     public function fields()
     {
         $fields = [
-        'id',
-        'username',
-        'email',
-        'unconfirmed_email',
-        'role',
-        'role_label' => function () {
-            return $this->getRoleLabel();
-        },
-        'last_login_at',
-        'last_login_ip',
-        'confirmed_at',
-        'blocked_at',
-        'status',
-        'status_label' => function () {
-            $statusLabel = '';
-            switch ($this->status) {
-                case self::STATUS_ACTIVE:
-                    $statusLabel = Yii::t('app', 'Active');
-                    break;
-                case self::STATUS_PENDING:
-                    $statusLabel = Yii::t('app', 'Waiting Confirmation');
-                  break;
-                case self::STATUS_DISABLED:
-                    $statusLabel = Yii::t('app', 'Disabled');
-                  break;
-                case self::STATUS_DELETED:
-                    $statusLabel = Yii::t('app', 'Deleted');
-                  break;
-            }
-            return $statusLabel;
-        },
-        'created_at',
-        'updated_at',
+            'id',
+            'username',
+            'email',
+            'unconfirmed_email',
+            'role',
+            'role_label' => function () {
+                return $this->getRoleLabel();
+            },
+            'last_login_at',
+            'last_login_ip',
+            'confirmed_at',
+            'blocked_at',
+            'status',
+            'status_label' => function () {
+                $statusLabel = '';
+                switch ($this->status) {
+                    case self::STATUS_ACTIVE:
+                        $statusLabel = Yii::t('app', 'Active');
+                        break;
+                    case self::STATUS_PENDING:
+                        $statusLabel = Yii::t('app', 'Waiting Confirmation');
+                      break;
+                    case self::STATUS_DISABLED:
+                        $statusLabel = Yii::t('app', 'Disabled');
+                      break;
+                    case self::STATUS_DELETED:
+                        $statusLabel = Yii::t('app', 'Deleted');
+                      break;
+                }
+                return $statusLabel;
+            },
+            'created_at',
+            'updated_at',
         ];
 
         // If role is staff and admin, then return permissions
@@ -324,9 +324,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                      */
                     foreach ($availablePermissions as $permissionKey => $permission) {
                         $tmpPermission = [
-                        'name' => $permission->name,
-                        'description' => $permission->description,
-                        'checked' => false,
+                            'name' => $permission->name,
+                            'description' => $permission->description,
+                            'checked' => false,
                         ];
 
                         if (!empty($userPermissions)) {
@@ -380,36 +380,36 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-        ['username', 'trim'],
-        ['username', 'required'],
-        ['username', 'string', 'length' => [3, 15]],
-        [
-          'username',
-          'match',
-          'pattern' => '/^[A-Za-z0-9_-]{3,15}$/',
-          'message' => Yii::t(
-              'app',
-              'Your username can only contain alphanumeric characters, underscores and dashes.'
-          )
-        ],
-        ['username', 'validateUsername'],
-        ['email', 'trim'],
-        ['email', 'required'],
-        ['email', 'email'],
-        ['email', 'string', 'max' => 255],
-        ['email', 'validateEmail'],
-        ['password', 'string', 'min' => 6],
-        ['password', 'validatePasswordSubmit'],
-        [['confirmed_at', 'blocked_at', 'last_login_at'], 'datetime', 'format' => 'php:U'],
-        [['last_login_ip', 'registration_ip'], 'ip'],
-        ['status', 'default', 'value' => self::STATUS_ACTIVE],
-        ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DISABLED]],
+            ['username', 'trim'],
+            ['username', 'required'],
+            ['username', 'string', 'length' => [3, 15]],
+            [
+                'username',
+                'match',
+                'pattern' => '/^[A-Za-z0-9_-]{3,15}$/',
+                'message' => Yii::t(
+                    'app',
+                    'Your username can only contain alphanumeric characters, underscores and dashes.'
+                )
+            ],
+            ['username', 'validateUsername'],
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'validateEmail'],
+            ['password', 'string', 'min' => 6],
+            ['password', 'validatePasswordSubmit'],
+            [['confirmed_at', 'blocked_at', 'last_login_at'], 'datetime', 'format' => 'php:U'],
+            [['last_login_ip', 'registration_ip'], 'ip'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_DISABLED]],
 
-        ['role', 'default', 'value' => self::ROLE_USER],
-        ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_STAFF, self::ROLE_ADMIN]],
+            ['role', 'default', 'value' => self::ROLE_USER],
+            ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_STAFF, self::ROLE_ADMIN]],
 
-        ['permissions', 'validatePermissions'],
-        [['access_token', 'permissions'], 'safe'],
+            ['permissions', 'validatePermissions'],
+            [['access_token', 'permissions'], 'safe'],
         ];
     }
 
@@ -701,20 +701,20 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
       // Merge token with presets not to miss any params in custom
       // configuration
         $token = array_merge([
-        'iat' => $currentTime,
+            'iat' => $currentTime,
       // Issued at: timestamp of token issuing.
-        'iss' => $hostInfo,
+            'iss' => $hostInfo,
       // Issuer: A string containing the name or identifier of the issuer application. Can be a domain name and can be used to discard tokens from other applications.
-        'aud' => $hostInfo,
-        'nbf' => $currentTime,
+            'aud' => $hostInfo,
+            'nbf' => $currentTime,
       // Not Before: Timestamp of when the token should start being considered valid. Should be equal to or greater than iat. In this case, the token will begin to be valid 10 seconds
-        'exp' => $expire,
+            'exp' => $expire,
       // Expire: Timestamp of when the token should cease to be valid. Should be greater than iat and nbf. In this case, the token will expire 60 seconds after being issued.
-        'data' => [
-          'username' => $this->username,
-          'roleLabel' => $this->getRoleLabel(),
-          'lastLoginAt' => $this->last_login_at,
-        ]
+            'data' => [
+                'username' => $this->username,
+                'roleLabel' => $this->getRoleLabel(),
+                'lastLoginAt' => $this->last_login_at,
+            ]
         ], static::getHeaderToken());
       // Set up id
         $token['jti'] = $this->getJTI();    // JSON Token ID: A unique string, could be used to validate a token, but goes against not having a centralized issuer authority.

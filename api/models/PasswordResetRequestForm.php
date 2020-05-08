@@ -18,16 +18,16 @@ class PasswordResetRequestForm extends Model
     public function rules()
     {
         return [
-        ['email', 'trim'],
-        ['email', 'required'],
-        ['email', 'email'],
-        [
-          'email',
-          'exist',
-          'targetClass' => '\app\models\User',
-          'filter' => ['status' => User::STATUS_ACTIVE],
-          'message' => Yii::t('app', 'There is no user with this email address.')
-        ],
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            [
+                'email',
+                'exist',
+                'targetClass' => '\app\models\User',
+                'filter' => ['status' => User::STATUS_ACTIVE],
+                'message' => Yii::t('app', 'There is no user with this email address.')
+            ],
         ];
     }
 
@@ -40,8 +40,8 @@ class PasswordResetRequestForm extends Model
     {
       /* @var $user User */
         $user = User::findOne([
-        'status' => User::STATUS_ACTIVE,
-        'email' => $this->email,
+            'status' => User::STATUS_ACTIVE,
+            'email' => $this->email,
         ]);
 
         if (!$user) {
@@ -62,9 +62,9 @@ class PasswordResetRequestForm extends Model
         ->compose(
             ['html' => 'password-reset-token-html'],
             [
-              'user' => $user,
-              'appName' => \Yii::$app->name,
-              'resetURL' => $resetURL,
+                'user' => $user,
+                'appName' => \Yii::$app->name,
+                'resetURL' => $resetURL,
             ]
         )
         ->setFrom([Yii::$app->params['supportEmail'] => \Yii::$app->name])

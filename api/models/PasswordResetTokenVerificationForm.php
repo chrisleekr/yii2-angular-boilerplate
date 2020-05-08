@@ -21,8 +21,8 @@ class PasswordResetTokenVerificationForm extends Model
     public function rules()
     {
         return [
-        ['token', 'required'],
-        ['token', 'validatePasswordResetToken'],
+            ['token', 'required'],
+            ['token', 'validatePasswordResetToken'],
         ];
     }
 

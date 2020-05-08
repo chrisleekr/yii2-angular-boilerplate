@@ -22,33 +22,33 @@ class UserEditForm extends Model
     public function rules()
     {
         return [
-        [
-          'id',
-          'exist',
-          'targetClass' => '\app\models\User',
-          'filter' => [
-              'and',
-              ['status' => User::STATUS_ACTIVE],
-              'confirmed_at IS NOT NULL',
-              'blocked_at IS NULL'
-          ],
-          'message' => 'The ID is not valid.'
-        ],
-        ['email', 'trim'],
-        ['email', 'required'],
-        ['email', 'email'],
-        ['email', 'string', 'max' => 255],
-        [
-          'email',
-          'unique',
-          'targetClass' => '\app\models\User',
-          'message' => Yii::t('app', 'This email address has already been taken.'),
-          'filter' => function ($query) {
-              $query->andWhere(['!=', 'id', $this->id]);
-          }
-        ],
+            [
+                'id',
+                'exist',
+                'targetClass' => '\app\models\User',
+                'filter' => [
+                    'and',
+                    ['status' => User::STATUS_ACTIVE],
+                    'confirmed_at IS NOT NULL',
+                    'blocked_at IS NULL'
+                ],
+                'message' => 'The ID is not valid.'
+            ],
+            ['email', 'trim'],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            [
+                'email',
+                'unique',
+                'targetClass' => '\app\models\User',
+                'message' => Yii::t('app', 'This email address has already been taken.'),
+                'filter' => function ($query) {
+                    $query->andWhere(['!=', 'id', $this->id]);
+                }
+            ],
 
-        ['password', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 6],
         ];
     }
 
@@ -114,8 +114,8 @@ class UserEditForm extends Model
         ->compose(
             ['html' => 'email-confirmation-html'],
             [
-              'appName' => \Yii::$app->name,
-              'confirmURL' => $confirmURL,
+                'appName' => \Yii::$app->name,
+                'confirmURL' => $confirmURL,
             ]
         )
         ->setTo($this->email)

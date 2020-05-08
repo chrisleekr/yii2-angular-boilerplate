@@ -14,14 +14,14 @@ class SettingCest
         $I->canSeeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
-        'success' => true,
-        'data' => [
-          [
-              'meta_key' => 'timezone',
-              'meta_type' => 'select',
-              'meta_value' => 'Australia/Melbourne'
-          ]
-        ]
+            'success' => true,
+            'data' => [
+                [
+                    'meta_key' => 'timezone',
+                    'meta_type' => 'select',
+                    'meta_value' => 'Australia/Melbourne'
+                ]
+            ]
         ]);
     }
 }
