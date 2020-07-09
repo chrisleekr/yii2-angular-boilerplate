@@ -8,7 +8,7 @@ import { StaffService } from './staff.service';
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private staffService: StaffService, private globalService: GlobalService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
     return this.checkLogin(url);
   }

@@ -14,7 +14,7 @@ export class UserList {
   setRowNum() {
     let rowNo = this.pagination.firstRowNo || 0;
     if (this.rows.length > 0) {
-      _.map(this.rows, row => {
+      _.map(this.rows, (row: any) => {
         row.row_num = rowNo--;
         return row;
       });

@@ -83,7 +83,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  setFormField(field, value) {
+  setFormField(field: string, value: any) {
     this.form.controls[field].setValue(value);
   }
 
@@ -100,7 +100,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     };
   }
 
-  isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid: boolean = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
@@ -113,7 +113,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     return isValid;
   }
 
-  onValueChanged(data?: any) {
+  onValueChanged(_data?: any) {
     if (!this.form) {
       return;
     }
@@ -175,7 +175,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           result => {
             const permissions = result;
             if (permissions.length > 0) {
-              permissions.forEach((permission, index) => {
+              permissions.forEach((_permission, index) => {
                 permissions[index]['checked'] = true;
               });
             }
@@ -259,23 +259,23 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   private setStaffToForm() {
-    _.forIn(this.staff, (value, key) => {
+    _.forIn(this.staff, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         if (key === 'permissions') {
-          const formControls = value.map((v, k) => {
+          const formControls = value.map((v: any, k: string) => {
             return this.formBuilder.control(v.checked);
           });
           const formArray = this.formBuilder.array(formControls);
           this.form.setControl(key, formArray);
         } else if (key === 'confirmed_at' || key === 'blocked_at') {
-          if (value === null) {
-            this.form.controls[key].setValue('');
+          if (value === null || value === '') {
+            this.form.controls[key].setValue(null);
           } else if (moment.isMoment(value)) {
             this.form.controls[key].setValue(value.format(environment.customDateTimeFormat.apiFormat));
           } else if (moment.unix(value).isValid()) {
             this.form.controls[key].setValue(new Date(moment.unix(value).format('YYYY-MM-DD HH:mm:ss')));
           } else {
-            this.form.controls[key].setValue('');
+            this.form.controls[key].setValue(null);
           }
         } else {
           this.form.controls[key].setValue(value);
@@ -285,19 +285,19 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToStaff() {
-    _.forIn(this.form.getRawValue(), (value, key) => {
+    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
       if (typeof this.staff[key] !== 'undefined') {
         if (key === 'permissions') {
-          this.staff[key] = value.map((v, k) => {
+          this.staff[key] = value.map((v: any, k: string) => {
             const newPermission = this.staff[key][k];
             newPermission.checked = v;
             return newPermission;
           });
         } else if (key === 'confirmed_at' || key === 'blocked_at') {
           if (moment.isMoment(value)) {
-            this.staff[key] = value.unix();
+            this.staff[key] = String(value.unix());
           } else if (moment(value).isValid()) {
-            this.staff[key] = moment(value).unix();
+            this.staff[key] = String(moment(value).unix());
           } else {
             this.staff[key] = null;
           }

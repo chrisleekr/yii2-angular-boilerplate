@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { SharedService } from '../shared/shared.service';
@@ -10,11 +10,10 @@ import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
 import { Staff } from './staff';
 import { StaffList } from './staff-list';
-import { StaffService } from './staff.service';
 
 @Injectable()
 export class StaffDataService {
-  constructor(private globalService: GlobalService, private staffService: StaffService, private http: HttpClient) {}
+  constructor(private globalService: GlobalService, private http: HttpClient) {}
 
   public static getStatusTypes(): any[] {
     return [

@@ -18,7 +18,16 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": ["src/scss/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "rxjs/internal/observable/throwError",
+              "ng2-validation",
+              "babel-runtime/helpers/slicedToArray",
+              "babel-runtime/helpers/createClass",
+              "core-js/library/fn/get-iterator",
+              "babel-runtime/helpers/extends",
+              "babel-runtime/core-js/get-iterator"
+            ]
           },
           "configurations": {
             "production": {

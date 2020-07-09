@@ -40,8 +40,7 @@ export function tokenGetter() {
     BsDropdownModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter,
-        whitelistedDomains: [environment.apiHost]
+        tokenGetter
       }
     })
   ],

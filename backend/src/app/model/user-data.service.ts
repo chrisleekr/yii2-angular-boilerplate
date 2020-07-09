@@ -7,13 +7,12 @@ import { catchError, map } from 'rxjs/operators';
 import { SharedService } from '../shared/shared.service';
 import { GlobalService } from './global.service';
 import { ResponseBody } from './response-body';
-import { StaffService } from './staff.service';
 import { User } from './user';
 import { UserList } from './user-list';
 
 @Injectable()
 export class UserDataService {
-  constructor(private globalService: GlobalService, private staffService: StaffService, private http: HttpClient) {}
+  constructor(private globalService: GlobalService, private http: HttpClient) {}
 
   public static getStatusTypes(): any[] {
     return [
