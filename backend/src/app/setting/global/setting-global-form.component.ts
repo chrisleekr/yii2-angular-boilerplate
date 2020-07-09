@@ -99,7 +99,7 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
     };
   }
 
-  isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid: boolean = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
@@ -249,7 +249,7 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
   }
 
   private setSettingToForm() {
-    _.forIn(this.setting, (value, key) => {
+    _.forIn(this.setting, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         this.form.controls[key].setValue(value);
       }
@@ -257,7 +257,7 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToSetting() {
-    _.forIn(this.form.getRawValue(), (value, key) => {
+    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
       if (typeof this.setting[key] !== 'undefined') {
         if (value instanceof moment) {
           this.setting[key] = moment(value, environment.customDateTimeFormat.parseInput, true).format(

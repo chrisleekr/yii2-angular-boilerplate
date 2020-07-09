@@ -24,7 +24,7 @@ export class StaffService {
     this.loggedIn = this.globalService.isLoggedIn();
   }
 
-  public login(username, password) {
+  public login(username: string, password: string) {
     const headers = GlobalService.getHeaders();
 
     return this.http

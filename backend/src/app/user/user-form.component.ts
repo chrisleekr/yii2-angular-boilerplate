@@ -76,7 +76,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  setFormField(field, value) {
+  setFormField(field: string, value: any) {
     this.form.controls[field].setValue(value);
   }
 
@@ -92,7 +92,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     };
   }
 
-  isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid: boolean = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
@@ -106,7 +106,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
     return isValid;
   }
 
-  onValueChanged(data?: any) {
+  onValueChanged(_data?: any) {
     if (!this.form) {
       return;
     }
@@ -226,10 +226,10 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private setUserToForm() {
-    _.forIn(this.user, (value, key) => {
+    _.forIn(this.user, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         if (key === 'confirmed_at' || key === 'blocked_at') {
-          if (value === null) {
+          if (value === null || value === '') {
             this.form.controls[key].setValue('');
           } else if (moment.isMoment(value)) {
             this.form.controls[key].setValue(value.format(environment.customDateTimeFormat.apiFormat));
@@ -246,13 +246,13 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToUser() {
-    _.forIn(this.form.getRawValue(), (value, key) => {
+    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
       if (typeof this.user[key] !== 'undefined') {
         if (key === 'confirmed_at' || key === 'blocked_at') {
           if (moment.isMoment(value)) {
-            this.user[key] = value.unix();
+            this.user[key] = String(value.unix());
           } else if (moment(value).isValid()) {
-            this.user[key] = moment(value).unix();
+            this.user[key] = String(moment(value).unix());
           } else {
             this.user[key] = null;
           }
