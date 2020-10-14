@@ -36,7 +36,8 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile.dev       # For development
-    #      dockerfile: ./Dockerfile       # For production
+      # dockerfile: ./Dockerfile       # For production
+      # target: production-stage
     depends_on:
       - api
     networks:
@@ -50,7 +51,8 @@ services:
     build:
       context: ./frontend
       dockerfile: ./Dockerfile.dev       # For development
-    #      dockerfile: ./Dockerfile       # For production
+      # dockerfile: ./Dockerfile       # For production
+      # target: production-stage
     depends_on:
       - api
     networks:
