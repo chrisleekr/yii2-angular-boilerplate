@@ -21,12 +21,8 @@ import { UserDataService } from './model/user-data.service';
 // 3rd Party
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
-export function jwtOptionsFactory(localStorage) {
-  return {
-    tokenGetter: () => {
-      return localStorage.getItem(environment.tokenName) || '';
-    }
-  };
+export function tokenGetter() {
+  return localStorage.getItem(environment.tokenName);
 }
 
 @NgModule({
@@ -40,9 +36,8 @@ export function jwtOptionsFactory(localStorage) {
     SharedModule,
     BsDropdownModule.forRoot(),
     JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory
+      config: {
+        tokenGetter
       }
     })
   ],
