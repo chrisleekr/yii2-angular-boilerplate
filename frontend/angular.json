@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/frontend",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -20,13 +20,14 @@
             "styles": ["src/scss/styles.scss"],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "rxjs/internal/observable/throwError",
+              "lodash",
               "ng2-validation",
+              "libphonenumber",
+              "babel-runtime/core-js/get-iterator",
+              "babel-runtime/helpers/extends",
               "babel-runtime/helpers/slicedToArray",
               "babel-runtime/helpers/createClass",
-              "core-js/library/fn/get-iterator",
-              "babel-runtime/helpers/extends",
-              "babel-runtime/core-js/get-iterator"
+              "core-js/library/fn/get-iterator"
             ]
           },
           "configurations": {
@@ -40,6 +41,12 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -50,12 +57,6 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -95,14 +96,6 @@
           "options": {
             "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**"]
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
           }
         }
       }

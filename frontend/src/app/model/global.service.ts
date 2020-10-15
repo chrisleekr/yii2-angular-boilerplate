@@ -28,14 +28,14 @@ export class GlobalService {
   static handleError(response: any) {
     let errorMessage: any = {};
     // Connection error
-    if (response.error.status === 0) {
+    if (response && response.error && response.error.status === 0) {
       errorMessage = {
         success: false,
         status: 0,
         data: 'Sorry, there was a connection error occurred. Please try again.'
       };
     } else {
-      errorMessage = response.error;
+      errorMessage = response.error || 'Unknown error';
     }
 
     return throwError(errorMessage);
