@@ -3,7 +3,14 @@
 #################################
 FROM node:13-alpine as initial-stage
 
-WORKDIR /srv
+RUN apk add --no-cache nodejs nodejs-npm bash chromium nss chromium-chromedriver
+
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_DRIVER=/usr/bin/chromedrive
+
+RUN npm install -g @angular/cli
+
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -14,20 +21,30 @@ RUN npm install
 #################################
 FROM initial-stage AS build-stage
 
-WORKDIR /srv
+RUN apk --no-cache add nginx
+
+WORKDIR /app
+
+COPY image-files/ /
 
 COPY . .
 
-RUN npm run build -- --prod --build-optimizer
+EXPOSE 80
 
 #################################
 # STEP 3: Deployment
 #################################
+FROM build-stage AS build-production-stage
+
+WORKDIR /app
+
+RUN npm run build
+
 FROM nginx:stable-alpine AS production-stage
 
 COPY image-files/ /
 
-COPY --from=build-stage /srv/dist /srv
+COPY --from=build-production-stage /app/dist /srv
 
 EXPOSE 80
 

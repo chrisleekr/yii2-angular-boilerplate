@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   nginx:
     container_name: nginx
@@ -18,8 +18,7 @@ services:
 
   api:
     container_name: api
-    build:
-      context: ./api
+    image: $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-dev
     depends_on:
       - mysql
     networks:
@@ -39,36 +38,24 @@ services:
       - CACHE_WEIGHT=60
       - CACHE_USERNAME=
       - CACHE_PASSWORD=
-    # volumes:
-    #   - ./api:/srv
-
+            
   backend:
     container_name: backend
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
-      target: build-stage
+    image: $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-dev
     depends_on:
       - api
     networks:
       - internal
-    command: ["docker-entrypoint-dev.sh"]
-    volumes:
-      - ./backend/src:/app/src
+    command: ["nginx", "-g", "daemon off;"]
 
   frontend:
     container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
-      target: build-stage
+    image: $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-dev
     depends_on:
       - api
     networks:
       - internal
-    command: ["docker-entrypoint-dev.sh"]
-    volumes:
-      - ./frontend/src:/app/src
+    command: ["nginx", "-g", "daemon off;"]
 
   memcached:
     container_name: memcached
@@ -81,12 +68,6 @@ services:
     image: mysql:8.0
     networks:
       - internal
-    ports:
-      - 3308:3306
-    volumes:
-      - ./mysql/conf.d:/etc/mysql/conf.d
-      - mysql_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=boilerplate
@@ -96,5 +77,3 @@ networks:
   internal:
     driver: bridge
 
-volumes:
-  mysql_data:

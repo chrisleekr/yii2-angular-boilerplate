@@ -1,0 +1,86 @@
+stages:
+  - build dev environment
+  - testing
+  - build production
+
+cache:
+  key: "$CI_PIPELINE_ID"
+  paths:
+    - /root/.cache
+    - /root/.npm
+    - node_modules
+    - vendor
+
+.before_script_template: &before-script
+  before_script:
+    - echo "$CI_BUILD_TOKEN" | docker login -u gitlab-ci-token --password-stdin $REGISTRY_DOMAIN
+
+build-api:
+  stage: build dev environment
+  <<: *before-script
+  script:
+    - cd api
+    - docker build . -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-dev
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-dev
+
+build-backend:
+  stage: build dev environment
+  <<: *before-script
+  script:
+    - cd backend
+    - docker build . --target build-stage -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-dev
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-dev
+
+build-frontend:
+  stage: build dev environment
+  <<: *before-script
+  script:
+    - cd frontend
+    - docker build . --target build-stage -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-dev
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-dev
+
+testing-and-linting:
+  stage: testing
+  image: docker/compose:latest
+  <<: *before-script
+  services:
+    - docker:18-dind
+  tags:
+    - dind
+  # variables:
+  #   DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker-compose -f docker-compose.actions.yml pull
+    - docker-compose -f docker-compose.actions.yml up -d
+    - while [[ "$(wget --server-response http://docker/api/ping -O ip-tmp 2>&1| grep -c 'HTTP/1.1 200 OK')" -ne 1 ]]; do sleep 3; echo "Waiting API to be available..."; done
+    - docker exec api composer run sniff
+    - docker exec api composer run test:unit
+    - docker exec api composer run test:functional
+    - docker exec backend npm run lint
+    - docker exec backend npm run test
+    - docker exec frontend npm run lint
+    - docker exec frontend npm run test
+
+production-api:
+  stage: build production
+  <<: *before-script
+  script:
+    - cd api
+    - docker build . -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-latest
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-latest
+
+production-backend:
+  stage: build production
+  <<: *before-script
+  script:
+    - cd backend
+    - docker build . --target production-stage -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-latest
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-latest
+
+production-frontend:
+  stage: build production
+  <<: *before-script
+  script:
+    - cd frontend
+    - docker build . --target production-stage -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-latest
+    - docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-latest

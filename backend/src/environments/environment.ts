@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiHost: '//localhost/api/v1',
+  apiHost: '/api/v1',
   tokenName: 'backend-token',
   customDateTimeFormat: {
     apiFormat: 'YYYY-MM-DD HH:mm:ss',

@@ -1,0 +1,76 @@
+on: [push]
+
+jobs:
+  build:
+    name: Build/test and push
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY_DOMAIN: ${{ secrets.REGISTRY_DOMAIN }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@master
+      - name: set inotify
+        run: |
+          echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: docker hub login
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin $REGISTRY_DOMAIN
+      - name: Build api dev image
+        run: |
+          cd api
+          docker build . -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-dev
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-dev
+      - name: Build backend dev image
+        run: |
+          cd backend
+          docker build . --target build-stage --build-arg NODE_ENV=$NODE_ENV -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-dev
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-dev
+      - name: Build frontend image
+        run: |
+          cd frontend
+          docker build . --target build-stage --build-arg NODE_ENV=$NODE_ENV -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-dev
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-dev
+      - name: Run docker compose for dev
+        run: |
+          docker-compose -f docker-compose.actions.yml pull
+          docker-compose -f docker-compose.actions.yml up -d
+          while [[ "$(wget --server-response http://localhost/api/ping -O ip-tmp 2>&1| grep -c 'HTTP/1.1 200 OK')" -ne 1 ]]; do sleep 3; echo "Waiting API to be available..."; done
+      - name: Lint API
+        run: |
+          docker exec api composer run sniff
+      - name: Test API
+        run: |
+          docker exec api composer run test:unit
+          docker exec api composer run test:functional
+      - name: Lint backend
+        run: |
+          docker exec backend npm run lint
+      - name: Unit test backend
+        run: |
+          docker exec backend npm run test
+      - name: Lint frontend
+        run: |
+          docker exec frontend npm run lint
+      - name: Unit test frontend
+        run: |
+          docker exec frontend npm run test
+      - name: Build api latest image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd api
+          docker build . -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-latest
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:api-latest
+      - name: Build backend latest image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd backend
+          docker build . --target production-stage --build-arg NODE_ENV=$NODE_ENV -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-latest
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:backend-latest
+      - name: Build frontend latest image
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cd frontend
+          docker build . --target production-stage -t $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-latest
+          docker push $REGISTRY_DOMAIN/chrisleekr/yii2-angular-boilerplate:frontend-latest
