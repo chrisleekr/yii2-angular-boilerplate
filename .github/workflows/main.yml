@@ -1,13 +1,11 @@
 on: [push]
 
-env:
-  REGISTRY_DOMAIN: ${{ secrets.REGISTRY_DOMAIN }}
-
 jobs:
   build:
     name: Build/test and push
     runs-on: ubuntu-latest
     env:
+      REGISTRY_DOMAIN: ${{ secrets.REGISTRY_DOMAIN }}
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
@@ -38,7 +36,7 @@ jobs:
         run: |
           docker-compose -f docker-compose.actions.yml pull
           docker-compose -f docker-compose.actions.yml up -d
-          while [[ "$(wget --server-response http://localhost/api/ping -O ip-tmp 2>&1| grep -c 'HTTP/1.1 200 OK')" -ne 200 ]]; do sleep 3; echo "Waiting API to be available..."; done
+          while [[ "$(wget --server-response http://localhost/api/ping -O ip-tmp 2>&1| grep -c 'HTTP/1.1 200 OK')" -ne 1 ]]; do sleep 3; echo "Waiting API to be available..."; done
       - name: Lint API
         run: |
           docker exec api composer run sniff
@@ -52,10 +50,10 @@ jobs:
       - name: Unit test backend
         run: |
           docker exec backend npm run test
-      - name: Lint frontend 
+      - name: Lint frontend
         run: |
           docker exec frontend npm run lint
-      - name: Unit test frontend 
+      - name: Unit test frontend
         run: |
           docker exec frontend npm run test
       - name: Build api latest image
