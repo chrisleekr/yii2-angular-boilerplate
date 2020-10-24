@@ -1,6 +1,6 @@
 # Yii2 REST API + Angular 10 Boilerplate
 
-[![Actions Status](https://github.com/chrisleekr/yii2-angular-boilerplate/workflows/main/badge.svg)](https://github.com/chrisleekr/yii2-angular-boilerplate/actions)
+[![Build](https://github.com/chrisleekr/yii2-angular-boilerplate/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/chrisleekr/yii2-angular-boilerplate/actions?query=workflow%3Amain)
 
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend
 developed by Angular 10 with Bootstrap 4.
