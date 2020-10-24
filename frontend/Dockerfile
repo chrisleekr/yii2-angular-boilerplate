@@ -1,34 +1,54 @@
-FROM node:12.10.0-alpine as build
+#################################
+# STEP 1: NPM install
+#################################
+FROM node:13-alpine as initial-stage
 
-# Create app folder
-RUN mkdir /app
+RUN apk add --no-cache nodejs nodejs-npm bash chromium nss chromium-chromedriver
+
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROME_DRIVER=/usr/bin/chromedrive
+
+RUN npm install -g @angular/cli
+
 WORKDIR /app
 
-# Add path
-ENV PATH /app/node_modules/.bin:$PATH
+COPY package*.json ./
 
-# Copy package*.json to app folder
-COPY package.json package-lock.json /app/
-
-# Install app dependencies
-RUN npm set progress=false
 RUN npm install
 
-# Copy all files to app folder
-COPY . /app
+#################################
+# STEP 2: Build
+#################################
+FROM initial-stage AS build-stage
 
-# Build the app
-RUN npm run build:prod
+RUN apk --no-cache add nginx
 
-# Add configuration files
+WORKDIR /app
+
 COPY image-files/ /
-RUN chmod 700 /usr/local/bin/docker-entrypoint.sh
 
-# Add path
-ENV PATH /usr/local/bin:$PATH
+COPY . .
 
 # Expose port 80
 EXPOSE 80
 
-# Run entry point
-CMD ["npm", "run", "server"]
+#################################
+# STEP 3: Deployment
+#################################
+FROM build-stage AS build-production-stage
+
+WORKDIR /app
+
+RUN npm run build
+
+FROM nginx:stable-alpine AS production-stage
+
+COPY image-files/ /
+
+COPY --from=build-production-stage /app/dist /srv
+
+EXPOSE 80
+
+ENTRYPOINT [ "docker-entrypoint.sh" ]
+
+CMD ["nginx", "-g", "daemon off;"]

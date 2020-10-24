@@ -41,7 +41,6 @@ Icon?
 Thumbs.db
 
 # Dist #
-dist
 .awcache
 .webpack.json
 compiled

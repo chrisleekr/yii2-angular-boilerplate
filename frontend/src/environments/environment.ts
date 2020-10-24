@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiHost: '//localhost/api/v1',
+  apiHost: '/api/v1',
   tokenName: 'frontend-token'
 };

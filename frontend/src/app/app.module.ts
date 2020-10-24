@@ -20,14 +20,9 @@ import { UserService } from './model/user.service';
 import { UserDataService } from './model/user-data.service';
 // 3rd Party
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { LOCAL_STORAGE, NgtUniversalModule } from '@ng-toolkit/universal';
 
-export function jwtOptionsFactory(localStorage) {
-  return {
-    tokenGetter: () => {
-      return localStorage.getItem(environment.tokenName) || '';
-    }
-  };
+export function tokenGetter() {
+  return localStorage.getItem(environment.tokenName);
 }
 
 @NgModule({
@@ -40,12 +35,9 @@ export function jwtOptionsFactory(localStorage) {
     HttpClientModule,
     SharedModule,
     BsDropdownModule.forRoot(),
-    NgtUniversalModule,
     JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [LOCAL_STORAGE]
+      config: {
+        tokenGetter
       }
     })
   ],

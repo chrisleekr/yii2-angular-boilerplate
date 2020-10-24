@@ -1,6 +1,6 @@
 # Yii2 REST API + Angular 10 Boilerplate
 
-[![Build Status](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate.svg?branch=master)](https://travis-ci.org/chrisleekr/yii2-angular-boilerplate)
+[![Actions Status](https://github.com/chrisleekr/yii2-angular-boilerplate/workflows/main/badge.svg)](https://github.com/chrisleekr/yii2-angular-boilerplate/actions)
 
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend
 developed by Angular 10 with Bootstrap 4.
@@ -18,15 +18,17 @@ The project involves:
 
 ## Demo
 
-| Service  | Endpoint                                                                           |
-| -------- | ---------------------------------------------------------------------------------- |
-| Frontend | [https://boilerplate.chrislee.kr](https://boilerplate.chrislee.kr)                 |
-| Backend  | [https://boilerplate-backend.chrislee.kr](https://boilerplate-backend.chrislee.kr) |
-| API      | [https://boilerplate-api.chrislee.kr](https://boilerplate-api.chrislee.kr/ping)    |
+| Service  | Endpoint                                                                                     |
+| -------- | -------------------------------------------------------------------------------------------- |
+| Frontend | [https://yam-boilerplate.chrislee.kr/frontend](https://yam-boilerplate.chrislee.kr/frontend) |
+| Backend  | [https://yam-boilerplate.chrislee.kr/backend](https://yam-boilerplate.chrislee.kr/backend)   |
+| API      | [https://yam-boilerplate.chrislee.kr/api](https://yam-boilerplate.chrislee.kr/api/ping)      |
+
+![Demo](https://user-images.githubusercontent.com/5715919/97081825-b4b6b680-1650-11eb-81c3-fe49b84e787e.gif)
 
 ## Architecture Diagram
 
-![Architecture Diagram](screenshots/network-diagram.png)
+![Architecture Diagram](https://user-images.githubusercontent.com/5715919/97081827-be401e80-1650-11eb-96ed-c192c842e530.png)
 
 ## Features
 
@@ -91,15 +93,14 @@ To run the application, you will need `docker` and `docker-compose` installed.
 Open the console and execute following commands.
 
 ```
-$ git clone https://github.com/chrisleekr/yii2-ngx-boilerplate.git
-$ cd yii2-ngx-boilerplate
-$ cp .env-dist .env
+$ git clone https://github.com/chrisleekr/yii2-angular-boilerplate.git
+$ cd yii2-angular-boilerplate
 $ docker-compose up -d
 ```
 
 With `docker-compose`, following containers will be configured. Please make sure port 80, 443 are available.
 
-1. MySQL database will be configured.
+1. MySQL database will be configured by API migration.
 2. Memcached will be configured.
 3. REST API - Yii 2
    - Database migration will be executed which are located in `/api/migrations`.
@@ -107,7 +108,6 @@ With `docker-compose`, following containers will be configured. Please make sure
 4. Backend - Angular
    - By default, development mode will be running with nginx.
 5. Frontend - Angular
-
    - By default, development mode will be running with nginx.
 
 Once all containers are finished compiling, then open the browser.
@@ -202,7 +202,6 @@ Once all containers are finished compiling, then open the browser.
 
 ## Files & Folders structures
 
-- **.env**: contains environment settings
 - **docker-compose.yml**: contains docker container specifications
 - **api**: Yii2
   - `image-files`: contains nginx config, php.ini, composer and `docker-entrypoint.sh`
@@ -215,12 +214,8 @@ Once all containers are finished compiling, then open the browser.
 
 ## Setup for production
 
-1. Backend
-   - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to
-     `dockerfile: ./Dockerfile`.
-2. Frontend
-   - To run production mode, update `docker-compose.yml` by changing `dockerfile: ./Dockerfile.dev` to
-     `dockerfile: ./Dockerfile`.
+To run production mode, update `docker-compose.yml` by changing `target: build-stage` to `target: production-stage` for
+backend and frontend.
 
 ## Troubleshooting
 

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LOCAL_STORAGE } from '@ng-toolkit/universal';
 
 import { environment } from './../../environments/environment';
 import { GlobalService } from './global.service';
@@ -20,8 +19,7 @@ export class UserService {
     private globalService: GlobalService,
     private router: Router,
     private jwtHelper: JwtHelperService,
-    private http: HttpClient,
-    @Inject(LOCAL_STORAGE) private localStorage: any
+    private http: HttpClient
   ) {
     this.loggedIn = this.isLoggedIn();
   }
@@ -45,10 +43,10 @@ export class UserService {
       .pipe(
         map(response => {
           if (response.success) {
-            this.localStorage.setItem(environment.tokenName, response.data.access_token);
+            localStorage.setItem(environment.tokenName, response.data.access_token);
             this.loggedIn = true;
           } else {
-            this.localStorage.removeItem(environment.tokenName);
+            localStorage.removeItem(environment.tokenName);
             this.loggedIn = false;
           }
           return response;
@@ -184,12 +182,12 @@ export class UserService {
   }
 
   public logout(): void {
-    this.localStorage.removeItem(environment.tokenName);
+    localStorage.removeItem(environment.tokenName);
     this.loggedIn = false;
   }
 
   public getToken(): any {
-    return this.localStorage.getItem(environment.tokenName) || '';
+    return localStorage.getItem(environment.tokenName) || '';
   }
 
   public unauthorizedAccess(_error: any): void {
