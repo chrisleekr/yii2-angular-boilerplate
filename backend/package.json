@@ -28,7 +28,7 @@
     "core-js": "^3.6.5",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "ng-pick-datetime": "^7.0.0",
     "ng2-validation": "^4.2.0",
