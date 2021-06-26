@@ -65,7 +65,7 @@ export class SettingGlobalListComponent implements OnInit {
           parent.settingDataService.deleteSettingById(setting.id).subscribe(
             _result => {
               parent.getSettings();
-              resolve();
+              resolve(true);
             },
             error => {
               // unauthorized access
@@ -74,7 +74,7 @@ export class SettingGlobalListComponent implements OnInit {
               } else {
                 parent.errorMessage = error.data.message;
               }
-              resolve();
+              resolve(true);
             }
           );
         });

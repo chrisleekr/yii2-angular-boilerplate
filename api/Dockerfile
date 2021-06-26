@@ -1,4 +1,4 @@
-FROM php:7.4.3-apache
+FROM php:8.0.7-apache
 
 RUN requirements="nano mariadb-client libwebp-dev libxpm-dev libmcrypt-dev libmcrypt4 libcurl3-dev libxml2-dev \
     libmemcached-dev zlib1g-dev libc6 libstdc++6 libkrb5-3 openssl debconf libfreetype6-dev libjpeg-dev libtiff-dev \
@@ -23,7 +23,7 @@ RUN requirements="nano mariadb-client libwebp-dev libxpm-dev libmcrypt-dev libmc
     opcache
 
 # Configure version constraints
-ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.2 \
+ENV VERSION_COMPOSER_ASSET_PLUGIN=^1.4.6 \
     VERSION_PRESTISSIMO_PLUGIN=^0.3.7 \
     PATH=/srv:/srv/vendor/bin:/root/.composer/vendor/bin:$PATH \
     TERM=linux \
@@ -44,14 +44,14 @@ RUN chmod 700 \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
     # FIXME: Composer 2.0.0 is not compatible with fxp/composer-asset-plugin for now. Set version until it is fixed.
-    --version=1.10.16 \
+    # --version=1.10.22 \
     --filename=composer.phar \
-    --install-dir=/usr/local/bin && \
-    composer global require --optimize-autoloader \
-    "fxp/composer-asset-plugin:${VERSION_COMPOSER_ASSET_PLUGIN}" \
-    "hirak/prestissimo:${VERSION_PRESTISSIMO_PLUGIN}" && \
-    composer global dumpautoload --optimize && \
-    composer clear-cache
+    --install-dir=/usr/local/bin
+# composer global require --optimize-autoloader \
+# "fxp/composer-asset-plugin:${VERSION_COMPOSER_ASSET_PLUGIN}" && \
+# "hirak/prestissimo:${VERSION_PRESTISSIMO_PLUGIN}" && \
+# composer global dumpautoload --optimize && \
+# composer clear-cache
 
 WORKDIR /srv
 

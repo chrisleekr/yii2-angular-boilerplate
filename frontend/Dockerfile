@@ -1,7 +1,7 @@
 #################################
 # STEP 1: NPM install
 #################################
-FROM node:13-alpine as initial-stage
+FROM node:14-alpine as initial-stage
 
 RUN apk add --no-cache nodejs nodejs-npm bash chromium nss chromium-chromedriver
 

@@ -126,7 +126,7 @@ export class StaffListComponent implements OnInit {
             _result => {
               parent.getStaffs();
               parent.loading = false;
-              resolve();
+              resolve(true);
             },
             error => {
               // unauthorized access
@@ -135,7 +135,7 @@ export class StaffListComponent implements OnInit {
               } else {
                 parent.errorMessage = error.data.message;
               }
-              resolve();
+              resolve(true);
             }
           );
         });

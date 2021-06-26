@@ -127,7 +127,7 @@ export class UserListComponent implements OnInit {
             _result => {
               parent.getUsers();
               parent.loading = false;
-              resolve();
+              resolve(true);
             },
             error => {
               // unauthorized access
@@ -137,7 +137,7 @@ export class UserListComponent implements OnInit {
                 parent.errorMessage = error.data.message;
               }
               parent.loading = false;
-              resolve();
+              resolve(true);
             }
           );
         });
