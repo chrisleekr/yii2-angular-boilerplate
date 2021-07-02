@@ -262,7 +262,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => date("Y-m-d H:i:s")
+                'value' => time()
             ]
         ];
     }
