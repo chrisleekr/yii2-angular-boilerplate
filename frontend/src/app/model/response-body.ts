@@ -4,6 +4,9 @@ export class ResponseBody {
   data: any;
 
   constructor(values: object = {}) {
+    this.status = 0;
+    this.success = false;
+    this.data = {};
     Object.assign(this, values);
   }
 }

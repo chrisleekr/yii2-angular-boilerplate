@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidators } from 'ng2-validation';
 
@@ -7,8 +7,8 @@ import { Staff } from '../model/staff';
 import { StaffDataService } from '../model/staff-data.service';
 import { StaffService } from '../model/staff.service';
 
-import _ from 'lodash';
-import * as moment from 'moment';
+import forIn from 'lodash-es/forIn';
+import moment from 'moment';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -17,11 +17,11 @@ import { environment } from '../../environments/environment';
 export class StaffFormComponent implements OnInit, OnDestroy {
   mode = '';
 
-  id: number;
-  parameters: any;
-  staff: Staff;
+  id: number = 0;
+  parameters: any = {};
+  staff: Staff = new Staff();
 
-  errorMessage: string;
+  errorMessage: string = '';
 
   form: FormGroup;
   formErrors: any;
@@ -69,6 +69,14 @@ export class StaffFormComponent implements OnInit, OnDestroy {
     this.roleTypes = StaffDataService.getRoleTypes();
 
     this.form.valueChanges.subscribe(data => this.onValueChanged(data));
+  }
+
+  getControls(key: string) {
+    return (this.form.get(key) as FormArray).controls;
+  }
+
+  getFormControls(key: string, index: number) {
+    return (this.form.get(key) as FormArray).get(String(index)) as FormControl;
   }
 
   setFormErrors(errorFields: any): void {
@@ -259,7 +267,7 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   private setStaffToForm() {
-    _.forIn(this.staff, (value: any, key: string) => {
+    forIn(this.staff, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         if (key === 'permissions') {
           const formControls = value.map((v: any, k: string) => {
@@ -285,11 +293,12 @@ export class StaffFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToStaff() {
-    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
-      if (typeof this.staff[key] !== 'undefined') {
+    forIn(this.form.getRawValue(), (value: any, key: string) => {
+      console.log('key => ', key);
+      if (this.staff.hasOwnProperty(key)) {
         if (key === 'permissions') {
-          this.staff[key] = value.map((v: any, k: string) => {
-            const newPermission = this.staff[key][k];
+          this.staff.permissions = value.map((v: any, k: string) => {
+            const newPermission = (this.staff[key] as any)[k];
             newPermission.checked = v;
             return newPermission;
           });
@@ -299,10 +308,10 @@ export class StaffFormComponent implements OnInit, OnDestroy {
           } else if (moment(value).isValid()) {
             this.staff[key] = String(moment(value).unix());
           } else {
-            this.staff[key] = null;
+            this.staff[key] = '';
           }
         } else {
-          this.staff[key] = value;
+          (this.staff as any)[key] = value;
         }
       }
     });

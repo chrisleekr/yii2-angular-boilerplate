@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../model/user.service';
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  isValid(field): boolean {
+  isValid(field: string): boolean {
     let isValid = false;
 
     // If the field is not touched and invalid, it is considered as initial loaded form. Thus set as true
@@ -64,6 +64,10 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm) {
       return;
     }
+  }
+
+  getFormControls(key: string) {
+    return this.loginForm.get(key) as FormControl;
   }
 
   ngOnInit() {

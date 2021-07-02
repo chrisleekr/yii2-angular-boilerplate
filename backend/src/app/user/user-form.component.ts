@@ -7,8 +7,8 @@ import { StaffService } from '../model/staff.service';
 import { User } from '../model/user';
 import { UserDataService } from '../model/user-data.service';
 
-import _ from 'lodash';
-import * as moment from 'moment';
+import forIn from 'lodash-es/forIn';
+import moment from 'moment';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -17,11 +17,11 @@ import { environment } from '../../environments/environment';
 export class UserFormComponent implements OnInit, OnDestroy {
   mode: string = '';
 
-  id: number;
-  parameters: any;
-  user: User;
+  id: number = 0;
+  parameters: any = {};
+  user: User = new User();
 
-  errorMessage: string;
+  errorMessage: string = '';
 
   form: FormGroup;
   formErrors: any;
@@ -226,7 +226,7 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private setUserToForm() {
-    _.forIn(this.user, (value: any, key: string) => {
+    forIn(this.user, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         if (key === 'confirmed_at' || key === 'blocked_at') {
           if (value === null || value === '') {
@@ -246,18 +246,18 @@ export class UserFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToUser() {
-    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
-      if (typeof this.user[key] !== 'undefined') {
+    forIn(this.form.getRawValue(), (value: any, key: string) => {
+      if (this.user.hasOwnProperty(key)) {
         if (key === 'confirmed_at' || key === 'blocked_at') {
           if (moment.isMoment(value)) {
             this.user[key] = String(value.unix());
           } else if (moment(value).isValid()) {
             this.user[key] = String(moment(value).unix());
           } else {
-            this.user[key] = null;
+            this.user[key] = '';
           }
         } else {
-          this.user[key] = value;
+          (this.user as any)[key] = value;
         }
       }
     });

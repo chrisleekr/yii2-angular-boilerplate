@@ -38,11 +38,11 @@
             {{ staff.username }}
           </td>
           <td>
-            <p *ngIf="staff.confirmed_at == null">
+            <p *ngIf="staff.confirmed_at === '' || staff.confirmed_at === null">
               {{ staff.unconfirmed_email }}
               <br /><span class="help-text text-danger">(Not Confirmed)</span>
             </p>
-            <p *ngIf="staff.confirmed_at != null">
+            <p *ngIf="staff.confirmed_at !== '' && staff.confirmed_at !== null">
               {{ staff.email }}
               <br /><span
                 class="help-text"
@@ -52,9 +52,9 @@
             </p>
           </td>
           <td class="text-center">
-            <span *ngIf="staff.last_login_ip == null" class="help-text">Never Logged In</span>
+            <span *ngIf="staff.last_login_ip === ''" class="help-text">Never Logged In</span>
             <p
-              *ngIf="staff.last_login_ip != null"
+              *ngIf="staff.last_login_ip !== ''"
               class="help-text"
               title="{{ staff.last_login_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
             >
@@ -62,12 +62,12 @@
             </p>
           </td>
           <td class="text-center">
-            <div *ngIf="staff.blocked_at == null">
+            <div *ngIf="staff.blocked_at === '' || staff.blocked_at === null">
               <span
                 [ngClass]="{
-                  'text-success': staff.status == 10,
-                  'text-info': staff.status == 1,
-                  'text-danger': staff.status == 0 || staff.status == -1
+                  'text-success': staff.status === 10,
+                  'text-info': staff.status === 1,
+                  'text-danger': staff.status === 0 || staff.status === -1
                 }"
                 >{{ staff.status_label }}</span
               >
@@ -78,17 +78,14 @@
                 >({{ staff.updated_at | amFromUnix | amTimeAgo }})</span
               >
             </div>
-            <div *ngIf="staff.blocked_at != null">
-              <span
-                *ngIf="staff.blocked_at != null"
-                class="text-danger"
-                title="{{ staff.blocked_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
+            <div *ngIf="staff.blocked_at !== null && staff.blocked_at !== ''">
+              <span class="text-danger" title="{{ staff.blocked_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
                 >Blocked since {{ staff.blocked_at | amFromUnix | amTimeAgo }}</span
               >
             </div>
           </td>
           <td class="text-center">
-            <div *ngIf="staff.status != -1">
+            <div *ngIf="staff.status !== -1">
               <button class="btn btn-primary btn-sm" type="button" (click)="viewStaff(staff)">
                 <i class="fa fa-edit"></i> Edit
               </button>

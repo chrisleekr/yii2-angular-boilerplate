@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2" *ngIf="mode == 'create'">New Staff</h1>
-  <h1 class="h2" *ngIf="mode == 'update'">Update Staff - {{ staff.username }}</h1>
+  <h1 class="h2" *ngIf="mode === 'create'">New Staff</h1>
+  <h1 class="h2" *ngIf="mode === 'update'">Update Staff - {{ staff.username }}</h1>
 </div>
 
 <div class="row" *ngIf="errorMessage">
@@ -90,12 +90,12 @@
                 </div>
               </div>
             </div>
-            <div class="form-group-wrapper" *ngIf="mode == 'update'">
+            <div class="form-group-wrapper" *ngIf="mode === 'update'">
               <div class="form-group row">
                 <label class="col-sm-12">Last Login</label>
                 <div class="col-sm-3">
-                  <span *ngIf="staff.last_login_ip == null" class="form-text text-muted">Never Logged In</span>
-                  <p *ngIf="staff.last_login_ip != null" class="form-text text-muted">
+                  <span *ngIf="staff.last_login_ip === null" class="form-text text-muted">Never Logged In</span>
+                  <p *ngIf="staff.last_login_ip !== null" class="form-text text-muted">
                     {{ staff.last_login_ip }}<br />({{
                       staff.last_login_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm'
                     }})
@@ -215,21 +215,18 @@
               </div>
             </div>
             <!-- Only if role is staff -->
-            <div class="form-group-wrapper" *ngIf="form.controls['role'].value + '' == '50'">
+            <div class="form-group-wrapper" *ngIf="form.controls['role'].value + '' === '50'">
               <div class="form-group row">
                 <label class="col-sm-12">Permission</label>
                 <div class="col-sm-6">
                   <div class="card">
                     <div class="card-body">
-                      <div
-                        class="checkbox"
-                        *ngFor="let permission of form.controls['permissions'].controls; let i = index"
-                      >
+                      <div class="checkbox" *ngFor="let permission of getControls('permissions'); let i = index">
                         <label for="permission_{{ staff.permissions[i].name }}">
                           <input
                             type="checkbox"
                             id="permission_{{ staff.permissions[i].name }}"
-                            [formControl]="permission"
+                            [formControl]="getFormControls('permissions', i)"
                           />
                           {{ staff.permissions[i].description }}
                         </label>
@@ -270,7 +267,7 @@
           <div class="card-footer">
             <div class="row">
               <div class="col-sm-6">
-                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted === true">
                   <i class="fa fa-dot-circle-o"></i>
                   Save
                   <app-spinner *ngIf="submitted"></app-spinner>

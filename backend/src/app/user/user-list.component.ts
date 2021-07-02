@@ -11,7 +11,7 @@ import { UserList } from '../model/user-list';
   templateUrl: './user-list.component.html'
 })
 export class UserListComponent implements OnInit {
-  userList: UserList;
+  userList: UserList | null;
   errorMessage: string;
 
   loading: boolean;
@@ -26,6 +26,15 @@ export class UserListComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
+    this.userList = null;
+    this.errorMessage = '';
+
+    this.loading = false;
+    this.searchParams = {};
+    this.totalCount = 0;
+    this.currentPage = 0;
+    this.pageSize = 0;
+
     const queryParams = this.activatedRoute.snapshot.queryParams;
     this.currentPage = typeof queryParams['page'] !== 'undefined' ? +queryParams['page'] : 1;
 
@@ -83,8 +92,8 @@ export class UserListComponent implements OnInit {
     this.userDataService.getAllUsers(this.searchParams).subscribe(
       userList => {
         this.userList = userList;
-        this.totalCount = this.userList.pagination.totalCount;
-        this.pageSize = this.userList.pagination.defaultPageSize;
+        this.totalCount = this.userList.pagination.totalCount || 0;
+        this.pageSize = this.userList.pagination.defaultPageSize || 0;
         this.loading = false;
       },
       error => {
@@ -127,7 +136,7 @@ export class UserListComponent implements OnInit {
             _result => {
               parent.getUsers();
               parent.loading = false;
-              resolve();
+              resolve(true);
             },
             error => {
               // unauthorized access
@@ -137,7 +146,7 @@ export class UserListComponent implements OnInit {
                 parent.errorMessage = error.data.message;
               }
               parent.loading = false;
-              resolve();
+              resolve(true);
             }
           );
         });

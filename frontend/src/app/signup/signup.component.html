@@ -6,7 +6,7 @@
 <div class="row justify-content-center">
   <div class="col-md-8">
     <div class="card mx-4">
-      <div class="card-body p-4" *ngIf="showConfirmation == false">
+      <div class="card-body p-4" *ngIf="showConfirmation === false">
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
           <h1>Register</h1>
           <p class="text-muted">Please fill out the following fields to register</p>
@@ -21,7 +21,7 @@
                   class="form-control"
                   type="text"
                   placeholder="Username"
-                  [formControl]="signupForm.controls['username']"
+                  [formControl]="getFormControls('username')"
                   [ngClass]="{ 'form-control-danger': !isValid('username') }"
                   maxlength="20"
                 />
@@ -48,7 +48,7 @@
                   class="form-control"
                   type="email"
                   placeholder="Email Address"
-                  [formControl]="signupForm.controls['email']"
+                  [formControl]="getFormControls('email')"
                   [ngClass]="{ 'form-control-danger': !isValid('email') }"
                 />
               </div>
@@ -72,7 +72,7 @@
                   class="form-control"
                   type="password"
                   placeholder="Password"
-                  [formControl]="signupForm.controls['password']"
+                  [formControl]="getFormControls('password')"
                   [ngClass]="{ 'form-control-danger': !isValid('password') }"
                 />
               </div>
@@ -95,7 +95,7 @@
                   class="form-control"
                   type="password"
                   placeholder="Repeat Password"
-                  [formControl]="signupForm.controls['password_confirm']"
+                  [formControl]="getFormControls('password_confirm')"
                   [ngClass]="{ 'form-control-danger': !isValid('password_confirm') }"
                 />
               </div>
@@ -110,7 +110,7 @@
               <button
                 type="submit"
                 class="btn btn-success btn-block px-2"
-                [disabled]="!signupForm.valid || submitted == true"
+                [disabled]="!signupForm.valid || submitted === true"
               >
                 Register
                 <app-spinner *ngIf="submitted"></app-spinner>
@@ -126,12 +126,12 @@
         </form>
       </div>
 
-      <div class="card-body p-4" *ngIf="showConfirmation == true">
+      <div class="card-body p-4" *ngIf="showConfirmation === true">
         <h1>Thank you for signing up</h1>
         <br />
         <p class="text-muted">
           To complete the registration process you must confirm your account. An email has sent to
-          {{ signupForm.controls['email'].value }}.
+          {{ emailAddress }}.
           <br />
           <br />
           To confirm and activate your account please check your inbox and click on the link found in the email we just

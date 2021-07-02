@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   submitted = false;
   errorMessage = '';
   showConfirmation = false;
+  emailAddress = '';
 
   constructor(private userService: UserService, private formBuilder: FormBuilder) {
     const password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]));
@@ -59,6 +60,10 @@ export class SignupComponent implements OnInit {
     this.userService.logout();
   }
 
+  getFormControls(key: string) {
+    return this.signupForm.get(key) as FormControl;
+  }
+
   public onSubmit(elementValues: any) {
     this.submitted = true;
     this.userService.signup(elementValues.username, elementValues.email, elementValues.password).subscribe(
@@ -66,6 +71,7 @@ export class SignupComponent implements OnInit {
         if (result.success) {
           // show confirmation dialog
           this.showConfirmation = true;
+          this.emailAddress = elementValues.email;
         } else {
           this.errorMessage = 'Registration is failed. Please check and try again.';
           this.submitted = false;

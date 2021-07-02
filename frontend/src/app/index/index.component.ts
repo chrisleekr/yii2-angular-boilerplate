@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './index.component.html'
 })
 export class IndexComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
+  ngOnInit(): void {}
 }

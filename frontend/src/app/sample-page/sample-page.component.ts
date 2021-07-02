@@ -9,7 +9,10 @@ export class SamplePageComponent implements OnInit {
   id: number;
   parameters: any;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.id = 0;
+    this.parameters = {};
+  }
 
   ngOnInit() {
     this.parameters = this.activatedRoute.params.subscribe(params => {

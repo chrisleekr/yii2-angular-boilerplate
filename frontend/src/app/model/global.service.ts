@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { HttpHeaders } from '@angular/common/http';
-import { throwError } from 'rxjs/internal/observable/throwError';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class GlobalService {
@@ -28,14 +28,20 @@ export class GlobalService {
   static handleError(response: any) {
     let errorMessage: any = {};
     // Connection error
-    if (response && response.error && response.error.status === 0) {
+    if (response.error.status === 403) {
+      errorMessage = {
+        success: false,
+        status: 403,
+        data: { message: "Sorry, you don't have permission to access this page." }
+      };
+    } else if (response.error.status === 0) {
       errorMessage = {
         success: false,
         status: 0,
-        data: 'Sorry, there was a connection error occurred. Please try again.'
+        data: { message: 'Sorry, there was a connection error occurred. Please try again.' }
       };
     } else {
-      errorMessage = response.error || 'Unknown error';
+      errorMessage = response.error;
     }
 
     return throwError(errorMessage);
@@ -43,7 +49,7 @@ export class GlobalService {
 
   loadGlobalSettingsFromSessionStorage(): void {
     if (sessionStorage.getItem('frontend-setting') != null) {
-      this.setting = JSON.parse(sessionStorage.getItem('frontend-setting'));
+      this.setting = JSON.parse(sessionStorage.getItem('frontend-setting') || '{}');
     }
   }
 }

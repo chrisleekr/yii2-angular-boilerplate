@@ -6,11 +6,11 @@
 
 <div class="row justify-content-center">
   <div class="col-8">
-    <div class="card mx-4" *ngIf="errorMessage != ''">
+    <div class="card mx-4" *ngIf="errorMessage !== ''">
       <div class="card-body p-4">
         <h1>Error occurred</h1>
         <br />
-        <p class="text-muted" style="white-space: pre;">{{ errorMessage }}</p>
+        <p class="text-muted" style="white-space: pre">{{ errorMessage }}</p>
         <div class="row">
           <div class="col-6">
             <a [routerLink]="['/login']" class="btn btn-link px-0">Back to Login</a>
@@ -18,20 +18,18 @@
         </div>
       </div>
     </div>
-    <div class="card mx-4" *ngIf="submitted == true && isConfirmed == false">
+    <div class="card mx-4" *ngIf="submitted === true && isConfirmed === false">
       <div class="card-body p-4">
         <h1>Confirming your account</h1>
         <br />
         <app-spinner></app-spinner>
       </div>
     </div>
-    <div class="card mx-4" *ngIf="submitted == true && isConfirmed == true">
+    <div class="card mx-4" *ngIf="submitted === true && isConfirmed === true">
       <div class="card-body p-4">
         <h1>Account Confirmed</h1>
         <br />
-        <p class="text-muted">
-          Your account has been confirmed. Please login now.
-        </p>
+        <p class="text-muted"> Your account has been confirmed. Please login now. </p>
         <div class="row">
           <div class="col-6">
             <a [routerLink]="['/login']" class="btn btn-link px-0">Go to Login</a>

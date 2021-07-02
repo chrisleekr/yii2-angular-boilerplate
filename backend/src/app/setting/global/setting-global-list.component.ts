@@ -10,8 +10,8 @@ import { StaffService } from '../../model/staff.service';
   templateUrl: './setting-global-list.component.html'
 })
 export class SettingGlobalListComponent implements OnInit {
-  settings: Setting[];
-  errorMessage: string;
+  settings: Setting[] = [];
+  errorMessage: string = '';
 
   constructor(
     private settingDataService: SettingDataService,
@@ -24,7 +24,7 @@ export class SettingGlobalListComponent implements OnInit {
   }
 
   public getSettings() {
-    this.settings = null;
+    this.settings = [];
     this.settingDataService.getAllSettings().subscribe(
       settings => {
         this.settings = settings;
@@ -65,7 +65,7 @@ export class SettingGlobalListComponent implements OnInit {
           parent.settingDataService.deleteSettingById(setting.id).subscribe(
             _result => {
               parent.getSettings();
-              resolve();
+              resolve(true);
             },
             error => {
               // unauthorized access
@@ -74,7 +74,7 @@ export class SettingGlobalListComponent implements OnInit {
               } else {
                 parent.errorMessage = error.data.message;
               }
-              resolve();
+              resolve(true);
             }
           );
         });

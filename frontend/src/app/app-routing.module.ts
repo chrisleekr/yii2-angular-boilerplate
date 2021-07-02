@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: '',
     component: FrontendLayoutComponent,
     pathMatch: 'full',
-    loadChildren: 'app/index/index.module#IndexModule'
+    loadChildren: () => import('./index/index.module').then(m => m.IndexModule)
   },
   {
     path: '',
@@ -20,7 +20,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'account',
-        loadChildren: 'app/account/account.module#AccountModule'
+        loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
       }
     ]
   },
@@ -30,31 +30,32 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadChildren: 'app/login/login.module#LoginModule'
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
       },
       {
         path: 'logout',
-        loadChildren: 'app/logout/logout.module#LogoutModule'
+        loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule)
       },
       {
         path: 'signup',
-        loadChildren: 'app/signup/signup.module#SignupModule'
+        loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule)
       },
       {
         path: 'confirm',
-        loadChildren: 'app/confirm/confirm.module#ConfirmModule'
+        loadChildren: () => import('./confirm/confirm.module').then(m => m.ConfirmModule)
       },
       {
         path: 'password-reset-request',
-        loadChildren: 'app/password-reset-request/password-reset-request.module#PasswordResetRequestModule'
+        loadChildren: () =>
+          import('./password-reset-request/password-reset-request.module').then(m => m.PasswordResetRequestModule)
       },
       {
         path: 'password-reset',
-        loadChildren: 'app/password-reset/password-reset.module#PasswordResetModule'
+        loadChildren: () => import('./password-reset/password-reset.module').then(m => m.PasswordResetModule)
       },
       {
         path: 'sample-page',
-        loadChildren: 'app/sample-page/sample-page.module#SamplePageModule'
+        loadChildren: () => import('./sample-page/sample-page.module').then(m => m.SamplePageModule)
       }
     ]
   },

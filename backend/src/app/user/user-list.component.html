@@ -38,11 +38,11 @@
             {{ user.username }}
           </td>
           <td>
-            <p *ngIf="user.confirmed_at == null">
+            <p *ngIf="user.confirmed_at === null || user.confirmed_at === ''">
               {{ user.unconfirmed_email }}
               <br /><span class="help-text text-danger">(Not Confirmed)</span>
             </p>
-            <p *ngIf="user.confirmed_at != null">
+            <p *ngIf="user.confirmed_at !== null && user.confirmed_at !== ''">
               {{ user.email }}
               <br /><span
                 class="help-text"
@@ -52,9 +52,9 @@
             </p>
           </td>
           <td class="text-center">
-            <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
+            <span *ngIf="user.last_login_ip === ''" class="help-text">Never Logged In</span>
             <p
-              *ngIf="user.last_login_ip != null"
+              *ngIf="user.last_login_ip !== ''; ull"
               class="help-text"
               title="{{ user.last_login_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
             >
@@ -62,30 +62,30 @@
             </p>
           </td>
           <td class="text-center">
-            <div *ngIf="user.blocked_at == null">
+            <div *ngIf="user.blocked_at === null || user.blocked_at === ''">
               <span
                 [ngClass]="{
-                  'text-success': user.status == 10,
-                  'text-info': user.status == 1,
-                  'text-danger': user.status == 0 || user.status == -1
+                  'text-success': user.status === 10,
+                  'text-info': user.status === 1,
+                  'text-danger': user.status === 0 || user.status === -1
                 }"
                 >{{ user.status_label }}</span
               >
 
               <br /><span
                 class="help-text"
-                title="{{ user.updated_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
-                >({{ user.updated_at | amFromUnix | amTimeAgo }})</span
+                title="{{ user.updated_at || '' | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm' }}"
+                >({{ user.updated_at || '' | amFromUnix | amTimeAgo }})</span
               >
             </div>
-            <div *ngIf="user.blocked_at != null">
-              <span *ngIf="user.blocked_at != null" class="text-danger" title="{{ user.blocked_at }}"
+            <div *ngIf="user.blocked_at !== null && user.blocked_at !== ''">
+              <span class="text-danger" title="{{ user.blocked_at }}"
                 >Blocked since {{ user.blocked_at | amFromUnix | amTimeAgo }}</span
               >
             </div>
           </td>
           <td class="text-center">
-            <div *ngIf="user.status != -1">
+            <div *ngIf="user.status !== -1">
               <button class="btn btn-secondary btn-sm" type="button" (click)="viewUser(user)">
                 <i class="fa fa-edit"></i> Edit
               </button>

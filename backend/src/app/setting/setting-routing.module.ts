@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'global',
-        loadChildren: 'app/setting/global/setting-global.module#SettingGlobalModule'
+        loadChildren: () => import('./global/setting-global.module').then(m => m.SettingGlobalModule)
       },
       {
         path: '',
