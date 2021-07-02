@@ -10,8 +10,8 @@ import { StaffService } from '../../model/staff.service';
   templateUrl: './setting-global-list.component.html'
 })
 export class SettingGlobalListComponent implements OnInit {
-  settings: Setting[];
-  errorMessage: string;
+  settings: Setting[] = [];
+  errorMessage: string = '';
 
   constructor(
     private settingDataService: SettingDataService,
@@ -24,7 +24,7 @@ export class SettingGlobalListComponent implements OnInit {
   }
 
   public getSettings() {
-    this.settings = null;
+    this.settings = [];
     this.settingDataService.getAllSettings().subscribe(
       settings => {
         this.settings = settings;

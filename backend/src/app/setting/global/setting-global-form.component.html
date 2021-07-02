@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2" *ngIf="mode == 'create'">Create new setting</h1>
-  <h1 class="h2" *ngIf="mode == 'update'">Update setting - {{ setting.meta_name }}</h1>
+  <h1 class="h2" *ngIf="mode === 'create'">Create new setting</h1>
+  <h1 class="h2" *ngIf="mode === 'update'">Update setting - {{ setting.meta_name }}</h1>
 </div>
 
 <div class="row" *ngIf="errorMessage">
@@ -111,7 +111,7 @@
             <div class="form-group-wrapper">
               <div
                 class="form-group row"
-                *ngIf="selectedMetaType == 'select'"
+                *ngIf="selectedMetaType === 'select'"
                 [ngClass]="{ 'has-danger': !isValid('meta_attribute') }"
               >
                 <label class="col-sm-12" for="meta_attribute">Attribute <span class="required">*</span></label>
@@ -140,7 +140,7 @@
             <div class="form-group-wrapper">
               <div
                 class="form-group row"
-                *ngIf="selectedMetaType == 'select'"
+                *ngIf="selectedMetaType === 'select'"
                 [ngClass]="{ 'has-danger': !isValid('meta_value') }"
               >
                 <label class="col-sm-12" for="meta_value_select">Value <span class="required">*</span></label>
@@ -163,7 +163,7 @@
 
               <div
                 class="form-group row"
-                *ngIf="selectedMetaType == 'number'"
+                *ngIf="selectedMetaType === 'number'"
                 [ngClass]="{ 'has-danger': !isValid('meta_value') }"
               >
                 <label class="col-sm-12" for="meta_value_number">Value <span class="required">*</span></label>
@@ -186,7 +186,7 @@
 
               <div
                 class="form-group row"
-                *ngIf="selectedMetaType == 'text'"
+                *ngIf="selectedMetaType === 'text'"
                 [ngClass]="{ 'has-danger': !isValid('meta_value') }"
               >
                 <label class="col-sm-12" for="meta_value_string">Value <span class="required">*</span></label>
@@ -238,7 +238,7 @@
                 <p>Form status: {{ form.status | json }}</p>
               </div> -->
               <div class="col-sm-6">
-                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted === true">
                   <i class="fa fa-dot-circle-o"></i>
                   Save
                   <app-spinner *ngIf="submitted"></app-spinner>

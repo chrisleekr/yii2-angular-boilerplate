@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2" *ngIf="mode == 'create'">New User</h1>
-  <h1 class="h2" *ngIf="mode == 'update'">Update User - {{ user.username }}</h1>
+  <h1 class="h2" *ngIf="mode === 'create'">New User</h1>
+  <h1 class="h2" *ngIf="mode === 'update'">Update User - {{ user.username }}</h1>
 </div>
 
 <div class="row" *ngIf="errorMessage">
@@ -88,14 +88,14 @@
                 </div>
               </div>
             </div>
-            <div class="form-group-wrapper" *ngIf="mode == 'update'">
+            <div class="form-group-wrapper" *ngIf="mode === 'update'">
               <div class="form-group row">
                 <label class="col-sm-12">Last Login</label>
                 <div class="col-sm-3">
-                  <span *ngIf="user.last_login_ip == null" class="help-text">Never Logged In</span>
-                  <p *ngIf="user.last_login_ip != null" class="form-text text-muted">
+                  <span *ngIf="user.last_login_ip === null" class="help-text">Never Logged In</span>
+                  <p *ngIf="user.last_login_ip !== null" class="form-text text-muted">
                     {{ user.last_login_ip }}<br />({{
-                      user.last_login_at | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm'
+                      user.last_login_at || '' | amFromUnix | amDateFormat: 'YYYY-MM-DD HH:mm'
                     }})
                   </p>
                 </div>
@@ -219,7 +219,7 @@
           <div class="card-footer">
             <div class="row">
               <div class="col-sm-6">
-                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted === true">
                   <i class="fa fa-dot-circle-o"></i>
                   Save
                   <app-spinner *ngIf="submitted"></app-spinner>

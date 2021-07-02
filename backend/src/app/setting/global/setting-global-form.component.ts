@@ -7,8 +7,8 @@ import { Setting } from '../../model/setting';
 import { SettingDataService } from '../../model/setting-data.service';
 import { StaffService } from '../../model/staff.service';
 
-import _ from 'lodash';
-import * as moment from 'moment';
+import forIn from 'lodash-es/forIn';
+import moment from 'moment';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -17,16 +17,16 @@ import { environment } from '../../../environments/environment';
 export class SettingGlobalFormComponent implements OnInit, OnDestroy {
   mode = '';
 
-  id: number;
-  parameters: any;
-  setting: Setting;
+  id: number = 0;
+  parameters: any = {};
+  setting: Setting = new Setting();
 
   metaTypes: any = {};
   isPublicTypes: any = {};
   selectedMetaType: string = '';
   enteredMetaAttributes: any = {};
 
-  errorMessage: string;
+  errorMessage: string = '';
 
   form: FormGroup;
   formErrors: any;
@@ -249,7 +249,7 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
   }
 
   private setSettingToForm() {
-    _.forIn(this.setting, (value: any, key: string) => {
+    forIn(this.setting, (value: any, key: string) => {
       if (typeof this.form.controls[key] !== 'undefined') {
         this.form.controls[key].setValue(value);
       }
@@ -257,14 +257,14 @@ export class SettingGlobalFormComponent implements OnInit, OnDestroy {
   }
 
   private setFormToSetting() {
-    _.forIn(this.form.getRawValue(), (value: any, key: string) => {
-      if (typeof this.setting[key] !== 'undefined') {
+    forIn(this.form.getRawValue(), (value: any, key: string) => {
+      if (this.setting.hasOwnProperty(key)) {
         if (value instanceof moment) {
-          this.setting[key] = moment(value, environment.customDateTimeFormat.parseInput, true).format(
+          (this.setting as any)[key] = moment(value, environment.customDateTimeFormat.parseInput, true).format(
             environment.customDateTimeFormat.apiFormat
           );
         } else {
-          this.setting[key] = value;
+          (this.setting as any)[key] = value;
         }
       }
     });

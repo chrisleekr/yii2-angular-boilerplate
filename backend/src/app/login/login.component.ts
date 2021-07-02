@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { StaffService } from '../model/staff.service';
 // tslint:disable-next-line: ordered-imports
@@ -76,6 +76,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.resetFormErrors();
     this.staffService.logout();
+  }
+
+  getFormControls(key: string) {
+    return this.loginForm.get(key) as FormControl;
   }
 
   public onSubmit(elementValues: any) {

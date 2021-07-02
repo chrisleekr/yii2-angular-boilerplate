@@ -14,6 +14,7 @@ export class GlobalService {
 
   constructor(private jwtHelper: JwtHelperService) {
     this.apiHost = environment.apiHost;
+    console.log('environment => ', environment);
   }
 
   static getHeaders(): HttpHeaders {
@@ -30,11 +31,17 @@ export class GlobalService {
   static handleError(response: Response | any) {
     let errorMessage: any = {};
     // Connection error
-    if (response.error.status === 0) {
+    if (response.error.status === 403) {
+      errorMessage = {
+        success: false,
+        status: 403,
+        data: { message: "Sorry, you don't have permission to access this page." }
+      };
+    } else if (response.error.status === 0) {
       errorMessage = {
         success: false,
         status: 0,
-        data: 'Sorry, there was a connection error occurred. Please try again.'
+        data: { message: 'Sorry, there was a connection error occurred. Please try again.' }
       };
     } else {
       errorMessage = response.error;
@@ -49,7 +56,7 @@ export class GlobalService {
 
   loadGlobalSettingsFromSessionStorage(): void {
     if (sessionStorage.getItem('backend-setting') !== null) {
-      this.setting = JSON.parse(sessionStorage.getItem('backend-setting'));
+      this.setting = JSON.parse(sessionStorage.getItem('backend-setting') || '{}');
     }
   }
 }

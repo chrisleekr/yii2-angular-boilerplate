@@ -61,12 +61,6 @@ ENV PATH /srv/vendor/bin:${PATH}
 
 COPY . /srv/
 
-RUN mkdir /srv/runtime \
-    && chmod 777 -R /srv/runtime \
-    && mkdir /srv/web/assets \
-    && chmod 777 -R /srv/web/assets \
-    && chown -R www-data:www-data /srv/
-
 EXPOSE 80
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

@@ -24,7 +24,9 @@ export class PasswordResetComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.passwordResetForm = this.formBuilder.group({});
+  }
 
   ngOnInit() {
     this.resetFormErrors();
@@ -39,6 +41,10 @@ export class PasswordResetComponent implements OnInit {
         this.errorMessage = 'The parameters are missing. Please check your access';
       }
     });
+  }
+
+  getFormControls(key: string) {
+    return this.passwordResetForm.get(key) as FormControl;
   }
 
   public onValueChanged(_data?: any) {

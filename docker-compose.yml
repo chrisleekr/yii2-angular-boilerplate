@@ -39,8 +39,8 @@ services:
       - CACHE_WEIGHT=60
       - CACHE_USERNAME=
       - CACHE_PASSWORD=
-    # volumes:
-    #   - ./api:/srv
+    volumes:
+      - ./api:/srv
 
   backend:
     container_name: backend

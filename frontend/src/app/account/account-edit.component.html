@@ -1,6 +1,4 @@
-<h1>
-  Account Page
-</h1>
+<h1> Account Page </h1>
 <br />
 
 <div class="row" *ngIf="errorMessage">
@@ -11,7 +9,7 @@
 <div *ngIf="!mode && !errorMessage">
   <app-spinner></app-spinner>
 </div>
-<div *ngIf="mode == 'update'">
+<div *ngIf="mode === 'update'">
   <div class="row">
     <div class="col-12">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -41,7 +39,7 @@
                     class="form-control"
                     id="email"
                     placeholder="Enter email address"
-                    [formControl]="form.controls['email']"
+                    [formControl]="getFormControls('email')"
                     [ngClass]="{ 'form-control-danger': !isValid('email') }"
                   />
                 </div>
@@ -67,7 +65,7 @@
                     class="form-control"
                     id="password"
                     placeholder="Enter the password"
-                    [formControl]="form.controls['password']"
+                    [formControl]="getFormControls('password')"
                     [ngClass]="{ 'form-control-danger': !isValid('password') }"
                   />
                 </div>
@@ -84,7 +82,7 @@
           <div class="card-footer">
             <div class="row">
               <div class="col-6">
-                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted == true">
+                <button type="submit" class="btn btn-primary" [disabled]="!form.valid || submitted === true">
                   <i class="fa fa-dot-circle-o"></i> Save
                 </button>
                 <div *ngIf="submitted" class="spinner"></div>

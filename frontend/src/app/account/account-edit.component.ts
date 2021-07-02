@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CustomValidators } from 'ng2-validation';
 
@@ -16,9 +16,9 @@ import Swal from 'sweetalert2';
 export class AccountEditComponent implements OnInit {
   errorMessage: string;
 
-  mode = '';
+  mode: string;
   user: User;
-  originalEmail = '';
+  originalEmail: string;
   form: FormGroup;
   formErrors: any;
 
@@ -32,6 +32,10 @@ export class AccountEditComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder
   ) {
+    this.errorMessage = '';
+    this.mode = '';
+    this.user = new User();
+    this.originalEmail = '';
     // Construct form group
     this.form = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, CustomValidators.email])],
@@ -81,6 +85,10 @@ export class AccountEditComponent implements OnInit {
     );
   }
 
+  getFormControls(key: string) {
+    return this.form.get(key) as FormControl;
+  }
+
   public onSubmit() {
     this.resetFormErrors();
     this.submitted = true;
@@ -89,6 +97,7 @@ export class AccountEditComponent implements OnInit {
     const tempUser = this.form.getRawValue();
 
     if (this.originalEmail !== tempUser.email) {
+      // tslint:disable-next-line: no-this-assignment
       const parent = this;
 
       Swal.fire({
@@ -114,7 +123,7 @@ export class AccountEditComponent implements OnInit {
                 } else {
                   parent.submitted = false;
                 }
-                resolve();
+                resolve(true);
               },
               error => {
                 if (error.status === 422) {
@@ -126,7 +135,7 @@ export class AccountEditComponent implements OnInit {
                 } else {
                   parent.errorMessage = error.data.message;
                 }
-                resolve();
+                resolve(true);
               }
             );
           });

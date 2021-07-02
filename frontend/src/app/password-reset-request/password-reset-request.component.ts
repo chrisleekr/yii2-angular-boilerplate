@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
 import { UserService } from '../model/user.service';
@@ -42,6 +41,10 @@ export class PasswordResetRequestComponent implements OnInit {
   ngOnInit() {
     this.resetFormErrors();
     this.userService.logout();
+  }
+
+  getFormControls(key: string) {
+    return this.passwordResetRequestForm.get(key) as FormControl;
   }
 
   public onSubmit(elementValues: any) {

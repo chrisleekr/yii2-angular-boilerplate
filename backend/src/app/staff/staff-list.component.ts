@@ -11,14 +11,14 @@ import { StaffService } from '../model/staff.service';
   templateUrl: './staff-list.component.html'
 })
 export class StaffListComponent implements OnInit {
-  staffList: StaffList;
-  errorMessage: string;
+  staffList: StaffList = new StaffList();
+  errorMessage: string = '';
 
-  loading: boolean;
-  searchParams: any;
-  totalCount: number;
-  currentPage: number;
-  pageSize: number;
+  loading: boolean = false;
+  searchParams: any = {};
+  totalCount: number = 0;
+  currentPage: number = 0;
+  pageSize: number = 0;
 
   constructor(
     private staffDataService: StaffDataService,
@@ -75,7 +75,7 @@ export class StaffListComponent implements OnInit {
   }
 
   public getStaffs() {
-    this.staffList = null;
+    this.staffList = new StaffList();
     this.loading = true;
 
     this.router.navigate([], { queryParams: this.searchParams });
@@ -83,8 +83,8 @@ export class StaffListComponent implements OnInit {
     this.staffDataService.getAllStaffs(this.searchParams).subscribe(
       staffList => {
         this.staffList = staffList;
-        this.totalCount = this.staffList.pagination.totalCount;
-        this.pageSize = this.staffList.pagination.defaultPageSize;
+        this.totalCount = this.staffList.pagination.totalCount || 0;
+        this.pageSize = this.staffList.pagination.defaultPageSize || 0;
         this.loading = false;
       },
       error => {

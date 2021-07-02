@@ -20,19 +20,19 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: 'app/dashboard/dashboard.module#DashboardModule'
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: 'staff',
-        loadChildren: 'app/staff/staff.module#StaffModule'
+        loadChildren: () => import('./staff/staff.module').then(m => m.StaffModule)
       },
       {
         path: 'user',
-        loadChildren: 'app/user/user.module#UserModule'
+        loadChildren: () => import('./user/user.module').then(m => m.UserModule)
       },
       {
         path: 'setting',
-        loadChildren: 'app/setting/setting.module#SettingModule'
+        loadChildren: () => import('./setting/setting.module').then(m => m.SettingModule)
       }
     ]
   },
@@ -42,11 +42,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadChildren: 'app/login/login.module#LoginModule'
+        loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
       },
       {
         path: 'logout',
-        loadChildren: 'app/logout/logout.module#LogoutModule'
+        loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule)
       }
     ]
   },

@@ -17,4 +17,10 @@ printf "Upgrading database...\n\n"
 
 touch /srv/.migrated
 
+mkdir -p /srv/runtime \
+&& chmod 777 -R /srv/runtime \
+&& mkdir -p /srv/web/assets \
+&& chmod 777 -R /srv/web/assets \
+&& chown -R www-data:www-data /srv/
+
 exec "$@"
