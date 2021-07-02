@@ -1,19 +1,19 @@
-# Yii2 REST API + Angular 10 Boilerplate
+# Yii2 REST API + Angular 12 Boilerplate
 
 [![Build](https://github.com/chrisleekr/yii2-angular-boilerplate/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/chrisleekr/yii2-angular-boilerplate/actions?query=workflow%3Amain)
 
 This is a boilerplate project for future use. The project consists of REST API developed by Yii2 and backend/frontend
-developed by Angular 10 with Bootstrap 4.
+developed by Angular 12 with Bootstrap 4.
 
 The project involves:
 
 - API
   - Yii2 REST API, Yii2 RBAC, JWT (JSON Web Token), Memcached, _Basic Unit & Functional Test using Codeception_
 - Backend: Staff/Administrator dashboard to manage staffs, users and settings
-  - Angular 10, Bootstrap 4, JWT (JSON Web Token), _Basic Unit test using Karma+Jasmine_, Moment.js, Sweet Alert,
+  - Angular 12, Bootstrap 4, JWT (JSON Web Token), _Basic Unit test using Karma+Jasmine_, Moment.js, Sweet Alert,
     Underscore.js
 - Frontend: User website to support user registration, login and account management
-  - Angular 10, Bootstrap 4, JWT (JSON Web Token), _Basic Unit using Karma+Jasmine, Basic E2E test using
+  - Angular 12, Bootstrap 4, JWT (JSON Web Token), _Basic Unit using Karma+Jasmine, Basic E2E test using
     Protractor+Jasmine_, Moment.js, Sweet Alert
 
 ## Demo
