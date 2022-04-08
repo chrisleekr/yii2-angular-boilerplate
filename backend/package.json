@@ -29,7 +29,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "lodash-es": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "ng-pick-datetime": "^7.0.0",
     "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^6.2.0",
