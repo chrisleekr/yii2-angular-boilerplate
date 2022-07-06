@@ -28,7 +28,7 @@
     "core-js": "^3.15.1",
     "cors": "~2.8.5",
     "jquery": "^3.6.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^6.2.0",
     "ngx-moment": "^5.0.0",
